@@ -13,4 +13,15 @@ public class Item extends Rastreabilidade{
     private UnidadeDeMedida unidadeDeMedida;    
     private boolean status;
     private String observacoes;
+
+    public Item(Integer id, String descricao, GrupoDeItens grupoDeItens, ClassificacaoItem classificacaoItem, UnidadeDeMedida unidadeDeMedida, boolean status, String observacoes, Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
+        super(usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
+        this.id = id;
+        this.descricao = descricao;
+        this.grupoDeItens = grupoDeItens;
+        this.classificacaoItem = classificacaoItem;
+        this.unidadeDeMedida = unidadeDeMedida;
+        this.status = status;
+        this.observacoes = observacoes;
+    }
 }

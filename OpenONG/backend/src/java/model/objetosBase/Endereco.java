@@ -1,4 +1,4 @@
-package model;
+package model.objetosBase;
 
 public class Endereco {
     private Integer id;

@@ -5,7 +5,6 @@ import model.Item;
 
 public class LinhaDocumentoMarketing {
     private Integer id;
-    private DocumentoDeMarketing documentoDeMarketing;
     private Integer linha;
     private Item item;
     private double valorUnitario;
