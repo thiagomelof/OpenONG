@@ -3,7 +3,7 @@ package model.objetosBase;
 import java.util.Date;
 import model.Item;
 
-public class LinhaDocumentoMarketing {
+public class LinhaDocumentoDeMarketing {
     private Integer id;
     private Integer linha;
     private Item item;

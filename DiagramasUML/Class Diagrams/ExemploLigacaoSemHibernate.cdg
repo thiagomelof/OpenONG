@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Multi-file class diagram">
+  <ClassDiagramComponents>
+    <Class name="Entrada" package="model" visibility="public" xPosition="95.0" yPosition="15.0">
+      <Fields>
+        <Field name="projeto" type="Projeto" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getProjeto" returnType="Projeto" visibility="public"/>
+        <Method name="setProjeto" returnType="void" visibility="public">
+          <Argument type="Projeto" name="projeto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LinhaEntrada" package="model" visibility="public" xPosition="117.0" yPosition="316.0">
+      <Fields>
+        <Field name="entrada" type="Entrada" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="linhaEntrada" source="model.Entrada" target="model.LinhaEntrada" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;LinhaEntrada&gt;"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

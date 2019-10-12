@@ -1,7 +1,7 @@
 package model;
 
-import model.objetosBase.LinhaDocumentoMarketing;
+import model.objetosBase.LinhaDocumentoDeMarketing;
 
-public class LinhaEntrada  extends LinhaDocumentoMarketing{
+public class LinhaEntrada  extends LinhaDocumentoDeMarketing{
     private Entrada entrada;
 }
