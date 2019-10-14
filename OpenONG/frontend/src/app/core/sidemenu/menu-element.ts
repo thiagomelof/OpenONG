@@ -1,19 +1,58 @@
 export const menus = [
     {
-        'name': 'Dashboard',
+        'name': 'Cadastros',
         'icon': 'dashboard',
         'link': false,
         'open': false,
-        'chip': { 'value': 1, 'color': 'accent' },
+        // 'chip': { 'value': 1, 'color': 'accent' },
         'sub': [
             {
-                'name': 'Dashboard',
+                'name': 'Parceiro de negócios',
                 'link': '/auth/dashboard',
-                'icon': 'dashboard',
+                'icon': 'account_box',
+                'chip': false,
+                'open': true,
+            },
+            {
+                'name': 'Itens e serviços',
+                'link': '/auth/dashboard',
+                'icon': 'list',
+                'chip': false,
+                'open': true,
+            },
+            {
+                'name': 'Grupo de itens',
+                'link': '/auth/dashboard',
+                'icon': 'list',
+                'chip': false,
+                'open': true,
+            },
+            {
+                'name': 'Usuário',
+                'link': '/auth/dashboard',
+                'icon': 'account_circle',
                 'chip': false,
                 'open': true,
             }
         ]
+    },
+    {
+        'name': 'Projetos',
+        'link': '/auth/dashboard',
+        'icon': 'assignment',
+        'open': false,
+    },
+    {
+        'name': 'Compras',
+        'icon': 'local_grocery_store',
+        'link': '/auth/guarded-routes',
+        'open': false,
+    },
+    {
+        'name': 'Doações',
+        'icon': 'favorite',
+        'link': '/auth/guarded-routes',
+        'open': false,
     },
     {
         'name': 'Material Widget',
