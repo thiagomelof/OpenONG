@@ -5,13 +5,7 @@ import model.objetosBase.DocumentoDeMarketing;
 public class Projeto extends DocumentoDeMarketing{
     private Date validoDe;
     private Date validoAte;  
-
-    public Projeto(Date validoDe, Date validoAte, Integer id, ParceiroDeNegocio parceiroDeNegocio, boolean status, Date lancamento, Date vencimento, String observacoes, Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
-        super(id, parceiroDeNegocio, status, lancamento, vencimento, observacoes, usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
-        this.validoDe = validoDe;
-        this.validoAte = validoAte;
-    }
-
+    //rastreabilidade
     public Date getValidoDe() {
         return validoDe;
     }

@@ -71,7 +71,7 @@ export class DoughnutGraphComponent implements OnInit {
                 },
                 title: {
                     display: true,
-                    text: 'LEAD GRAPH'
+                    text: 'GASTOS POR CATEGORIA'
                 }
             }
 

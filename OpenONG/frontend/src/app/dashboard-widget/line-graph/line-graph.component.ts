@@ -19,11 +19,11 @@ export class LineGraphComponent implements OnInit {
       new Chart('line-graph', {
                 type: 'line',
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sep",'Oct'],
+                    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago","Set",'Out'],
                     datasets: [{
                         backgroundColor: 'rgba(92, 107, 192, 0.36)',
                         borderColor: 'rgba(92, 107, 192,.5)',
-                        data: [76.97, 88.91, 99.31, 122.19, 130.85, 140.91, 150.36, 142.66, 150.36, 142.66],
+                        data: [7000, 10000, 9500, 15000, 5000.85, 13000.91, 20000.36, 12000.66, 3000.36, 7000.66],
                         label: 'Dataset',
                         fill: 'start'
                     }]
@@ -45,7 +45,7 @@ export class LineGraphComponent implements OnInit {
                     },
                     title: {
                         display: true,
-                        text: 'ASSIGNMENTS GRAPH '
+                        text: 'DOAÇÕES MENSAIS'
                     }
                 }
         })

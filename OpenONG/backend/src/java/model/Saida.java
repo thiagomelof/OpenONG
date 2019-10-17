@@ -4,12 +4,7 @@ import model.objetosBase.DocumentoDeMarketing;
 
 public class Saida extends DocumentoDeMarketing{
     private Projeto projeto;
-
-    public Saida(Projeto projeto, Integer id, ParceiroDeNegocio parceiroDeNegocio, boolean status, Date lancamento, Date vencimento, String observacoes, Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
-        super(id, parceiroDeNegocio, status, lancamento, vencimento, observacoes, usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
-        this.projeto = projeto;
-    }
-
+    //rastreabilidade
     public Projeto getProjeto() {
         return projeto;
     }
