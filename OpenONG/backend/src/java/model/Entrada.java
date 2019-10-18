@@ -1,13 +1,17 @@
 package model;
 import java.util.Date;
 import java.util.List;
-import model.objetosBase.DocumentoDeMarketing;
+import model.objetosBase.Documento;
+import model.objetosBase.LinhaDocumento;
 
-public class Entrada extends DocumentoDeMarketing{
+public class Entrada extends Documento{
     private Projeto projeto;
-    private List<LinhaEntrada> linhaEntrada;
-    //rastreabilidade
+    private List<LinhaDocumento> linhas;
 
+    public Entrada(Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
+        super(usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
+    }
+    
     public Projeto getProjeto() {
         return projeto;
     }
@@ -16,13 +20,11 @@ public class Entrada extends DocumentoDeMarketing{
         this.projeto = projeto;
     }
 
-    public List<LinhaEntrada> getLinhaEntrada() {
-        return linhaEntrada;
+    public List<LinhaDocumento> getLinhas() {
+        return linhas;
     }
 
-    public void setLinhaEntrada(List<LinhaEntrada> linhaEntrada) {
-        this.linhaEntrada = linhaEntrada;
+    public void setLinhas(List<LinhaDocumento> linhas) {
+        this.linhas = linhas;
     }
-    
-    
 }

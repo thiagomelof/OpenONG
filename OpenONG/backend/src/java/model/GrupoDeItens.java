@@ -1,44 +1,25 @@
 package model;
-
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import model.objetosBase.Rastreabilidade;
 
-@Entity
-public class GrupoDeItens implements Serializable{
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(length = 100,nullable = false)
+public class GrupoDeItens extends Rastreabilidade{
+    private Integer id;
     private String descricao;    
     private boolean status;
-    @Lob
     private String observacoes;
-    
-    
-    private Date dataCriacao;
-    private Date dataModificacao;
 
-    public Long getId() {
+    public GrupoDeItens(Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
+        super(usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
+    }
+    
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
     
-
     public String getDescricao() {
         return descricao;
     }
@@ -61,21 +42,5 @@ public class GrupoDeItens implements Serializable{
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
-    }
-
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataModificacao() {
-        return dataModificacao;
-    }
-
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
     }
 }

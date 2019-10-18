@@ -2,45 +2,28 @@ package model;
 
 import constantes.ClassificacaoItem;
 import constantes.UnidadeDeMedida;
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import model.objetosBase.Rastreabilidade;
 
-@Entity
-public class Item implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class Item extends Rastreabilidade{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(length = 100,nullable = false)
-    private String descricao;
-    
+    private Integer id;
+    private String descricao;    
     private GrupoDeItens grupoDeItens;
     private ClassificacaoItem classificacaoItem;
     private UnidadeDeMedida unidadeDeMedida;    
-    private boolean status;
-    
-    @Lob
+    private boolean status;    
     private String observacoes;
-    
-    
-    private Date dataCriacao;
-    private Date dataModificacao;
 
-    public Long getId() {
+    public Item(Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
+        super(usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
+    }
+    
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -91,23 +74,4 @@ public class Item implements Serializable{
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataModificacao() {
-        return dataModificacao;
-    }
-
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
-    }
-    
-    
-    
 }

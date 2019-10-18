@@ -1,11 +1,18 @@
 package model;
 import java.util.Date;
-import model.objetosBase.DocumentoDeMarketing;
+import java.util.List;
+import model.objetosBase.Documento;
 
-public class Projeto extends DocumentoDeMarketing{
+public class Projeto extends Documento{
     private Date validoDe;
     private Date validoAte;  
-    //rastreabilidade
+     private List<GrupoDeItens> gruposDeItens; 
+     private List<Item> itens; 
+
+    public Projeto(Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
+        super(usuarioCriacao, dataCriacao, usuarioModificacao, dataModificacao);
+    }
+    
     public Date getValidoDe() {
         return validoDe;
     }
@@ -20,5 +27,21 @@ public class Projeto extends DocumentoDeMarketing{
 
     public void setValidoAte(Date validoAte) {
         this.validoAte = validoAte;
+    }
+
+    public List<GrupoDeItens> getGruposDeItens() {
+        return gruposDeItens;
+    }
+
+    public void setGruposDeItens(List<GrupoDeItens> gruposDeItens) {
+        this.gruposDeItens = gruposDeItens;
+    }
+
+    public List<Item> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
     }
 }

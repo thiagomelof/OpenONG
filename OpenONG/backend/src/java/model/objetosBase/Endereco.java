@@ -1,29 +1,15 @@
 package model.objetosBase;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-@Embeddable
 public class Endereco {
-    @Column(length = 200)
-    private String descricao;    
-    @Column(length = 50)
+    private String descricao;
     private String logradouro;
-    @Column(length = 200)
     private String rua;
-    @Column(length = 20)
     private String numRua;
-    @Column(length = 200)
     private String complemento;
-    @Column(length = 100)
     private String bairro;
-    @Column(length = 20)
     private String cep;
-    @Column(length = 11)
     private String cidade;
-    @Column(length = 11)
     private String estado;
-    @Column(length = 100)
     private String pontoDeReferencia;
 
     public String getDescricao() {
