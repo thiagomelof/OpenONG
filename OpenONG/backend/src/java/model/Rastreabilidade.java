@@ -1,25 +1,13 @@
 package model;
 
 import java.util.Date;
-import javax.persistence.Embeddable;
+import model.Usuario;
 
-@Embeddable
 public class Rastreabilidade {
-
     private Usuario usuarioCriacao;
-
-    private Date dataCriacao;
-
+    private Date dataCriacao;    
     private Usuario usuarioModificacao;
-
-    private Date dataModificacao;
-
-    public Rastreabilidade(Usuario usuarioCriacao, Date dataCriacao, Usuario usuarioModificacao, Date dataModificacao) {
-        this.usuarioCriacao = usuarioCriacao;
-        this.dataCriacao = dataCriacao;
-        this.usuarioModificacao = usuarioModificacao;
-        this.dataModificacao = dataModificacao;
-    }
+    private Date dataModificacao;   
 
     public Usuario getUsuarioCriacao() {
         return usuarioCriacao;

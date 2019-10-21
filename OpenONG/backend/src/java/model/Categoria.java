@@ -1,5 +1,4 @@
 package model;
-
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ public class Categoria implements Serializable {
     private String descricao;
     
     private boolean status;
-    @Lob
     private String observacoes;
     @Embedded
     private Rastreabilidade rastreabilidade;
@@ -33,7 +31,7 @@ public class Categoria implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getDescricao() {
         return descricao;
     }

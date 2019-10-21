@@ -34,7 +34,7 @@ public class Item implements Serializable {
     private Rastreabilidade rastreabilidade;
 
     private static final long serialVersionUID = 1L;
-
+    
     public Long getId() {
         return id;
     }

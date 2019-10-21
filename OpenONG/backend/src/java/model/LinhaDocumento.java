@@ -4,28 +4,12 @@ import java.util.Date;
 import model.Item;
 
 public class LinhaDocumento {
-
-    private Long id;
-
     private Integer linha;
-
     private Item item;
-
     private double valorUnitario;
-
     private double quantidade;
-
     private Date vencimento;
-
     private String observacoes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getLinha() {
         return linha;
