@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 public class Endereco implements Serializable {
 
     @Column(length = 200)
-    private String descricao;
+    private String descricaoEndereco;
     @Column(length = 200)
     private String rua;
     @Column(length = 20)
@@ -28,12 +28,12 @@ public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescricaoEndereco() {
+        return descricaoEndereco;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescricaoEndereco(String descricaoEndereco) {
+        this.descricaoEndereco = descricaoEndereco;
     }
 
     public String getRua() {
