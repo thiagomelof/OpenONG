@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-@Entity
+
 public class ParceiroDeNegocio implements Serializable {
 
     @Id

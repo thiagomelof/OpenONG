@@ -1,32 +1,39 @@
 package model;
 
-public class Endereco {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-    private String descricao;    
-    private String logradouro;
+//@Embeddable
+public class Endereco implements Serializable{
+
+    @Column(length = 200)
+    private String descricao;
+    @Column(length = 200)
     private String rua;
+    @Column(length = 20)
     private String numRua;
+    @Column(length = 200)
     private String complemento;
+    @Column(length = 100)
     private String bairro;
+    @Column(length = 20)
     private String cep;
+    @Column(length = 11)
     private String cidade;
+    @Column(length = 11)
     private String estado;
+    @Column(length = 100)
     private String pontoDeReferencia;
-
+    
+    private static final long serialVersionUID = 1L;
+    
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
     }
 
     public String getRua() {

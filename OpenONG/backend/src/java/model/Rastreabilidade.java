@@ -1,20 +1,52 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 import model.Usuario;
 
-public class Rastreabilidade {
-    private Usuario usuarioCriacao;
-    private Date dataCriacao;    
-    private Usuario usuarioModificacao;
-    private Date dataModificacao;   
+@Embeddable
+public class Rastreabilidade implements Serializable {
 
-    public Usuario getUsuarioCriacao() {
-        return usuarioCriacao;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUsuarioCriacao")
+    private Usuario usuariocriacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUsuarioModificacao")
+    private Usuario usuariomodificacao;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataCriacao;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataModificacao;
+
+    private static final long serialVersionUID = 1L;
+
+    
+    
+    public Usuario getUsuariocriacao() {
+        return usuariocriacao;
     }
 
-    public void setUsuarioCriacao(Usuario usuarioCriacao) {
-        this.usuarioCriacao = usuarioCriacao;
+    public void setUsuariocriacao(Usuario usuariocriacao) {
+        this.usuariocriacao = usuariocriacao;
+    }
+
+    public Usuario getUsuariomodificacao() {
+        return usuariomodificacao;
+    }
+
+    public void setUsuariomodificacao(Usuario usuariomodificacao) {
+        this.usuariomodificacao = usuariomodificacao;
     }
 
     public Date getDataCriacao() {
@@ -25,14 +57,6 @@ public class Rastreabilidade {
         this.dataCriacao = dataCriacao;
     }
 
-    public Usuario getUsuarioModificacao() {
-        return usuarioModificacao;
-    }
-
-    public void setUsuarioModificacao(Usuario usuarioModificacao) {
-        this.usuarioModificacao = usuarioModificacao;
-    }
-
     public Date getDataModificacao() {
         return dataModificacao;
     }
@@ -40,4 +64,13 @@ public class Rastreabilidade {
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

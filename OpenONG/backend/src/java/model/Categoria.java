@@ -1,6 +1,5 @@
 package model;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -16,11 +15,12 @@ public class Categoria implements Serializable {
     private Long id;
     @Column(length = 100, nullable = false)
     private String descricao;
-    
+    @Column
     private boolean status;
+    @Lob
     private String observacoes;
-    @Embedded
-    private Rastreabilidade rastreabilidade;
+    //@Embedded
+    //private Rastreabilidade rastreabilidade;
 
     private static final long serialVersionUID = 1L;
     
@@ -55,7 +55,7 @@ public class Categoria implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-
+/*
     public Rastreabilidade getRastreabilidade() {
         return rastreabilidade;
     }
@@ -63,4 +63,5 @@ public class Categoria implements Serializable {
     public void setRastreabilidade(Rastreabilidade rastreabilidade) {
         this.rastreabilidade = rastreabilidade;
     }
+    */
 }
