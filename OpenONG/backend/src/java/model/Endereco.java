@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Endereco implements Serializable{
+public class Endereco implements Serializable {
 
     @Column(length = 200)
     private String descricao;
@@ -25,9 +25,9 @@ public class Endereco implements Serializable{
     private String estado;
     @Column(length = 100)
     private String pontoDeReferencia;
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     public String getDescricao() {
         return descricao;
     }
@@ -99,4 +99,5 @@ public class Endereco implements Serializable{
     public void setPontoDeReferencia(String pontoDeReferencia) {
         this.pontoDeReferencia = pontoDeReferencia;
     }
+
 }

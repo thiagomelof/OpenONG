@@ -40,7 +40,7 @@ public class Categoria implements Serializable {
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<Item> itens;
-    
+
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<ProjetoCategoria> projetoCategoria;
 
@@ -116,6 +116,14 @@ public class Categoria implements Serializable {
 
     public void setItens(List<Item> itens) {
         this.itens = itens;
+    }
+
+    public List<ProjetoCategoria> getProjetoCategoria() {
+        return projetoCategoria;
+    }
+
+    public void setProjetoCategoria(List<ProjetoCategoria> projetoCategoria) {
+        this.projetoCategoria = projetoCategoria;
     }
 
 }

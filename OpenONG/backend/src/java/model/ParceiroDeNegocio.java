@@ -34,8 +34,6 @@ public class ParceiroDeNegocio implements Serializable {
     private String celular;
     @Column(length = 30)
     private String cpf;
-    @Column(length = 30)
-    private String senha;
     @Lob
     private String observacoes;
     @Column(length = 200)
@@ -119,14 +117,6 @@ public class ParceiroDeNegocio implements Serializable {
         this.cpf = cpf;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getWebSite() {
         return site;
     }
@@ -205,6 +195,14 @@ public class ParceiroDeNegocio implements Serializable {
 
     public void setDoacoes(List<Doacao> doacoes) {
         this.doacoes = doacoes;
+    }
+
+    public List<Projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
     }
 
 }

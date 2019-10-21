@@ -101,5 +101,5 @@ public class ItemDoacao implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-    
+
 }
