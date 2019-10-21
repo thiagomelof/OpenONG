@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import model.Usuario;
 
 @Embeddable
 public class Rastreabilidade implements Serializable {
@@ -31,8 +30,6 @@ public class Rastreabilidade implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    
-    
     public Usuario getUsuariocriacao() {
         return usuariocriacao;
     }

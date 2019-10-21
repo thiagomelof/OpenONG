@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,15 +35,15 @@ public class Usuario implements Serializable {
     private String senha;
     @Lob
     private String observacoes;
-    //@Embedded
-    //private Endereco endereco;
-    
+    @Embedded
+    private Endereco endereco;
+    /*
     @OneToMany(mappedBy = "usuariocriacao", fetch = FetchType.LAZY)
     private List<Rastreabilidade> usuarioCriacao;
     
     @OneToMany(mappedBy = "usuariomodificacao", fetch = FetchType.LAZY)
     private List<Rastreabilidade> usuarioModificacao;
-
+    */
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -116,15 +117,15 @@ public class Usuario implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-/*
+
     public Endereco getEndereco() {
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }*/
-
+    }
+/*
     public List<Rastreabilidade> getUsuarioCriacao() {
         return usuarioCriacao;
     }
@@ -140,5 +141,5 @@ public class Usuario implements Serializable {
     public void setUsuarioModificacao(List<Rastreabilidade> usuarioModificacao) {
         this.usuarioModificacao = usuarioModificacao;
     }
-
+*/
 }
