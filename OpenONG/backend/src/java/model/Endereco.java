@@ -1,12 +1,13 @@
-package model.objetosBase;
+package model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Endereco {
+
     @Column(length = 200)
-    private String descricao;    
+    private String descricao;
     @Column(length = 50)
     private String logradouro;
     @Column(length = 200)

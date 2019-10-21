@@ -1,73 +1,47 @@
 package model;
+
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import model.objetosBase.Endereco;
 
 @Entity
-public class ParceiroDeNegocio implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class ParceiroDeNegocio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(length = 100,nullable = false)
-    private String codigo;    
-    
-    @Column(length = 100,nullable = false)
-    private String nome;  
-    
+    @Column(length = 100, nullable = false)
+    private String codigo;
+    @Column(length = 100, nullable = false)
+    private String nome;
     @Column(length = 100)
     private String email;
-    
     @Column(length = 30)
     private String telefone;
-    
     @Column(length = 30)
-    private String celular;  
-    
+    private String celular;
     @Column(length = 30)
     private String cpf;
-    
     @Column(length = 30)
     private String senha;
-    
     @Lob
     private String observacoes;
-    
     @Column(length = 200)
     private String site;
-    
     @Column(length = 30)
     private String cnpj;
-
     @Embedded
     private Endereco endereco;
-    
-    @ManyToOne
-    @JoinColumn(name = "usuario_criacao")
-    private Usuario usuario_criacao;
-    
-    @ManyToOne
-    @JoinColumn(name = "usuario_modificacao")
-    private Usuario usuario_modificacao;
-    
-    private Date dataCriacao;
-    private Date dataModificacao; 
-    
+    @Embedded
+    private Rastreabilidade rastreabilidade;
+
+    private static final long serialVersionUID = 1L;
+
     public Long getId() {
         return id;
     }
@@ -131,7 +105,7 @@ public class ParceiroDeNegocio implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
     public String getWebSite() {
         return site;
     }
@@ -164,37 +138,11 @@ public class ParceiroDeNegocio implements Serializable{
         this.endereco = endereco;
     }
 
-    public Usuario getUsuario_criacao() {
-        return usuario_criacao;
+    public Rastreabilidade getRastreabilidade() {
+        return rastreabilidade;
     }
 
-    public void setUsuario_criacao(Usuario usuario_criacao) {
-        this.usuario_criacao = usuario_criacao;
-    }
-
-    public Usuario getUsuario_modificacao() {
-        return usuario_modificacao;
-    }
-
-    public void setUsuario_modificacao(Usuario usuario_modificacao) {
-        this.usuario_modificacao = usuario_modificacao;
-    }
-
-    
-
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataModificacao() {
-        return dataModificacao;
-    }
-
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
+    public void setRastreabilidade(Rastreabilidade rastreabilidade) {
+        this.rastreabilidade = rastreabilidade;
     }
 }

@@ -1,32 +1,31 @@
 package model;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Embedded;
 
-public class Projeto {
+public class Doacao {
 
-    private Long id;
+    private Integer id;
 
     private ParceiroDeNegocio parceiroDeNegocio;
 
     private boolean status;
 
+    private Date lancamento;
+
+    private Date vencimento;
+
     private String observacoes;
 
-    private Date validoDe;
-
-    private Date validoAte;
+    private Projeto projeto;
     @Embedded
     private Rastreabilidade rastreabilidade;
 
-    List<Categoria> categorias;
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,6 +45,22 @@ public class Projeto {
         this.status = status;
     }
 
+    public Date getLancamento() {
+        return lancamento;
+    }
+
+    public void setLancamento(Date lancamento) {
+        this.lancamento = lancamento;
+    }
+
+    public Date getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(Date vencimento) {
+        this.vencimento = vencimento;
+    }
+
     public String getObservacoes() {
         return observacoes;
     }
@@ -54,20 +69,12 @@ public class Projeto {
         this.observacoes = observacoes;
     }
 
-    public Date getValidoDe() {
-        return validoDe;
+    public Projeto getProjeto() {
+        return projeto;
     }
 
-    public void setValidoDe(Date validoDe) {
-        this.validoDe = validoDe;
-    }
-
-    public Date getValidoAte() {
-        return validoAte;
-    }
-
-    public void setValidoAte(Date validoAte) {
-        this.validoAte = validoAte;
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     public Rastreabilidade getRastreabilidade() {
@@ -78,11 +85,4 @@ public class Projeto {
         this.rastreabilidade = rastreabilidade;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
 }
