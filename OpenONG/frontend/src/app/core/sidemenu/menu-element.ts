@@ -1,5 +1,11 @@
 export const menus = [
     {
+        'name': 'Dashboards',
+        'link': '/auth/dashboard',
+        'icon': 'assessment',
+        'open': false,
+    },
+    {
         'name': 'Cadastros',
         'icon': 'dashboard',
         'link': false,
@@ -7,9 +13,16 @@ export const menus = [
         // 'chip': { 'value': 1, 'color': 'accent' },
         'sub': [
             {
-                'name': 'Parceiro de negócios',
-                'link': '/auth/dashboard',
+                'name': 'Doadores e Fornecedores',
+                'link': '/auth/material-widgets/input',
                 'icon': 'account_box',
+                'chip': false,
+                'open': true,
+            },
+            {
+                'name': 'Beneficiados',
+                'link': '/auth/material-widgets/input',
+                'icon': 'supervisor_account',
                 'chip': false,
                 'open': true,
             },
@@ -21,7 +34,7 @@ export const menus = [
                 'open': true,
             },
             {
-                'name': 'Grupo de itens',
+                'name': 'Categoria de item',
                 'link': '/auth/dashboard',
                 'icon': 'list',
                 'chip': false,
@@ -43,14 +56,14 @@ export const menus = [
         'open': false,
     },
     {
-        'name': 'Compras',
-        'icon': 'local_grocery_store',
-        'link': '/auth/guarded-routes',
+        'name': 'Doações',
+        'icon': 'favorite',
+        'link': '/auth/tables/fixed',
         'open': false,
     },
     {
-        'name': 'Doações',
-        'icon': 'favorite',
+        'name': 'Despesas',
+        'icon': 'local_grocery_store',
         'link': '/auth/guarded-routes',
         'open': false,
     },

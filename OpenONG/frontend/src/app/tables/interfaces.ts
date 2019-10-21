@@ -15,3 +15,12 @@ export interface GithubIssue {
   state: string;
   title: string;
 }
+
+
+export interface LinhasDocumento {
+  linha: string;
+  item: string;
+  valorUnitario: string;
+  quantidade: string;
+  observacoes: string;
+}

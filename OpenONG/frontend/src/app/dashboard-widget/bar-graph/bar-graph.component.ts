@@ -21,7 +21,7 @@ export class BarGraphComponent implements OnInit {
       new Chart('dash-bar-graph', {
             type: 'bar',
             data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago"],
                 datasets: [
                     {
                         backgroundColor: 'rgba(92, 107, 192, .7)',
@@ -29,7 +29,7 @@ export class BarGraphComponent implements OnInit {
                         data: [70, 88, 77, 93, 82, 100, 70, 67,78,99],
                         label: 'Dataset',
                         fill: 'false'
-                    }
+                    },
                     {
                         backgroundColor: 'rgba(38, 166, 154, .7)',
                         borderColor: 'rgba(69, 39, 160, .7)',
