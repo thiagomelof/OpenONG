@@ -1,15 +1,22 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
-
+@Entity
 public class ParceiroDeNegocio implements Serializable {
 
     @Id
@@ -37,8 +44,22 @@ public class ParceiroDeNegocio implements Serializable {
     private String cnpj;
     @Embedded
     private Endereco endereco;
-    @Embedded
-    private Rastreabilidade rastreabilidade;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataCriacao;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataModificacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuarioCriacao")
+    private Usuario usuarioCriacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuarioModificacao")
+    private Usuario usuarioModificacao;
+    @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
+    private List<Despesa> despesas;
+    @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
+    private List<Doacao> doacoes;
+    @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
+    private List<Projeto> projetos;
 
     private static final long serialVersionUID = 1L;
 
@@ -138,11 +159,52 @@ public class ParceiroDeNegocio implements Serializable {
         this.endereco = endereco;
     }
 
-    public Rastreabilidade getRastreabilidade() {
-        return rastreabilidade;
+    public Date getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setRastreabilidade(Rastreabilidade rastreabilidade) {
-        this.rastreabilidade = rastreabilidade;
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
+
+    public Date getDataModificacao() {
+        return dataModificacao;
+    }
+
+    public void setDataModificacao(Date dataModificacao) {
+        this.dataModificacao = dataModificacao;
+    }
+
+    public Usuario getUsuarioCriacao() {
+        return usuarioCriacao;
+    }
+
+    public void setUsuarioCriacao(Usuario usuarioCriacao) {
+        this.usuarioCriacao = usuarioCriacao;
+    }
+
+    public Usuario getUsuarioModificacao() {
+        return usuarioModificacao;
+    }
+
+    public void setUsuarioModificacao(Usuario usuarioModificacao) {
+        this.usuarioModificacao = usuarioModificacao;
+    }
+
+    public List<Despesa> getDespesas() {
+        return despesas;
+    }
+
+    public void setDespesas(List<Despesa> despesas) {
+        this.despesas = despesas;
+    }
+
+    public List<Doacao> getDoacoes() {
+        return doacoes;
+    }
+
+    public void setDoacoes(List<Doacao> doacoes) {
+        this.doacoes = doacoes;
+    }
+
 }

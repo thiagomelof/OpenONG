@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,13 +36,37 @@ public class Usuario implements Serializable {
     private String observacoes;
     @Embedded
     private Endereco endereco;
-    /*
-    @OneToMany(mappedBy = "usuariocriacao", fetch = FetchType.LAZY)
-    private List<Rastreabilidade> usuarioCriacao;
-    
-    @OneToMany(mappedBy = "usuariomodificacao", fetch = FetchType.LAZY)
-    private List<Rastreabilidade> usuarioModificacao;
-    */
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<Categoria> usuarioCriacaoCategoria;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<Categoria> usuarioModificacaoCategoria;
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<Item> usuarioCriacaoItem;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<Item> usuarioModificacaoItem;
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<ParceiroDeNegocio> usuarioCriacaoParceiroDeNegocio;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<ParceiroDeNegocio> usuarioModificacaoParceiroDeNegocio;
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<Despesa> usuarioCriacaoDespesa;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<Despesa> usuarioModificacaoDespesa;
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<Doacao> usuarioCriacaoDoacao;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<Doacao> usuarioModificacaoDoacao;
+
+    @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
+    private List<Projeto> usuarioCriacaoProjeto;
+    @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
+    private List<Projeto> usuarioModificacaoProjeto;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -125,21 +148,101 @@ public class Usuario implements Serializable {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-/*
-    public List<Rastreabilidade> getUsuarioCriacao() {
-        return usuarioCriacao;
+
+    public List<Categoria> getUsuarioCriacaoCategoria() {
+        return usuarioCriacaoCategoria;
     }
 
-    public void setUsuarioCriacao(List<Rastreabilidade> usuarioCriacao) {
-        this.usuarioCriacao = usuarioCriacao;
+    public void setUsuarioCriacaoCategoria(List<Categoria> usuarioCriacaoCategoria) {
+        this.usuarioCriacaoCategoria = usuarioCriacaoCategoria;
     }
 
-    public List<Rastreabilidade> getUsuarioModificacao() {
-        return usuarioModificacao;
+    public List<Categoria> getUsuarioModificacaoCategoria() {
+        return usuarioModificacaoCategoria;
     }
 
-    public void setUsuarioModificacao(List<Rastreabilidade> usuarioModificacao) {
-        this.usuarioModificacao = usuarioModificacao;
+    public void setUsuarioModificacaoCategoria(List<Categoria> usuarioModificacaoCategoria) {
+        this.usuarioModificacaoCategoria = usuarioModificacaoCategoria;
     }
-*/
+
+    public List<Item> getUsuarioCriacaoItem() {
+        return usuarioCriacaoItem;
+    }
+
+    public void setUsuarioCriacaoItem(List<Item> usuarioCriacaoItem) {
+        this.usuarioCriacaoItem = usuarioCriacaoItem;
+    }
+
+    public List<Item> getUsuarioModificacaoItem() {
+        return usuarioModificacaoItem;
+    }
+
+    public void setUsuarioModificacaoItem(List<Item> usuarioModificacaoItem) {
+        this.usuarioModificacaoItem = usuarioModificacaoItem;
+    }
+
+    public List<ParceiroDeNegocio> getUsuarioCriacaoParceiroDeNegocio() {
+        return usuarioCriacaoParceiroDeNegocio;
+    }
+
+    public void setUsuarioCriacaoParceiroDeNegocio(List<ParceiroDeNegocio> usuarioCriacaoParceiroDeNegocio) {
+        this.usuarioCriacaoParceiroDeNegocio = usuarioCriacaoParceiroDeNegocio;
+    }
+
+    public List<ParceiroDeNegocio> getUsuarioModificacaoParceiroDeNegocio() {
+        return usuarioModificacaoParceiroDeNegocio;
+    }
+
+    public void setUsuarioModificacaoParceiroDeNegocio(List<ParceiroDeNegocio> usuarioModificacaoParceiroDeNegocio) {
+        this.usuarioModificacaoParceiroDeNegocio = usuarioModificacaoParceiroDeNegocio;
+    }
+
+    public List<Despesa> getUsuarioCriacaoDespesa() {
+        return usuarioCriacaoDespesa;
+    }
+
+    public void setUsuarioCriacaoDespesa(List<Despesa> usuarioCriacaoDespesa) {
+        this.usuarioCriacaoDespesa = usuarioCriacaoDespesa;
+    }
+
+    public List<Despesa> getUsuarioModificacaoDespesa() {
+        return usuarioModificacaoDespesa;
+    }
+
+    public void setUsuarioModificacaoDespesa(List<Despesa> usuarioModificacaoDespesa) {
+        this.usuarioModificacaoDespesa = usuarioModificacaoDespesa;
+    }
+
+    public List<Doacao> getUsuarioCriacaoDoacao() {
+        return usuarioCriacaoDoacao;
+    }
+
+    public void setUsuarioCriacaoDoacao(List<Doacao> usuarioCriacaoDoacao) {
+        this.usuarioCriacaoDoacao = usuarioCriacaoDoacao;
+    }
+
+    public List<Doacao> getUsuarioModificacaoDoacao() {
+        return usuarioModificacaoDoacao;
+    }
+
+    public void setUsuarioModificacaoDoacao(List<Doacao> usuarioModificacaoDoacao) {
+        this.usuarioModificacaoDoacao = usuarioModificacaoDoacao;
+    }
+
+    public List<Projeto> getUsuarioCriacaoProjeto() {
+        return usuarioCriacaoProjeto;
+    }
+
+    public void setUsuarioCriacaoProjeto(List<Projeto> usuarioCriacaoProjeto) {
+        this.usuarioCriacaoProjeto = usuarioCriacaoProjeto;
+    }
+
+    public List<Projeto> getUsuarioModificacaoProjeto() {
+        return usuarioModificacaoProjeto;
+    }
+
+    public void setUsuarioModificacaoProjeto(List<Projeto> usuarioModificacaoProjeto) {
+        this.usuarioModificacaoProjeto = usuarioModificacaoProjeto;
+    }
+
 }

@@ -1,15 +1,50 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
-import model.Item;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
-public class LinhaDocumento {
+@Entity
+public class ItemDespesa implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
     private Integer linha;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "despesa")
+    private Despesa despesa;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item")
     private Item item;
+    @Column
     private double valorUnitario;
+    @Column
     private double quantidade;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date vencimento;
+    @Lob
     private String observacoes;
+
+    private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Integer getLinha() {
         return linha;
@@ -57,5 +92,13 @@ public class LinhaDocumento {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public Despesa getDespesa() {
+        return despesa;
+    }
+
+    public void setDespesa(Despesa despesa) {
+        this.despesa = despesa;
     }
 }
