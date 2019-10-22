@@ -19,8 +19,6 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(length = 100, nullable = false)
-    private String codigo;
-    @Column(length = 100, nullable = false)
     private String nome;
     @Column(length = 100)
     private String email;
@@ -75,14 +73,6 @@ public class Usuario implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getNome() {

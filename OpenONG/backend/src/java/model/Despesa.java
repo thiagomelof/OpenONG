@@ -46,7 +46,7 @@ public class Despesa implements Serializable {
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
     @OneToMany(mappedBy = "despesa", fetch = FetchType.LAZY)
-    private List<ItemDespesa> itemDespesa;
+    private List<DespesaItem> itemDespesa;
 
     private static final long serialVersionUID = 1L;
 
@@ -138,11 +138,11 @@ public class Despesa implements Serializable {
         this.usuarioModificacao = usuarioModificacao;
     }
 
-    public List<ItemDespesa> getItemDespesa() {
+    public List<DespesaItem> getItemDespesa() {
         return itemDespesa;
     }
 
-    public void setItemDespesa(List<ItemDespesa> itemDespesa) {
+    public void setItemDespesa(List<DespesaItem> itemDespesa) {
         this.itemDespesa = itemDespesa;
     }
 }

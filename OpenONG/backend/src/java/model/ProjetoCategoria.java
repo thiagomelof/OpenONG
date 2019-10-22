@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ public class ProjetoCategoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
+    private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "projeto")
     private Projeto projeto;
@@ -22,8 +23,11 @@ public class ProjetoCategoria implements Serializable {
     @JoinColumn(name = "categoria")
     private Categoria categoria;
 
+    @Column
+    private Double percentual;
+
     private static final long serialVersionUID = 1L;
-    
+
     public Long getId() {
         return id;
     }
@@ -47,5 +51,12 @@ public class ProjetoCategoria implements Serializable {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-    
+
+    public Double getPercentual() {
+        return percentual;
+    }
+
+    public void setPercentual(Double percentual) {
+        this.percentual = percentual;
+    }
 }

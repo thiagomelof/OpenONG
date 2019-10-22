@@ -22,7 +22,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(length = 100, nullable = false)
-    private String descricao;
+    private String nome;
     @Column
     private boolean status;
     @Lob
@@ -54,12 +54,12 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public boolean isStatus() {

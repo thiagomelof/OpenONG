@@ -26,7 +26,7 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(length = 150, nullable = false)
-    private String descricao;
+    private String nome;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria")
@@ -55,10 +55,10 @@ public class Item implements Serializable {
     private Usuario usuarioModificacao;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-    private List<ItemDoacao> itemDoacao;
+    private List<DoacaoItem> itemDoacao;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-    private List<ItemDespesa> itemDespesa;
+    private List<DespesaItem> itemDespesa;
 
     private static final long serialVersionUID = 1L;
 
@@ -70,14 +70,14 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-
+    
     public Categoria getCategoria() {
         return categoria;
     }
@@ -150,19 +150,19 @@ public class Item implements Serializable {
         this.usuarioModificacao = usuarioModificacao;
     }
 
-    public List<ItemDoacao> getItemDoacao() {
+    public List<DoacaoItem> getItemDoacao() {
         return itemDoacao;
     }
 
-    public void setItemDoacao(List<ItemDoacao> itemDoacao) {
+    public void setItemDoacao(List<DoacaoItem> itemDoacao) {
         this.itemDoacao = itemDoacao;
     }
 
-    public List<ItemDespesa> getItemDespesa() {
+    public List<DespesaItem> getItemDespesa() {
         return itemDespesa;
     }
 
-    public void setItemDespesa(List<ItemDespesa> itemDespesa) {
+    public void setItemDespesa(List<DespesaItem> itemDespesa) {
         this.itemDespesa = itemDespesa;
     }
 

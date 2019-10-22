@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 @Entity
-public class ItemDespesa implements Serializable {
+public class DoacaoItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +22,8 @@ public class ItemDespesa implements Serializable {
     @Column
     private Integer linha;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "despesa")
-    private Despesa despesa;
+    @JoinColumn(name = "doacao")
+    private Doacao doacao;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item")
     private Item item;
@@ -52,6 +52,14 @@ public class ItemDespesa implements Serializable {
 
     public void setLinha(Integer linha) {
         this.linha = linha;
+    }
+
+    public Doacao getDoacao() {
+        return doacao;
+    }
+
+    public void setDoacao(Doacao doacao) {
+        this.doacao = doacao;
     }
 
     public Item getItem() {
@@ -92,14 +100,6 @@ public class ItemDespesa implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
-    }
-
-    public Despesa getDespesa() {
-        return despesa;
-    }
-
-    public void setDespesa(Despesa despesa) {
-        this.despesa = despesa;
     }
 
 }
