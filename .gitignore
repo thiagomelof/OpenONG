@@ -2,3 +2,7 @@
 /OpenONG/backend/dist/
 /OpenONG/OpenONG_/nbproject/private/
 /OpenONG/ApiProdutos/ApiProdutos/target/
+OpenONG/backend/nbproject/project.properties
+OpenONG/backend/nbproject/private/private.xml
+OpenONG/backend/nbproject/private/private.properties
+OpenONG/backend/nbproject/ant-deploy.xml
