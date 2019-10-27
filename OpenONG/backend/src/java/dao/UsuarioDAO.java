@@ -5,24 +5,32 @@ import dao.interfaces.IUsuarioDAO;
 import java.io.Serializable;
 import java.util.List;
 import model.Usuario;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 public class UsuarioDAO extends BaseDao<Usuario, Long>
-        implements IUsuarioDAO, Serializable {    
+        implements IUsuarioDAO, Serializable {
 
     @Override
     public Usuario pesquisarPorId(Long id, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Usuario) session.get(Usuario.class, id);
     }
 
     @Override
     public List<Usuario> pesquisarTodos(Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = session.createQuery("from Usuario");
+        return consulta.list();
     }
 
     @Override
     public List<Usuario> pesquisarPorNome(String nome, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Criteria criteria = session.createCriteria(Usuario.class);
+        criteria.add(Restrictions.like("nome", "%" + nome + "%"));
+        List<Usuario> usuarios = criteria.list();
+
+        return usuarios;
     }
 }

@@ -38,6 +38,19 @@ public class DoacaoItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public DoacaoItem() {
+    }
+
+    public DoacaoItem(Integer linha, Doacao doacao, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
+        this.linha = linha;
+        this.doacao = doacao;
+        this.item = item;
+        this.valorUnitario = valorUnitario;
+        this.quantidade = quantidade;
+        this.vencimento = vencimento;
+        this.observacoes = observacoes;
+    }
+
     public Long getId() {
         return id;
     }

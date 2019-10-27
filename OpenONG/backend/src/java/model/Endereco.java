@@ -28,6 +28,21 @@ public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Endereco() {
+    }
+
+    public Endereco(String descricaoEndereco, String rua, String numRua, String complemento, String bairro, String cep, String cidade, String estado, String pontoDeReferencia) {
+        this.descricaoEndereco = descricaoEndereco;
+        this.rua = rua;
+        this.numRua = numRua;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pontoDeReferencia = pontoDeReferencia;
+    }
+    
     public String getDescricaoEndereco() {
         return descricaoEndereco;
     }

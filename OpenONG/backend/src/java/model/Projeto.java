@@ -54,6 +54,22 @@ public class Projeto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Projeto() {
+    }
+
+    public Projeto(String nome, ParceiroDeNegocio parceiroDeNegocio, boolean status, String observacoes, Date validoDe, Date validoAte, Date dataCriacao, Usuario usuarioCriacao) {
+        this.nome = nome;
+        this.parceiroDeNegocio = parceiroDeNegocio;
+        this.status = status;
+        this.observacoes = observacoes;
+        this.validoDe = validoDe;
+        this.validoAte = validoAte;
+        this.dataCriacao = dataCriacao;
+        this.usuarioCriacao = usuarioCriacao;
+    }
+
+    
+    
     public Long getId() {
         return id;
     }

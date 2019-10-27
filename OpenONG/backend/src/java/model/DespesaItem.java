@@ -38,6 +38,19 @@ public class DespesaItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public DespesaItem() {
+    }
+
+    public DespesaItem(Integer linha, Despesa despesa, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
+        this.linha = linha;
+        this.despesa = despesa;
+        this.item = item;
+        this.valorUnitario = valorUnitario;
+        this.quantidade = quantidade;
+        this.vencimento = vencimento;
+        this.observacoes = observacoes;
+    }
+    
     public Long getId() {
         return id;
     }

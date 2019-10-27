@@ -67,6 +67,34 @@ public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Usuario() {
+    }
+
+    public Usuario(Long id) {
+        this.id = id;
+    }
+    
+    public Usuario(String nome, String email, String telefone, String celular, String cpf, String senha, String observacoes) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.observacoes = observacoes;
+    }
+
+    public Usuario(String nome, String email, String telefone, String celular, String cpf, String senha, String observacoes, Endereco endereco) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.observacoes = observacoes;
+        this.endereco = endereco;
+    }
+    
     public Long getId() {
         return id;
     }

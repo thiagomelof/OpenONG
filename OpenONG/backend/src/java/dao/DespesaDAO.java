@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import model.Despesa;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class DespesaDAO extends BaseDao<Despesa, Long>
@@ -13,16 +14,21 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
 
     @Override
     public Despesa pesquisarPorId(Long id, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Despesa) session.get(Despesa.class, id);
     }
 
     @Override
     public List<Despesa> pesquisarTodos(Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = session.createQuery("from Despesa");
+        return consulta.list();
     }
 
     @Override
     public List<Despesa> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = session.createQuery("from Despesa d join fetch d.parceiroDeNegocio pn"
+                        + " where pn.nome like :pnHQL");
+        consulta.setParameter("pnHQL", "%" + nome + "%");
+        
+        return consulta.list();
     }
 }

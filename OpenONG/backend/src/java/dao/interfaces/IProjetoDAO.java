@@ -11,4 +11,6 @@ public interface IProjetoDAO extends IBaseDao<Projeto, Long> {
     List<Projeto> pesquisarTodos(Session session) throws HibernateException;
 
     List<Projeto> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException;
+    
+    List<Projeto> pesquisarPorNome(String nome, Session session) throws HibernateException;
 }

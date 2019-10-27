@@ -28,8 +28,6 @@ public class Despesa implements Serializable {
     private boolean status;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date lancamento;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date vencimento;
     @Lob
     private String observacoes;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -50,6 +48,19 @@ public class Despesa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Despesa() {
+    }
+
+    public Despesa(ParceiroDeNegocio parceiroDeNegocio, boolean status, Date lancamento, String observacoes, Projeto projeto, Date dataCriacao, Usuario usuarioCriacao) {
+        this.parceiroDeNegocio = parceiroDeNegocio;
+        this.status = status;
+        this.lancamento = lancamento;
+        this.observacoes = observacoes;
+        this.projeto = projeto;
+        this.dataCriacao = dataCriacao;
+        this.usuarioCriacao = usuarioCriacao;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -80,14 +91,6 @@ public class Despesa implements Serializable {
 
     public void setLancamento(Date lancamento) {
         this.lancamento = lancamento;
-    }
-
-    public Date getVencimento() {
-        return vencimento;
-    }
-
-    public void setVencimento(Date vencimento) {
-        this.vencimento = vencimento;
     }
 
     public String getObservacoes() {

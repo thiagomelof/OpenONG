@@ -59,6 +59,23 @@ public class ParceiroDeNegocio implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public ParceiroDeNegocio() {
+    }
+
+    public ParceiroDeNegocio(String nome, String email, String telefone, String celular, String cpf, String observacoes, String site, String cnpj, Endereco endereco, Date dataCriacao, Usuario usuarioCriacao) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.cpf = cpf;
+        this.observacoes = observacoes;
+        this.site = site;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.dataCriacao = dataCriacao;
+        this.usuarioCriacao = usuarioCriacao;
+    }    
+    
     public Long getId() {
         return id;
     }

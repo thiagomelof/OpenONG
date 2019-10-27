@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import model.DoacaoItem;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class DoacaoItemDAO extends BaseDao<DoacaoItem, Long>
@@ -13,11 +14,15 @@ public class DoacaoItemDAO extends BaseDao<DoacaoItem, Long>
 
     @Override
     public DoacaoItem pesquisarPorId(Long id, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (DoacaoItem) session.get(DoacaoItem.class, id);
     }
 
     @Override
     public List<DoacaoItem> pesquisarTodosPorDoacao(Long idDoacao, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query consulta = session.createQuery("from DoacaoItem di join fetch di.doacao d"
+                + " where d.id =:idHQL");
+        consulta.setParameter("idHQL", idDoacao);
+
+        return consulta.list();
     }
 }

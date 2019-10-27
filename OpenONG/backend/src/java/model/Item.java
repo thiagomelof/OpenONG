@@ -62,6 +62,20 @@ public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Item() {
+    }
+
+    public Item(String nome, Categoria categoria, TipoItem tipoItem, UnidadeDeMedida unidadeDeMedida, boolean status, String observacoes, Date dataCriacao, Usuario usuarioCriacao) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.tipoItem = tipoItem;
+        this.unidadeDeMedida = unidadeDeMedida;
+        this.status = status;
+        this.observacoes = observacoes;
+        this.dataCriacao = dataCriacao;
+        this.usuarioCriacao = usuarioCriacao;
+    }
+    
     public Long getId() {
         return id;
     }

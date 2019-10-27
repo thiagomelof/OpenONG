@@ -46,6 +46,17 @@ public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Categoria() {
+    }
+
+    public Categoria(String nome, boolean status, String observacoes, Date dataCriacao, Usuario usuarioCriacao) {
+        this.nome = nome;
+        this.status = status;
+        this.observacoes = observacoes;
+        this.dataCriacao = dataCriacao;
+        this.usuarioCriacao = usuarioCriacao;
+    }
+    
     public Long getId() {
         return id;
     }
