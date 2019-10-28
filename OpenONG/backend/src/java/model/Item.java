@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import constantes.TipoItem;
 import constantes.UnidadeDeMedida;
 import java.io.Serializable;
@@ -54,9 +55,11 @@ public class Item implements Serializable {
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<DoacaoItem> itemDoacao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<DespesaItem> itemDespesa;
 

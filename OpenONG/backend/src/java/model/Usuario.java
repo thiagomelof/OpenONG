@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ public class Usuario implements Serializable {
     private String celular;
     @Column(length = 30)
     private String cpf;
+    @JsonIgnore
     @Column(length = 30)
     private String senha;
     @Lob
@@ -35,35 +37,42 @@ public class Usuario implements Serializable {
     @Embedded
     private Endereco endereco;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<Categoria> usuarioCriacaoCategoria;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
     private List<Categoria> usuarioModificacaoCategoria;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<Item> usuarioCriacaoItem;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
     private List<Item> usuarioModificacaoItem;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<ParceiroDeNegocio> usuarioCriacaoParceiroDeNegocio;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
     private List<ParceiroDeNegocio> usuarioModificacaoParceiroDeNegocio;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<Despesa> usuarioCriacaoDespesa;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
     private List<Despesa> usuarioModificacaoDespesa;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<Doacao> usuarioCriacaoDoacao;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
     private List<Doacao> usuarioModificacaoDoacao;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
     private List<Projeto> usuarioCriacaoProjeto;
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
-    private List<Projeto> usuarioModificacaoProjeto;
+    private List<Projeto> usuarioModificacaoProjeto;    
 
     private static final long serialVersionUID = 1L;
 
@@ -73,7 +82,7 @@ public class Usuario implements Serializable {
     public Usuario(Long id) {
         this.id = id;
     }
-    
+
     public Usuario(String nome, String email, String telefone, String celular, String cpf, String senha, String observacoes) {
         this.nome = nome;
         this.email = email;
@@ -94,7 +103,7 @@ public class Usuario implements Serializable {
         this.observacoes = observacoes;
         this.endereco = endereco;
     }
-    
+
     public Long getId() {
         return id;
     }

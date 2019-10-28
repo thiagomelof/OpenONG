@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -50,10 +51,13 @@ public class ParceiroDeNegocio implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
+    @JsonIgnore
     @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
     private List<Despesa> despesas;
+    @JsonIgnore
     @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
     private List<Doacao> doacoes;
+    @JsonIgnore
     @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
     private List<Projeto> projetos;
 
@@ -74,8 +78,8 @@ public class ParceiroDeNegocio implements Serializable {
         this.endereco = endereco;
         this.dataCriacao = dataCriacao;
         this.usuarioCriacao = usuarioCriacao;
-    }    
-    
+    }
+
     public Long getId() {
         return id;
     }
@@ -83,7 +87,7 @@ public class ParceiroDeNegocio implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getNome() {
         return nome;
     }

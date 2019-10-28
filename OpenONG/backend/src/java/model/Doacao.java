@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,7 @@ public class Doacao implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
+    @JsonIgnore
     @OneToMany(mappedBy = "doacao", fetch = FetchType.LAZY)
     private List<DoacaoItem> itemDoacao;
 

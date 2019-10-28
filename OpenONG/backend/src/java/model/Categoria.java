@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Categoria implements Serializable {
     private Date dataCriacao;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataModificacao;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarioCriacao")
     private Usuario usuarioCriacao;
@@ -38,9 +40,11 @@ public class Categoria implements Serializable {
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<Item> itens;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<ProjetoCategoria> projetoCategoria;
 
@@ -56,7 +60,7 @@ public class Categoria implements Serializable {
         this.dataCriacao = dataCriacao;
         this.usuarioCriacao = usuarioCriacao;
     }
-    
+
     public Long getId() {
         return id;
     }
