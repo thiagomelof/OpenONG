@@ -5,10 +5,9 @@ import dao.interfaces.IProjetoCategoriaDAO;
 import java.io.Serializable;
 import java.util.List;
 import model.ProjetoCategoria;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 public class ProjetoCategoriaDAO extends BaseDao<ProjetoCategoria, Long>
         implements IProjetoCategoriaDAO, Serializable {
@@ -20,10 +19,10 @@ public class ProjetoCategoriaDAO extends BaseDao<ProjetoCategoria, Long>
 
     @Override
     public List<ProjetoCategoria> pesquisarTodosPorProjeto(Long idProjeto, Session session) throws HibernateException {
-        Criteria criteria = session.createCriteria(ProjetoCategoria.class);
-        criteria.add(Restrictions.like("despesa", "%" + idProjeto + "%"));
-        List<ProjetoCategoria> categoriasProjeto = criteria.list();
+        Query consulta = session.createQuery("from ProjetoCategoria pc join fetch pc.projeto p"
+                + " where p.id =:idHQL");
+        consulta.setParameter("idHQL", idProjeto);
 
-        return categoriasProjeto;
+        return consulta.list();
     }
 }

@@ -28,6 +28,15 @@ public class ProjetoCategoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public ProjetoCategoria() {
+    }
+
+    public ProjetoCategoria(Projeto projeto, Categoria categoria, Double percentual) {
+        this.projeto = projeto;
+        this.categoria = categoria;
+        this.percentual = percentual;
+    }
+
     public Long getId() {
         return id;
     }
