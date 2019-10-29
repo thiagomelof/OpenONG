@@ -1,9 +1,14 @@
 package server;
 
+import com.google.gson.Gson;
 import dao.ParceiroDeNegocioDAO;
 import dao.base.HibernateUtil;
 import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -45,7 +50,7 @@ public class ParceiroDeNegocioServer {
         Integer lastId = parceiroDeNegocioDAO.salvarOuAlterar(parceiroDeNegocio, session);
         session.close();
         return lastId;
-    }
+    }*/
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,5 +70,5 @@ public class ParceiroDeNegocioServer {
         Boolean res = new ParceiroDeNegocioDAO().salvarOuAlterar(parceiroDeNegocio, session);
         session.close();
         return res;
-    }*/
+    }
 }
