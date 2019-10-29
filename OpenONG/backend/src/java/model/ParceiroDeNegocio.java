@@ -128,7 +128,7 @@ public class ParceiroDeNegocio implements Serializable {
         this.cpf = cpf;
     }
 
-    public String getWebSite() {
+    public String getSite() {
         return site;
     }
 
