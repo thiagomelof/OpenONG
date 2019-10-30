@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.ParceiroDeNegocio;
+import model.list.ParceiroDeNegocioList;
 import org.hibernate.Session;
 
 @Path("/parceirodenegocio")
@@ -21,11 +22,11 @@ public class ParceiroDeNegocioServer {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ParceiroDeNegocio> getParceiroDeNegocios() {
+    public ParceiroDeNegocioList getParceiroDeNegocios() {
         Session session = HibernateUtil.abrirSessao();
         List<ParceiroDeNegocio> parceirosDeNegocio = new ParceiroDeNegocioDAO().pesquisarTodos(session);
         session.close();
-        return parceirosDeNegocio;
+        return new ParceiroDeNegocioList(parceirosDeNegocio);
     }
 
     @GET
@@ -38,6 +39,7 @@ public class ParceiroDeNegocioServer {
         session.close();
         return parceiroDeNegocio;
     }
+
     /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)
