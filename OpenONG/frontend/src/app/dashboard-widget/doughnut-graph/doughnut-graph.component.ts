@@ -37,7 +37,7 @@ export class DoughnutGraphComponent implements OnInit {
         new Chart('doughnut-graph-graph', {
             type: 'doughnut',
             data: {
-            labels: ['Data '],
+            labels: ['Material escolar '],
             datasets: [ {
                 data: [
                     this.randomNumber(),

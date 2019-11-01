@@ -21,28 +21,14 @@ export class BarGraphComponent implements OnInit {
       new Chart('dash-bar-graph', {
             type: 'bar',
             data: {
-                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago"],
+                labels: [ "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out"],
                 datasets: [
-                    {
-                        backgroundColor: 'rgba(92, 107, 192, .7)',
-                        borderColor: 'rgba(92, 107, 192, .7)',
-                        data: [70, 88, 77, 93, 82, 100, 70, 67,78,99],
-                        label: 'Dataset',
-                        fill: 'false'
-                    },
-                    {
-                        backgroundColor: 'rgba(38, 166, 154, .7)',
-                        borderColor: 'rgba(69, 39, 160, .7)',
-                        data: [60, 88, 70, 67, 27, 83, 78, 88,95,60],
-                        label: 'Dataset',
-                        fill: 'false'
-                    },
                     {
                         backgroundColor: 'rgba(102, 187, 106, .7)',
                         borderColor: 'rgba(255, 99, 132)',
-                        data: [75, 55, 55, 95, 66, 88, 70, 78,77,100],
-                        label: 'Dataset',
-                        fill: 'false'
+                        data: [10, 11, 13, 25, 4, 1, 5, 6,2,15],
+                        label: 'Doadores',
+                        fill: 'true'
                     }
                 ]
             },
@@ -63,7 +49,7 @@ export class BarGraphComponent implements OnInit {
                 },
                 title: {
                     display: true,
-                    text: 'GRÁFICO GERAL'
+                    text: 'NOVOS DOADORES'
                 }
             }
         })

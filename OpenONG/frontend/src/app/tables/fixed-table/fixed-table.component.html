@@ -8,13 +8,13 @@
                 <tr>
                     <td>
                         <button mat-mini-fab>
-							<mat-icon aria-label="Pesquisar">search</mat-icon>
-						</button>
+                            <mat-icon aria-label="Pesquisar">search</mat-icon>
+                        </button>
                     </td>
                     <td>
                         <button mat-mini-fab>
-							<mat-icon aria-label="Listar">list</mat-icon>
-						</button>
+                            <mat-icon aria-label="Listar">list</mat-icon>
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -40,6 +40,9 @@
                         </table>
                     </div>
                     <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
                         <table class="example-full-width" cellspacing="10">
                             <tr>
                                 <td>
@@ -47,13 +50,6 @@
                                         <input matInput [matDatepicker]="picker1" placeholder="Data de lançamento" [formControl]="dataLanc">
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="picker2" placeholder="Data de vencimento" [formControl]="dataVenc">
-                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker2></mat-datepicker>
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -95,15 +91,29 @@
                     </mat-table>
                 </div>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"></div>
                     <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="3">
+                            <tr>
+
+                                <td>
+                                    <mat-form-field>
+                                        <textarea matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="100" fxFlex.md="100" fxFlex.sm="100">
                         <form class="example-form">
                             <table class="example-full-width" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <mat-form-field>
-                                            <textarea matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                        </mat-form-field>
+                                        <button mat-mini-fab>
+                                            <mat-icon aria-label="Pesquisar">add</mat-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </table>
@@ -119,7 +129,7 @@
                 <table class="example-full-width" cellspacing="3">
                     <tr>
                         <td>
-                            <button mat-raised-button color="accent">Adicionar</button>
+                            <button mat-raised-button color="accent">Salvar</button>
                         </td>
                     </tr>
                 </table>

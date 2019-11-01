@@ -3,53 +3,46 @@
         <mat-toolbar class="input-header">
             <h1 class="mat-headline center-align">Doadores e Fornecedores</h1>
             <span class="spacer"></span>
-            <table class="example-full-width" cellspacing="3">
+            <table class="example-full-width" cellspacing="6">
                 <tr>
                     <td>
                         <button mat-mini-fab>
-                            <mat-icon aria-label="Pesquisar">search</mat-icon>
-                        </button>
+                                <mat-icon aria-label="Pesquisar">search</mat-icon>
+                            </button>
                     </td>
                     <td>
                         <button mat-mini-fab>
-                            <mat-icon aria-label="Listar">list</mat-icon>
-                        </button>
+                                <mat-icon aria-label="Listar">list</mat-icon>
+                            </button>
                     </td>
                 </tr>
             </table>
         </mat-toolbar>
+
         <div class="input-container">
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <mat-select placeholder="Tipo de parceiro" [formControl]="tipoDeParceiroControl" required>
-                                            <mat-option>--</mat-option>
-                                            <mat-option *ngFor="let pn of tiposDeParceiro" [value]="pn.value">
-                                                {{pn.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="tipoDeParceiroControl.hasError('required')">o Tipo de Parceiro é obrigatório</mat-error>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Código" [formControl]="codigoFormControl" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="codigoFormControl.hasError('required')">
-                                            O código é <strong>obrigatório</strong>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+            <form class="example-form">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <table class="example-full-width" cellspacing="6">
+                        <tr>
+                            <td>
+                                <mat-form-field>
+                                    <mat-select placeholder="Tipo de parceiro" [formControl]="tipoDeParceiroControl" required>
+                                        <mat-option>--</mat-option>
+                                        <mat-option *ngFor="let pn of tiposDeParceiro" [value]="pn.value">
+                                            {{pn.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="tipoDeParceiroControl.hasError('required')">o Tipo de Parceiro é obrigatório</mat-error>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
 
@@ -67,13 +60,9 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
                                     <mat-form-field class="example-full-width">
@@ -90,18 +79,20 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
+                    </div>
                 </div>
 
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
+
                                 <td>
                                     <mat-form-field class="example-full-width">
                                         <input matInput placeholder="CPF">
                                     </mat-form-field>
                                 </td>
+
                                 <td>
                                     <mat-form-field class="example-full-width">
                                         <input matInput placeholder="CNPJ">
@@ -109,13 +100,10 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
                                     <mat-form-field class="example-full-width">
@@ -129,11 +117,11 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
+                    </div>
                 </div>
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
                                     <mat-form-field class="example-full-width">
@@ -147,13 +135,9 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
                                     <mat-form-field class="example-full-width">
@@ -167,10 +151,10 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
+                    </div>
                 </div>
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
                         <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
@@ -188,36 +172,38 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"></div>
-                <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                    <form class="example-form">
-                        <table class="example-full-width" cellspacing="0">
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
                                     <mat-form-field>
                                         <textarea matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
                                     </mat-form-field>
                                 </td>
+
                             </tr>
                         </table>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <mat-toolbar class="input-header">
-            <form class="example-form">
-                <table class="example-full-width" cellspacing="3">
-                    <tr>
-                        <td>
-                            <button mat-raised-button color="accent">Adicionar</button>
-                        </td>
-                    </tr>
-                </table>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
+                            <tr>
+                                <td>
+                                    <button mat-raised-button color="accent">Adicionar</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table class="example-full-width" cellspacing="6">
+                            <tr>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </form>
-        </mat-toolbar>
+        </div>
     </div>
 </div>

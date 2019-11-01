@@ -18,26 +18,82 @@ export class ExampleDatabase {
 
   constructor() {
     // Fill up the database with 100 users.
-    for (let i = 0; i < 3; i++) { this.addDocumentLines(); }
+    // for (let i = 0; i < 3; i++) { this.addDocumentLines(); }
+    this.addDocumentLinesA();
+    this.addDocumentLinesB();
+    this.addDocumentLinesC();
   }
 
-  /** Adds a new user to the database. */
-  addDocumentLines() {
+  // addDocumentLines() {
+  //   const copiedData = this.data.slice();
+  //   copiedData.push(this.createDocumentLines());
+  //   this.dataChange.next(copiedData);
+  // }
+  // private createDocumentLines() {
+  //   const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))];
+
+  //   return {
+	// 		linha: (this.data.length + 1).toString(),
+	// 		item: name,
+	// 		valorUnitario: Math.round(Math.random() * 100).toString(),
+	// 		quantidade: QUANTIDADE[Math.round(Math.random() * (QUANTIDADE.length - 1))],
+	// 		observacoes: "teste"
+  //   };
+  // }
+
+
+  addDocumentLinesA() {
     const copiedData = this.data.slice();
-    copiedData.push(this.createDocumentLines());
+    copiedData.push(this.createDocumentLinesA());
     this.dataChange.next(copiedData);
   }
 
-  /** Builds and returns a new User. */
-  private createDocumentLines() {
-    const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))];
+  addDocumentLinesB() {
+    const copiedData = this.data.slice();
+    copiedData.push(this.createDocumentLinesB());
+    this.dataChange.next(copiedData);
+  }
+
+  addDocumentLinesC() {
+    const copiedData = this.data.slice();
+    copiedData.push(this.createDocumentLinesC());
+    this.dataChange.next(copiedData);
+  }
+
+
+  private createDocumentLinesA() {
+    const name = "Doação em dinheiro";
 
     return {
 			linha: (this.data.length + 1).toString(),
 			item: name,
-			valorUnitario: Math.round(Math.random() * 100).toString(),
-			quantidade: QUANTIDADE[Math.round(Math.random() * (QUANTIDADE.length - 1))],
-			observacoes: "teste"
+			valorUnitario: "250",
+			quantidade: "",
+			observacoes: "Depósito feito na conta BB"
+    };
+  }
+
+  private createDocumentLinesB() {
+    const name = "Feijão";
+
+    return {
+			linha: (this.data.length + 1).toString(),
+			item: name,
+			valorUnitario: "",
+			quantidade: "5",
+			observacoes: "Entregue na ONG"
+    };
+  }
+
+  private createDocumentLinesC() {
+    const name = "Arroz";
+
+    return {
+			linha: (this.data.length + 1).toString(),
+			item: name,
+			valorUnitario: "",
+			quantidade: "10",
+			observacoes: "Entregue na ONG"
     };
   }
 }
