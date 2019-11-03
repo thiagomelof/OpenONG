@@ -59,7 +59,7 @@ public class ParceiroDeNegocio implements Serializable {
     private List<Doacao> doacoes;
     @JsonIgnore
     @OneToMany(mappedBy = "parceiroDeNegocio", fetch = FetchType.LAZY)
-    private List<Projeto> projetos;
+    private List<Convenio> convenios;
 
     private static final long serialVersionUID = 1L;
 
@@ -208,12 +208,12 @@ public class ParceiroDeNegocio implements Serializable {
         this.doacoes = doacoes;
     }
 
-    public List<Projeto> getProjetos() {
-        return projetos;
+    public List<Convenio> getConvenios() {
+        return convenios;
     }
 
-    public void setProjetos(List<Projeto> projetos) {
-        this.projetos = projetos;
+    public void setConvenios(List<Convenio> convenios) {
+        this.convenios = convenios;
     }
 
 }

@@ -94,6 +94,6 @@ public class DespesaDAOTest {
     public static Despesa getDespesa() {
         Usuario teste = UsuarioDAOTest.novoUsuario();
         
-        return new Despesa(ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(), true, new Date(), "teste", ProjetoDAOTest.novoProjeto(), new Date(), teste);
+        return new Despesa(ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(), true, new Date(), "teste", ConvenioDAOTest.novoConvenio(), new Date(), teste);
     }
 }

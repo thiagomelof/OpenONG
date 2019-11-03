@@ -32,8 +32,8 @@ public class Despesa implements Serializable {
     @Lob
     private String observacoes;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "projeto")
-    private Projeto projeto;
+    @JoinColumn(name = "convenio")
+    private Convenio convenio;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCriacao;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -53,12 +53,12 @@ public class Despesa implements Serializable {
     public Despesa() {
     }
 
-    public Despesa(ParceiroDeNegocio parceiroDeNegocio, boolean status, Date lancamento, String observacoes, Projeto projeto, Date dataCriacao, Usuario usuarioCriacao) {
+    public Despesa(ParceiroDeNegocio parceiroDeNegocio, boolean status, Date lancamento, String observacoes, Convenio convenio, Date dataCriacao, Usuario usuarioCriacao) {
         this.parceiroDeNegocio = parceiroDeNegocio;
         this.status = status;
         this.lancamento = lancamento;
         this.observacoes = observacoes;
-        this.projeto = projeto;
+        this.convenio = convenio;
         this.dataCriacao = dataCriacao;
         this.usuarioCriacao = usuarioCriacao;
     }
@@ -103,12 +103,12 @@ public class Despesa implements Serializable {
         this.observacoes = observacoes;
     }
 
-    public Projeto getProjeto() {
-        return projeto;
+    public Convenio getConvenio() {
+        return convenio;
     }
 
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
     }
 
     public Date getDataCriacao() {

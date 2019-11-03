@@ -1,6 +1,6 @@
 package server;
 
-import dao.ProjetoDAO;
+import dao.ConvenioDAO;
 import dao.base.HibernateUtil;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -8,29 +8,29 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import model.Projeto;
+import model.Convenio;
 import org.hibernate.Session;
 
-@Path("/projeto")
-public class ProjetoServer {
+@Path("/convenio")
+public class ConvenioServer {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Projeto> getProjetos() {
+    public List<Convenio> getConvenios() {
         Session session = HibernateUtil.abrirSessao();
-        List<Projeto> projetos = new ProjetoDAO().pesquisarTodos(session);
+        List<Convenio> convenios = new ConvenioDAO().pesquisarTodos(session);
         session.close();
-        return projetos;
+        return convenios;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Projeto getProjeto(@PathParam("id") Long id) {
-        ProjetoDAO projetoDAO = new ProjetoDAO();
+    public Convenio getConvenio(@PathParam("id") Long id) {
+        ConvenioDAO convenioDAO = new ConvenioDAO();
         Session session = HibernateUtil.abrirSessao();
-        Projeto projeto = projetoDAO.pesquisarPorId(id, session);
+        Convenio convenio = convenioDAO.pesquisarPorId(id, session);
         session.close();
-        return projeto;
+        return convenio;
     }
     /*
     @POST
@@ -39,9 +39,9 @@ public class ProjetoServer {
     public Integer cadastrar(@FormParam("dado") String dadosJSON) {
         Gson gson = new Gson();
         Session session = HibernateUtil.abrirSessao();
-        Projeto projeto = gson.fromJson(dadosJSON, Projeto.class);
-        ProjetoDAO projetoDAO = new ProjetoDAO();
-        Integer lastId = projetoDAO.salvarOuAlterar(projeto, session);
+        Convenio convenio = gson.fromJson(dadosJSON, Convenio.class);
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        Integer lastId = convenioDAO.salvarOuAlterar(convenio, session);
         session.close();
         return lastId;
     }
@@ -53,15 +53,15 @@ public class ProjetoServer {
     public Boolean alterar(@PathParam("id") Long id, @FormParam("dado") String dadosJSON) {
         Session session = HibernateUtil.abrirSessao();
         Gson gson = new Gson();
-        Projeto projeto = gson.fromJson(dadosJSON, Projeto.class);
+        Convenio convenio = gson.fromJson(dadosJSON, Convenio.class);
 
-        if (id == projeto.getId() || projeto.getId() == null) {
-            projeto.setId(id);
+        if (id == convenio.getId() || convenio.getId() == null) {
+            convenio.setId(id);
         } else {
             return false;
         }
 
-        Boolean res = new ProjetoDAO().salvarOuAlterar(projeto, session);
+        Boolean res = new ConvenioDAO().salvarOuAlterar(convenio, session);
         session.close();
         return res;
     }*/

@@ -14,12 +14,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.ParceiroDeNegocio;
-import model.list.ParceiroDeNegocioList;
 import org.hibernate.Session;
 
 @Path("/parceirodenegocio")
 public class ParceiroDeNegocioServer {
-
+    
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ParceiroDeNegocio> getParceiroDeNegocios() {
+        Session session = HibernateUtil.abrirSessao();
+        List<ParceiroDeNegocio> parceirosDeNegocio = new ParceiroDeNegocioDAO().pesquisarTodos(session);
+        session.close();
+        return parceirosDeNegocio;
+    }
+    
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public ParceiroDeNegocioList getParceiroDeNegocios() {
@@ -28,7 +38,7 @@ public class ParceiroDeNegocioServer {
         session.close();
         return new ParceiroDeNegocioList(parceirosDeNegocio);
     }
-
+    */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -40,19 +50,19 @@ public class ParceiroDeNegocioServer {
         return parceiroDeNegocio;
     }
 
-    /*
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Integer cadastrar(@FormParam("dado") String dadosJSON) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean cadastrar(String body) {
         Gson gson = new Gson();
         Session session = HibernateUtil.abrirSessao();
-        ParceiroDeNegocio parceiroDeNegocio = gson.fromJson(dadosJSON, ParceiroDeNegocio.class);
+        ParceiroDeNegocio parceiroDeNegocio = gson.fromJson(body, ParceiroDeNegocio.class);
         ParceiroDeNegocioDAO parceiroDeNegocioDAO = new ParceiroDeNegocioDAO();
-        Integer lastId = parceiroDeNegocioDAO.salvarOuAlterar(parceiroDeNegocio, session);
+        boolean add = parceiroDeNegocioDAO.salvarOuAlterar(parceiroDeNegocio, session);
         session.close();
-        return lastId;
-    }*/
+        return add;
+    }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)

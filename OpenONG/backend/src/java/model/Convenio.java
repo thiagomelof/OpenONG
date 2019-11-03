@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
-public class Projeto implements Serializable {
+public class Convenio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,21 +47,21 @@ public class Projeto implements Serializable {
     @JoinColumn(name = "usuarioModificacao")
     private Usuario usuarioModificacao;
     @JsonIgnore
-    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "convenio", fetch = FetchType.LAZY)
     private List<Despesa> despesas;
     @JsonIgnore
-    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "convenio", fetch = FetchType.LAZY)
     private List<Doacao> doacoes;
     @JsonIgnore
-    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
-    private List<ProjetoCategoria> projetoCategoria;
+    @OneToMany(mappedBy = "convenio", fetch = FetchType.LAZY)
+    private List<ConvenioCategoria> convenioCategoria;
 
     private static final long serialVersionUID = 1L;
 
-    public Projeto() {
+    public Convenio() {
     }
 
-    public Projeto(String nome, ParceiroDeNegocio parceiroDeNegocio, boolean status, String observacoes, Date validoDe, Date validoAte, Date dataCriacao, Usuario usuarioCriacao) {
+    public Convenio(String nome, ParceiroDeNegocio parceiroDeNegocio, boolean status, String observacoes, Date validoDe, Date validoAte, Date dataCriacao, Usuario usuarioCriacao) {
         this.nome = nome;
         this.parceiroDeNegocio = parceiroDeNegocio;
         this.status = status;
@@ -178,12 +178,12 @@ public class Projeto implements Serializable {
         this.usuarioModificacao = usuarioModificacao;
     }
 
-    public List<ProjetoCategoria> getProjetoCategoria() {
-        return projetoCategoria;
+    public List<ConvenioCategoria> getConvenioCategoria() {
+        return convenioCategoria;
     }
 
-    public void setProjetoCategoria(List<ProjetoCategoria> projetoCategoria) {
-        this.projetoCategoria = projetoCategoria;
+    public void setConvenioCategoria(List<ConvenioCategoria> convenioCategoria) {
+        this.convenioCategoria = convenioCategoria;
     }
 
 }

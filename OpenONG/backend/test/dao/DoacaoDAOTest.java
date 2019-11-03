@@ -91,6 +91,6 @@ public class DoacaoDAOTest {
 
     public static Doacao getDoacao() {
         return new Doacao(ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(), true, new Date(), "teste",
-                ProjetoDAOTest.novoProjeto(), new Date(), UsuarioDAOTest.novoUsuario());
+                ConvenioDAOTest.novoConvenio(), new Date(), UsuarioDAOTest.novoUsuario());
     }
 }

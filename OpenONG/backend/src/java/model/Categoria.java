@@ -46,7 +46,7 @@ public class Categoria implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
-    private List<ProjetoCategoria> projetoCategoria;
+    private List<ConvenioCategoria> convenioCategoria;
 
     private static final long serialVersionUID = 1L;
 
@@ -133,12 +133,12 @@ public class Categoria implements Serializable {
         this.itens = itens;
     }
 
-    public List<ProjetoCategoria> getProjetoCategoria() {
-        return projetoCategoria;
+    public List<ConvenioCategoria> getConvenioCategoria() {
+        return convenioCategoria;
     }
 
-    public void setProjetoCategoria(List<ProjetoCategoria> projetoCategoria) {
-        this.projetoCategoria = projetoCategoria;
+    public void setConvenioCategoria(List<ConvenioCategoria> convenioCategoria) {
+        this.convenioCategoria = convenioCategoria;
     }
 
 }

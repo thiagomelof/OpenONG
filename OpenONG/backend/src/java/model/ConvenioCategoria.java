@@ -11,14 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ProjetoCategoria implements Serializable {
+public class ConvenioCategoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "projeto")
-    private Projeto projeto;
+    @JoinColumn(name = "convenio")
+    private Convenio convenio;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria")
     private Categoria categoria;
@@ -28,11 +28,11 @@ public class ProjetoCategoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public ProjetoCategoria() {
+    public ConvenioCategoria() {
     }
 
-    public ProjetoCategoria(Projeto projeto, Categoria categoria, Double percentual) {
-        this.projeto = projeto;
+    public ConvenioCategoria(Convenio convenio, Categoria categoria, Double percentual) {
+        this.convenio = convenio;
         this.categoria = categoria;
         this.percentual = percentual;
     }
@@ -45,12 +45,12 @@ public class ProjetoCategoria implements Serializable {
         this.id = id;
     }
 
-    public Projeto getProjeto() {
-        return projeto;
+    public Convenio getConvenio() {
+        return convenio;
     }
 
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
     }
 
     public Categoria getCategoria() {

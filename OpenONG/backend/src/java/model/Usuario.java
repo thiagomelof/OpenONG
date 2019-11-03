@@ -69,10 +69,10 @@ public class Usuario implements Serializable {
     private List<Doacao> usuarioModificacaoDoacao;
     @JsonIgnore
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
-    private List<Projeto> usuarioCriacaoProjeto;
+    private List<Convenio> usuarioCriacaoConvenio;
     @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
-    private List<Projeto> usuarioModificacaoProjeto;    
+    private List<Convenio> usuarioModificacaoConvenio;    
 
     private static final long serialVersionUID = 1L;
 
@@ -256,20 +256,20 @@ public class Usuario implements Serializable {
         this.usuarioModificacaoDoacao = usuarioModificacaoDoacao;
     }
 
-    public List<Projeto> getUsuarioCriacaoProjeto() {
-        return usuarioCriacaoProjeto;
+    public List<Convenio> getUsuarioCriacaoConvenio() {
+        return usuarioCriacaoConvenio;
     }
 
-    public void setUsuarioCriacaoProjeto(List<Projeto> usuarioCriacaoProjeto) {
-        this.usuarioCriacaoProjeto = usuarioCriacaoProjeto;
+    public void setUsuarioCriacaoConvenio(List<Convenio> usuarioCriacaoConvenio) {
+        this.usuarioCriacaoConvenio = usuarioCriacaoConvenio;
     }
 
-    public List<Projeto> getUsuarioModificacaoProjeto() {
-        return usuarioModificacaoProjeto;
+    public List<Convenio> getUsuarioModificacaoConvenio() {
+        return usuarioModificacaoConvenio;
     }
 
-    public void setUsuarioModificacaoProjeto(List<Projeto> usuarioModificacaoProjeto) {
-        this.usuarioModificacaoProjeto = usuarioModificacaoProjeto;
+    public void setUsuarioModificacaoConvenio(List<Convenio> usuarioModificacaoConvenio) {
+        this.usuarioModificacaoConvenio = usuarioModificacaoConvenio;
     }
 
 }
