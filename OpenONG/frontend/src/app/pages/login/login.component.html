@@ -7,18 +7,17 @@ background-size: cover; ">
 
         <div class=" mat-elevation-z4">
             <mat-card>
-                <mat-card-title>Open ONG - Gestão Financeira
-                </mat-card-title>
+                <mat-card-title>Open ONG - Gestão Financeira</mat-card-title>
                 <mat-card-content>
-                    <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="userForm" (ngSubmit)="login()">
+                    <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="userForm">
                         <mat-form-field class="full-width">
-                            <input type="email" id="email" class="input" placeholder="E-mail/Código de usuário" formControlName="email" required matInput>
+                            <input [(ngModel)]="usuario.email" type="email" id="email" class="input" placeholder="E-mail/Código de usuário" formControlName="email" required matInput>
                         </mat-form-field>
                         <div *ngIf="formErrors.email" class="help is-danger">
                             {{ formErrors.email }}
                         </div>
                         <mat-form-field class="full-width">
-                            <input type="password" id="password" class="input" placeholder="Senha" formControlName="password" required matInput>
+                            <input [(ngModel)]="usuario.senha" type="password" id="password" class="input" placeholder="Senha" formControlName="password" required matInput>
                         </mat-form-field>
                         <div *ngIf="formErrors.password" class="help is-danger">
                             {{ formErrors.password }}

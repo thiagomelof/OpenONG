@@ -1,27 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms'
+
 import { AppComponent } from './app.component';
 import { LazyLoadModule } from './lazy-load/lazy-load.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
-import { HomeComponent } from './home/home.component';
+import { ParceiroDeNegocioService } from './parceiro-de-negocio.service';
+import { LoginService } from './login.service';
+
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    
+    AppComponent
+
   ],
   imports: [
     BrowserModule,
     LazyLoadModule,
     CoreModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [ParceiroDeNegocioService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

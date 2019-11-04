@@ -7,11 +7,6 @@
                 <tr>
                     <td>
                         <button mat-mini-fab>
-                                <mat-icon aria-label="Pesquisar">search</mat-icon>
-                            </button>
-                    </td>
-                    <td>
-                        <button mat-mini-fab>
                                 <mat-icon aria-label="Listar">list</mat-icon>
                             </button>
                     </td>
@@ -20,7 +15,7 @@
         </mat-toolbar>
 
         <div class="input-container">
-            <form class="example-form">
+            <form method="post" #frm="ngForm" (ngSubmit)="criar(frm)">
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <table class="example-full-width" cellspacing="6">
                         <tr>
@@ -32,7 +27,8 @@
                                             {{pn.name}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error *ngIf="tipoDeParceiroControl.hasError('required')">o Tipo de Parceiro é obrigatório</mat-error>
+                                    <mat-error *ngIf="tipoDeParceiroControl.hasError('required')">o Tipo de Parceiro é obrigatório
+                                    </mat-error>
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -47,7 +43,8 @@
                                 <td>
 
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher">
+                                        <input type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" [(ngModel)]="parceiro.nome" required/>
+
                                         <mat-error *ngIf="nomeFormControl.hasError('required')">
                                             O nome é <strong>obrigatório</strong>
                                         </mat-error>
@@ -191,7 +188,7 @@
                         <table class="example-full-width" cellspacing="6">
                             <tr>
                                 <td>
-                                    <button mat-raised-button color="accent">Adicionar</button>
+                                    <button type="submit" mat-raised-button color="accent">Adicionar</button>
                                 </td>
                             </tr>
                         </table>
@@ -206,4 +203,9 @@
             </form>
         </div>
     </div>
+    <ul>
+        <li *ngFor="let p of parceiros">
+            {{p.id}} - {{p.nome}}
+        </li>
+    </ul>
 </div>

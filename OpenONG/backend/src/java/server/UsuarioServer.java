@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.Gson;
 import dao.UsuarioDAO;
 import dao.base.HibernateUtil;
 import java.util.List;
@@ -37,6 +38,7 @@ public class UsuarioServer {
         session.close();
         return usuario;
     }
+    
     /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)

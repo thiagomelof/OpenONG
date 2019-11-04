@@ -1,9 +1,13 @@
 package server;
 
+import com.google.gson.Gson;
 import dao.CategoriaDAO;
 import dao.base.HibernateUtil;
+import java.util.Date;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +17,7 @@ import org.hibernate.Session;
 
 @Path("/categoria")
 public class CategoriaServer {
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Categoria> getCategorias() {
@@ -32,6 +37,25 @@ public class CategoriaServer {
         session.close();
         return categoria;
     }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Categoria cadastrar(String body) {
+        Gson gson = new Gson();
+        Session session = HibernateUtil.abrirSessao();
+        Categoria categoria = gson.fromJson(body, Categoria.class);
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        categoria.setDataCriacao(new Date());
+        boolean retorno = categoriaDAO.salvarOuAlterar(categoria, session);
+        session.close();
+        if (retorno) {
+            return categoria;
+        }
+
+        return null;
+    }
+    
     /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)

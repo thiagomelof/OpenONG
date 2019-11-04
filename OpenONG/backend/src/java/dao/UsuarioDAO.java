@@ -33,4 +33,17 @@ public class UsuarioDAO extends BaseDao<Usuario, Long>
 
         return usuarios;
     }
+
+    //TODO: retorna um token
+    public Usuario Login(String email, String senha, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(Usuario.class);
+        criteria.add(Restrictions.like("email", email));
+        criteria.add(Restrictions.like("senha", senha));
+        List<Usuario> usuarios = criteria.list();
+
+        if (usuarios.size() == 1) {
+            return usuarios.get(0);
+        }
+        return new Usuario();
+    }
 }

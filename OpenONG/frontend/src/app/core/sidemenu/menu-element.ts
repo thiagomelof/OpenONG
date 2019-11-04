@@ -35,7 +35,7 @@ export const menus = [
             },
             {
                 'name': 'Categoria de item',
-                'link': '/auth/dashboard',
+                'link': '/auth/categoria',
                 'icon': 'list',
                 'chip': false,
                 'open': true,

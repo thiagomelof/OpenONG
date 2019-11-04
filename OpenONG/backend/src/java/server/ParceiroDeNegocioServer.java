@@ -18,8 +18,7 @@ import org.hibernate.Session;
 
 @Path("/parceirodenegocio")
 public class ParceiroDeNegocioServer {
-    
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ParceiroDeNegocio> getParceiroDeNegocios() {
@@ -28,7 +27,7 @@ public class ParceiroDeNegocioServer {
         session.close();
         return parceirosDeNegocio;
     }
-    
+
     /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +37,7 @@ public class ParceiroDeNegocioServer {
         session.close();
         return new ParceiroDeNegocioList(parceirosDeNegocio);
     }
-    */
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -50,37 +49,21 @@ public class ParceiroDeNegocioServer {
         return parceiroDeNegocio;
     }
 
-    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean cadastrar(String body) {
+    public ParceiroDeNegocio cadastrar(String body) {
         Gson gson = new Gson();
         Session session = HibernateUtil.abrirSessao();
         ParceiroDeNegocio parceiroDeNegocio = gson.fromJson(body, ParceiroDeNegocio.class);
         ParceiroDeNegocioDAO parceiroDeNegocioDAO = new ParceiroDeNegocioDAO();
-        boolean add = parceiroDeNegocioDAO.salvarOuAlterar(parceiroDeNegocio, session);
+        boolean retorno = parceiroDeNegocioDAO.salvarOuAlterar(parceiroDeNegocio, session);
         session.close();
-        return add;
-    }
 
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("{id}")
-    public Boolean alterar(@PathParam("id") Long id, @FormParam("dado") String dadosJSON) {
-        Session session = HibernateUtil.abrirSessao();
-        Gson gson = new Gson();
-        ParceiroDeNegocio parceiroDeNegocio = gson.fromJson(dadosJSON, ParceiroDeNegocio.class);
-
-        if (id == parceiroDeNegocio.getId() || parceiroDeNegocio.getId() == null) {
-            parceiroDeNegocio.setId(id);
-        } else {
-            return false;
+        if (retorno) {
+            return parceiroDeNegocio;
         }
 
-        Boolean res = new ParceiroDeNegocioDAO().salvarOuAlterar(parceiroDeNegocio, session);
-        session.close();
-        return res;
+        return null;
     }
 }
