@@ -11,6 +11,10 @@ export class CategoriaService {
 
   constructor(private http: HttpClient) { }
 
+  listar() {
+    return this.http.get<any[]>(this.categoriaUrl);
+  }
+
   add(categoria: Categoria) {
     return this.http.post(this.categoriaUrl, categoria);
   }

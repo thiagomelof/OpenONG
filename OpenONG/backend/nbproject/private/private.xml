@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Item.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/DoacaoItem.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/UsuarioServer.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/dao/base/BaseDao.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/LoginServer.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/ParceiroDeNegocioServer.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Convenio.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/ConvenioCategoria.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Usuario.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Doacao.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Despesa.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/CategoriaServer.java</file>
+        </group>
     </open-files>
 </project-private>

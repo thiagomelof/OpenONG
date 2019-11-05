@@ -14,7 +14,7 @@ import { LoginService } from '../login.service';
 
 export class AuthComponent implements OnInit {
   //TODO: verificar pq nao funcionou a autenticacao
-  mostrarTelas: boolean = false;
+  mostrarTelas: boolean = true;
   @Input() isVisible: boolean = true;
   visibility = 'shown';
  
@@ -33,7 +33,6 @@ export class AuthComponent implements OnInit {
 
     this.loginService.mostrarTelasEmitter.subscribe(
       mostrar => {
-        debugger;
         this.mostrarTelas = mostrar
         console.log(this.mostrarTelas)
        }
