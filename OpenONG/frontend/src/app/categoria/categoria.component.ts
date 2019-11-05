@@ -20,15 +20,16 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class CategoriaComponent implements OnInit {
   categoria = new Categoria();
+
   retorno: any;
 
   nomeFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
-  checkAtivo = true;
 
   constructor(private categoriaServer: CategoriaService) { }
 
   ngOnInit() {
+    this.categoria.status = true;
     this.retorno = {};
     this.categoria.usuarioCriacao = new Usuario();
   }

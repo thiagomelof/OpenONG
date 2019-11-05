@@ -24,7 +24,7 @@ export class ExampleDatabase {
         this.categorias = listCategorias;
 
         this.categorias.forEach(categoria => {
-          this.addUser(categoria);
+          this.addCategoria(categoria);
         });
 
       }
@@ -35,7 +35,7 @@ export class ExampleDatabase {
   }
 
   /** Adds a new user to the database. */
-  addUser(categoria: Categoria) {
+  addCategoria(categoria: Categoria) {
     const copiedData = this.data.slice();
     copiedData.push(categoria);
     this.dataChange.next(copiedData);
