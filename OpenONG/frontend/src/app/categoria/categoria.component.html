@@ -7,16 +7,32 @@
                 <tr>
                     <td>
                         <button mat-mini-fab>
-              <mat-icon aria-label="Listar" [routerLink]="['./list']">list</mat-icon>
-            </button>
+                            <mat-icon aria-label="Listar" [routerLink]="['./list']">list</mat-icon>
+                        </button>
                     </td>
                 </tr>
             </table>
         </mat-toolbar>
 
         <div class="input-container">
-            <form method="post" #frm="ngForm" (ngSubmit)="add()">
+            <form method="post" #frm="ngForm" (ngSubmit)="addOrUpdate()">
+                <div *ngIf="!isAddMode" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <table cellspacing="6">
+                        <tr>
+                            <td>
+                                <mat-form-field>
+                                    <input disabled [(ngModel)]="categoria.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-checkbox [(ngModel)]="categoria.status" id="status" name="status">Ativo
+                                </mat-checkbox>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+
                     <table cellspacing="6">
                         <tr>
                             <td>
@@ -32,9 +48,6 @@
                                     <textarea [(ngModel)]="categoria.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
                                 </mat-form-field>
                             </td>
-                            <td>
-                                <mat-checkbox [(ngModel)]="categoria.status" id="status" name="status">Ativo</mat-checkbox>
-                            </td>
                         </tr>
                     </table>
                 </div>
@@ -42,7 +55,7 @@
                     <table class="example-full-width" cellspacing="6">
                         <tr>
                             <td>
-                                <button type="submit" mat-raised-button color="accent">Salvar</button>
+                                <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
                             </td>
                         </tr>
                     </table>

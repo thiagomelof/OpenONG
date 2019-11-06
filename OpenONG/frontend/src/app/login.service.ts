@@ -18,7 +18,6 @@ export class LoginService {
     this.http.post<Usuario>(`${this.loginUrl}`, usuario).subscribe(user => {
       usuario = user
       console.log(usuario);
-      debugger;
       if (usuario.nome != null) {
         console.log(usuario.nome);
         this.usuarioAutenticado = true;
@@ -29,10 +28,6 @@ export class LoginService {
         this.mostrarTelasEmitter.emit(false);
         this.usuarioAutenticado = false;
       }
-
     });
-    //TODO: Corrigir subscribe retorno usuario
-
-
   }
 }

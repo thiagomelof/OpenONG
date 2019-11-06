@@ -16,6 +16,7 @@ export const appRoutes: Routes = [{
         { path: 'guarded-routes', loadChildren: '../guarded-routes/guarded-routes.module#GuardedRoutesModule' },
         // { path: 'editor', loadChildren: '../editor/editor.module#EditorModule' }, 
         { path: 'scrumboard', loadChildren: '../scrumboard/scrumboard.module#ScrumboardModule' },
-        { path: 'categoria', loadChildren: '../categoria/categoria.module#CategoriaModule' }
+        { path: 'categoria', loadChildren: '../categoria/categoria.module#CategoriaModule' },
+        { path: 'categoria/:id', loadChildren: '../categoria/categoria.module#CategoriaModule' }
     ]
 }];

@@ -18,4 +18,8 @@ export class CategoriaService {
   add(categoria: Categoria) {
     return this.http.post(this.categoriaUrl, categoria);
   }
+
+  getCategoria(id: number) {
+    return this.http.get<any>(this.categoriaUrl + "/" + id);
+  }
 }

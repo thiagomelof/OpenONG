@@ -11,18 +11,18 @@ export class Categoria {
     usuarioCriacao: Usuario;
     usuarioModificacao: Usuario;
 
-    constructor(id?: number, nome?: string, observacoes?: string, 
+    constructor(id?: number, nome?: string, observacoes?: string,
         status?: boolean, dataCriacao?: Date, dataModificacao?: Date,
         usuarioCriacao?: Usuario, usuarioModificacao?: Usuario
     ) {
-this.id = id;
-this.nome = nome;
-this.status = status;
-this.observacoes = observacoes;
-this.dataCriacao = dataCriacao;
-this.dataModificacao = dataModificacao;
-this.usuarioCriacao = usuarioCriacao;
-this.usuarioModificacao = usuarioModificacao;
+        this.id = id;
+        this.nome = nome;
+        this.status = status;
+        this.observacoes = observacoes;
+        this.dataCriacao = dataCriacao;
+        this.dataModificacao = dataModificacao;
+        this.usuarioCriacao = usuarioCriacao;
+        this.usuarioModificacao = usuarioModificacao;
 
     }
 }
