@@ -11,17 +11,20 @@ public abstract class BaseDao<T, ID> implements IBaseDao<T, ID> {
 
     @Override
     public Boolean salvarOuAlterar(T entidade, Session session) throws HibernateException {
-        transacao = session.beginTransaction();
-        session.saveOrUpdate(entidade);
-        transacao.commit();
+        try {
+            transacao = session.beginTransaction();
+            session.saveOrUpdate(entidade);
+            transacao.commit();
 
-        if (transacao.getLocalStatus() == LocalStatus.COMMITTED) {
-            return true;
+            if (transacao.getLocalStatus() == LocalStatus.COMMITTED) {
+                return true;
+            }
+            if (transacao.getLocalStatus() == LocalStatus.ROLLED_BACK || transacao.getLocalStatus() == LocalStatus.FAILED_COMMIT) {
+                return false;
+            }
+        } catch (Exception e) {
+            Object t = e;
         }
-        if (transacao.getLocalStatus() == LocalStatus.ROLLED_BACK || transacao.getLocalStatus() == LocalStatus.FAILED_COMMIT) {
-            return false;
-        }
-
         return false;
     }
 

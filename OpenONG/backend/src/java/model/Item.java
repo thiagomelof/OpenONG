@@ -2,7 +2,6 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import constantes.TipoItem;
-import constantes.UnidadeDeMedida;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +18,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Item implements Serializable {
@@ -36,11 +36,10 @@ public class Item implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column
     private TipoItem tipoItem;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private UnidadeDeMedida unidadeDeMedida;
 
     private boolean status;
+    @Transient
+    private String strStatus;
     @Lob
     private String observacoes;
 
@@ -68,11 +67,10 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(String nome, Categoria categoria, TipoItem tipoItem, UnidadeDeMedida unidadeDeMedida, boolean status, String observacoes, Date dataCriacao, Usuario usuarioCriacao) {
+    public Item(String nome, Categoria categoria, TipoItem tipoItem, boolean status, String observacoes, Date dataCriacao, Usuario usuarioCriacao) {
         this.nome = nome;
         this.categoria = categoria;
         this.tipoItem = tipoItem;
-        this.unidadeDeMedida = unidadeDeMedida;
         this.status = status;
         this.observacoes = observacoes;
         this.dataCriacao = dataCriacao;
@@ -109,14 +107,6 @@ public class Item implements Serializable {
 
     public void setTipoItem(TipoItem tipoItem) {
         this.tipoItem = tipoItem;
-    }
-
-    public UnidadeDeMedida getUnidadeDeMedida() {
-        return unidadeDeMedida;
-    }
-
-    public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
-        this.unidadeDeMedida = unidadeDeMedida;
     }
 
     public boolean isStatus() {
@@ -181,6 +171,20 @@ public class Item implements Serializable {
 
     public void setItemDespesa(List<DespesaItem> itemDespesa) {
         this.itemDespesa = itemDespesa;
+    }    
+    
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Inativo";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Inativo";
     }
 
 }

@@ -1,38 +1,41 @@
 package server;
 
-import dao.ItemDAO;
-import dao.base.HibernateUtil;
+import bo.ItemBO;
+import com.google.gson.Gson;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.Item;
-import org.hibernate.Session;
 
-@Path("/Item")
+@Path("/item")
 public class ItemServer {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Item> getItems() {
-        Session session = HibernateUtil.abrirSessao();
-        List<Item> itens = new ItemDAO().pesquisarTodos(session);
-        session.close();
-        return itens;
+    public List<Item> getItens() {
+        return new ItemBO().getItens();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Item getItem(@PathParam("id") Long id) {
-        ItemDAO itemDAO = new ItemDAO();
-        Session session = HibernateUtil.abrirSessao();
-        Item item = itemDAO.pesquisarPorId(id, session);
-        session.close();
-        return item;
+        return new ItemBO().getItem(id);
     }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Item cadastrar(String body) {
+        Item item = new Gson().fromJson(body, Item.class);
+        return new ItemBO().cadastrar(item);
+    }
+
     /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)

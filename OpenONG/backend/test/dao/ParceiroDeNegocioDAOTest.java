@@ -1,5 +1,6 @@
 package dao;
 
+import constantes.TipoParceiro;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ParceiroDeNegocioDAOTest {
         session.close();
         assertNotNull(parceiroDeNegocioPesquisado);
     }
+
     /*
     @Test
     public void excluir() {
@@ -91,7 +93,7 @@ public class ParceiroDeNegocioDAOTest {
     }
 
     public static ParceiroDeNegocio getParceiroDeNegocio() {
-        return new ParceiroDeNegocio("Thiago Melo", "thiago.melo93@hotmail.com", "(48)99999999", "(48)996501990", "033.88.890-05", "", "", "100.111.1213",
+        return new ParceiroDeNegocio("Thiago Melo", true,TipoParceiro.F, "thiago.melo93@hotmail.com", "(48)99999999", "(48)996501990", "033.88.890-05", "", "", "100.111.1213",
                 getEndereco(), new Date(), UsuarioDAOTest.novoUsuario());
     }
 

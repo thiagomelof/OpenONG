@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Categoria implements Serializable {
@@ -26,6 +27,8 @@ public class Categoria implements Serializable {
     private String nome;
     @Column
     private boolean status;
+    @Transient
+    private String strStatus;
     @Lob
     private String observacoes;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -51,6 +54,9 @@ public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Categoria() {
+        this.nome = "";
+        this.status = false;
+        this.observacoes = "";
     }
 
     public Categoria(String nome, boolean status, String observacoes, Date dataCriacao, Usuario usuarioCriacao) {
@@ -59,6 +65,7 @@ public class Categoria implements Serializable {
         this.observacoes = observacoes;
         this.dataCriacao = dataCriacao;
         this.usuarioCriacao = usuarioCriacao;
+        this.usuarioModificacao = new Usuario();
     }
 
     public Long getId() {
@@ -141,4 +148,17 @@ public class Categoria implements Serializable {
         this.convenioCategoria = convenioCategoria;
     }
 
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Inativo";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Inativo";
+    }
 }

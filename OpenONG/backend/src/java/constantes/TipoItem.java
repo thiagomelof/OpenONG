@@ -1,9 +1,9 @@
 package constantes;
 
 public enum TipoItem {
- P, /*Produto*/
+ D, /*Dinheiro*/
  S, /*Serviço*/
- D  /*Doação em dinheiro*/
+ I /*Item*/
 }
 
 

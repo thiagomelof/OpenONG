@@ -5,7 +5,6 @@ import dao.interfaces.ICategoriaDAO;
 import java.io.Serializable;
 import java.util.List;
 import model.Categoria;
-import model.Usuario;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -25,10 +24,17 @@ public class CategoriaDAO extends BaseDao<Categoria, Long>
         Query consulta = session.createQuery("from Categoria");
         return consulta.list();
     }
+    
+    public List<Categoria> pesquisarTodosAtivos(Session session) throws HibernateException {        
+        Query consulta = session.createQuery("from Categoria where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
 
     @Override
     public List<Categoria> pesquisarPorNome(String nome, Session session) throws HibernateException {
-        Criteria criteria = session.createCriteria(Usuario.class);
+        Criteria criteria = session.createCriteria(Categoria.class);
         criteria.add(Restrictions.like("nome", "%" + nome + "%"));
         List<Categoria> categorias = criteria.list();
 

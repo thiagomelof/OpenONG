@@ -1,7 +1,6 @@
 package dao;
 
 import constantes.TipoItem;
-import constantes.UnidadeDeMedida;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 public class ItemDAOTest {
@@ -96,6 +94,6 @@ public class ItemDAOTest {
     private static Item getItem() {
         Usuario usuario = UsuarioDAOTest.novoUsuario();
         Categoria categoria = CategoriaDAOTest.novaCategoria();
-        return new Item("Arroz Branco", categoria, TipoItem.P, UnidadeDeMedida.KG, true, "teste", new Date(), usuario);
+        return new Item("Arroz Branco", categoria, TipoItem.D, true, "teste", new Date(), usuario);
     }
 }

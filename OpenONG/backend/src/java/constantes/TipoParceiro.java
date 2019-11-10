@@ -1,7 +1,7 @@
 package constantes;
 
 public enum TipoParceiro {
-    C, /*Cliente*/
     D, /*Doador*/
-    F /*Fornecedor*/
+    F, /*Fornecedor*/
+    B /*Beneficiado*/
 }

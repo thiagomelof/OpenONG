@@ -1,12 +1,15 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import constantes.TipoParceiro;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +19,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class ParceiroDeNegocio implements Serializable {
@@ -25,6 +29,10 @@ public class ParceiroDeNegocio implements Serializable {
     private Long id;
     @Column(length = 100, nullable = false)
     private String nome;
+    @Column
+    private boolean status;
+    @Transient
+    private String strStatus;
     @Column(length = 100)
     private String email;
     @Column(length = 30)
@@ -33,6 +41,11 @@ public class ParceiroDeNegocio implements Serializable {
     private String celular;
     @Column(length = 30)
     private String cpf;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private TipoParceiro tipoParceiro;
+    @Transient
+    private String strTipoParceiro;
     @Lob
     private String observacoes;
     @Column(length = 200)
@@ -66,9 +79,10 @@ public class ParceiroDeNegocio implements Serializable {
     public ParceiroDeNegocio() {
     }
 
-    public ParceiroDeNegocio(String nome, String email, String telefone, String celular, String cpf, String observacoes, String site, String cnpj, Endereco endereco, Date dataCriacao, Usuario usuarioCriacao) {
+    public ParceiroDeNegocio(String nome, boolean status, TipoParceiro tipoParceiro, String email, String telefone, String celular, String cpf, String observacoes, String site, String cnpj, Endereco endereco, Date dataCriacao, Usuario usuarioCriacao) {
         this.nome = nome;
         this.email = email;
+        this.status = status;
         this.telefone = telefone;
         this.celular = celular;
         this.cpf = cpf;
@@ -78,6 +92,7 @@ public class ParceiroDeNegocio implements Serializable {
         this.endereco = endereco;
         this.dataCriacao = dataCriacao;
         this.usuarioCriacao = usuarioCriacao;
+        this.tipoParceiro = tipoParceiro;
     }
 
     public Long getId() {
@@ -150,6 +165,60 @@ public class ParceiroDeNegocio implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Inativo";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Inativo";
+    }
+
+    public TipoParceiro getTipoParceiro() {
+        return tipoParceiro;
+    }
+
+    public void setTipoParceiro(TipoParceiro tipoParceiro) {
+        this.tipoParceiro = tipoParceiro;
+    }
+
+    public void setStrTipoParceiro(String strTipoParceiro) {
+        if (tipoParceiro == TipoParceiro.B) {
+            this.strTipoParceiro = "Beneficiado";
+        } else if (tipoParceiro == TipoParceiro.D) {
+            this.strTipoParceiro = "Doador";
+        } else if (tipoParceiro == TipoParceiro.F) {
+            this.strTipoParceiro = "Fornecedor";
+        }
+
+        this.strStatus = "";
+    }
+
+    public String getStrTipoParceiro(String strTipoParceiro) {
+        if (tipoParceiro == TipoParceiro.B) {
+            return "Beneficiado";
+        } else if (tipoParceiro == TipoParceiro.D) {
+            return "Doador";
+        } else if (tipoParceiro == TipoParceiro.F) {
+            return "Fornecedor";
+        }
+
+        return "";
     }
 
     public Endereco getEndereco() {
