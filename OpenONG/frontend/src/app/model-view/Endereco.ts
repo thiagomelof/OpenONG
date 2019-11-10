@@ -10,4 +10,15 @@ export class Endereco {
     estado: string;
     pontoDeReferencia: string;
 
+    constructor() {
+        this.descricaoEndereco = "";
+        this.rua = "";
+        this.numRua = "";
+        this.complemento = "";
+        this.bairro = "";
+        this.cep = "";
+        this.cidade = "";
+        this.estado = "";
+        this.pontoDeReferencia = "";
+    }
 }

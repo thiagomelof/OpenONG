@@ -3,55 +3,55 @@ import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 
-import { Categoria } from '../../model-view/Categoria';
-import { CategoriaService } from '../../services/categoria.service';
+import { Item } from '../../model-view/Item';
+import { ItemService } from '../../services/item.service';
 
-export class CategoriaDao {
-  categorias: Array<Categoria>;
-  categoria: Categoria;
+export class ItemDao {
+  itens: Array<Item>;
+  item: Item;
 
-  dataChange: BehaviorSubject<Categoria[]> = new BehaviorSubject<Categoria[]>([]);
+  dataChange: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
 
-  get data(): Categoria[] { return this.dataChange.value; }
+  get data(): Item[] { return this.dataChange.value; }
 
-  constructor(private categoriaService: CategoriaService) {
-    categoriaService.listar().subscribe(
-      listCategorias => {
-        this.categorias = listCategorias;
+  constructor(private itemService: ItemService) {
+    itemService.listar().subscribe(
+      listItems => {
+        this.itens = listItems;
 
-        this.categorias.forEach(categoria => {
-          this.addCategoria(categoria);
+        this.itens.forEach(item => {
+          this.addItem(item);
         });
       }
     );
   }
 
-  addCategoria(categoria: Categoria) {
+  addItem(item: Item) {
     const copiedData = this.data.slice();
-    copiedData.push(categoria);
+    copiedData.push(item);
     this.dataChange.next(copiedData);
   }
 }
 
-export class CategoriaDataSource extends DataSource<any> {
+export class ItemDataSource extends DataSource<any> {
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
 
-  listaFiltrada: Categoria[] = [];
-  listaRenderizada: Categoria[] = [];
+  listaFiltrada: Item[] = [];
+  listaRenderizada: Item[] = [];
 
-  constructor(private _categoriaDao: CategoriaDao, private _paginator: MatPaginator, private _sort: MatSort) {
+  constructor(private _itemDao: ItemDao, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
     // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<Categoria[]> {
+  connect(): Observable<Item[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
-      this._categoriaDao.dataChange,
+      this._itemDao.dataChange,
       this._sort.sortChange,
       this._filterChange,
       this._paginator.page,
@@ -59,8 +59,8 @@ export class CategoriaDataSource extends DataSource<any> {
 
     return observableMerge(...displayDataChanges).pipe(map(() => {
       // Filter data
-      this.listaFiltrada = this._categoriaDao.data.slice().filter((item: Categoria) => {
-        let searchStr = (item.nome + item.observacoes + item.id + item.strStatus).toLowerCase();
+      this.listaFiltrada = this._itemDao.data.slice().filter((item: Item) => {
+        let searchStr = (item.nome + item.categoria.nome + item.id + item.strStatus).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) != -1;
       });
 
@@ -77,7 +77,7 @@ export class CategoriaDataSource extends DataSource<any> {
   disconnect() { }
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: Categoria[]): Categoria[] {
+  sortData(data: Item[]): Item[] {
     if (!this._sort.active || this._sort.direction == '') { return data; }
 
     return data.sort((a, b) => {
@@ -87,7 +87,7 @@ export class CategoriaDataSource extends DataSource<any> {
       switch (this._sort.active) {
         case 'ID': [propertyA, propertyB] = [a.id, b.id]; break;
         case 'Nome': [propertyA, propertyB] = [a.nome, b.nome]; break;
-        case 'Observações': [propertyA, propertyB] = [a.observacoes, b.observacoes]; break;
+        case 'Categoria': [propertyA, propertyB] = [a.categoria.nome, b.categoria.nome]; break;
         case 'Status': [propertyA, propertyB] = [a.strStatus, a.strStatus]; break;
       }
 

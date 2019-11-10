@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { LoginService } from '../login.service';
+import { LoginService } from '../services/login.service';
 
 
 

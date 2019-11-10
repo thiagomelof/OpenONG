@@ -14,7 +14,7 @@ export const menus = [
         'sub': [
             {
                 'name': 'Doadores e Fornecedores',
-                'link': '/auth/material-widgets/input',
+                'link': '/auth/parceiro',
                 'icon': 'account_box',
                 'chip': false,
                 'open': true,
@@ -28,7 +28,7 @@ export const menus = [
             },
             {
                 'name': 'Itens e serviços',
-                'link': '/auth/dashboard',
+                'link': '/auth/item',
                 'icon': 'list',
                 'chip': false,
                 'open': true,

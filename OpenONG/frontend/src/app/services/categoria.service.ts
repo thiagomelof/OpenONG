@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Categoria } from './model-view/Categoria';
+import { Categoria } from '../model-view/Categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class CategoriaService {
 
   listar() {
     return this.http.get<any[]>(this.categoriaUrl);
+  }
+
+  listarAtivas() {
+    return this.http.get<any[]>(this.categoriaUrl + "/ativo");
   }
 
   add(categoria: Categoria) {

@@ -17,6 +17,11 @@ export const appRoutes: Routes = [{
         // { path: 'editor', loadChildren: '../editor/editor.module#EditorModule' }, 
         { path: 'scrumboard', loadChildren: '../scrumboard/scrumboard.module#ScrumboardModule' },
         { path: 'categoria', loadChildren: '../categoria/categoria.module#CategoriaModule' },
-        { path: 'categoria/:id', loadChildren: '../categoria/categoria.module#CategoriaModule' }
+        { path: 'categoria/:id', loadChildren: '../categoria/categoria.module#CategoriaModule' },
+        { path: 'item', loadChildren: '../item-servico/item-servico.module#ItemServicoModule' },
+        { path: 'item/:id', loadChildren: '../item-servico/item-servico.module#ItemServicoModule' },
+
+        { path: 'parceiro', loadChildren: '../parceiro-de-negocio/parceiro-de-negocio.module#ParceiroDeNegocioModule' },
+        { path: 'parceiro/:id', loadChildren: '../parceiro-de-negocio/parceiro-de-negocio.module#ParceiroDeNegocioModule' }
     ]
 }];

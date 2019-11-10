@@ -16,10 +16,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
-import { CategoriaComponent } from './categoria.component';
+import { ParceiroDeNegocioComponent } from './parceiro-de-negocio.component';
 import { ListComponent } from './list/list.component';
 const appRoutes: Routes = [
-  { path: '', component: CategoriaComponent },
+  { path: '', component: ParceiroDeNegocioComponent },
   { path: 'list', component: ListComponent, data: { animation: 'list' } }
 ]
 
@@ -54,6 +54,8 @@ const appRoutes: Routes = [
     SharedModule
   ],
   exports: [],
-  declarations: [CategoriaComponent, ListComponent]
+  declarations: [ParceiroDeNegocioComponent, ListComponent]
 })
-export class CategoriaModule { }
+export class ParceiroDeNegocioModule {
+
+}

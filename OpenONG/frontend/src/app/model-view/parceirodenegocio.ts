@@ -1,3 +1,4 @@
+import { TipoParceiro } from './const/tipoparceiro';
 import { Usuario } from "./usuario";
 import { Endereco } from "./Endereco";
 
@@ -5,6 +6,10 @@ export class ParceiroDeNegocio {
     id: number;
     nome: string;
     email: string;
+    status: boolean;
+    strStatus: string;
+    tipoParceiro: TipoParceiro;
+    strTipoParceiro: string;
     telefone: string;
     celular: string;
     cpf: string;
@@ -16,4 +21,9 @@ export class ParceiroDeNegocio {
     dataModificacao: Date;
     usuarioCriacao: Usuario;
     usuarioModificacao: Usuario;
+
+    constructor() {
+        this.site ="";
+        this.nome ="";
+    }
 }

@@ -12,6 +12,7 @@ export class Usuario {
     endereco: Endereco;
 
     constructor() {
+        this.nome = "";
         this.endereco = new Endereco();
     }
 }
