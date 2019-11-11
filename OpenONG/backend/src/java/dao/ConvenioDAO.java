@@ -24,6 +24,13 @@ public class ConvenioDAO extends BaseDao<Convenio, Long>
         Query consulta = session.createQuery("from Convenio");
         return consulta.list();
     }
+    
+    public List<Convenio> pesquisarTodosAtivos(Session session) throws HibernateException {        
+        Query consulta = session.createQuery("from Convenio where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
 
     @Override
     public List<Convenio> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException {

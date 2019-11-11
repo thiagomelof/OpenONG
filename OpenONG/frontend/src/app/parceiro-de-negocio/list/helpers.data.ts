@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 
-import { ParceiroDeNegocio } from '../../model-view/ParceiroDeNegocio';
+import { ParceiroDeNegocio } from '../../model-view/parceiro-de-negocio';
 import { ParceiroDeNegocioService } from '../../services/parceiro-de-negocio.service';
 
 export class ParceiroDeNegocioDao {

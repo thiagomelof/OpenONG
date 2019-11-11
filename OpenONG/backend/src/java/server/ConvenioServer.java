@@ -1,68 +1,46 @@
 package server;
 
-import dao.ConvenioDAO;
-import dao.base.HibernateUtil;
+import bo.ConvenioBO;
+import com.google.gson.Gson;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.Convenio;
-import org.hibernate.Session;
 
 @Path("/convenio")
 public class ConvenioServer {
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Convenio> getConvenios() {
-        Session session = HibernateUtil.abrirSessao();
-        List<Convenio> convenios = new ConvenioDAO().pesquisarTodos(session);
-        session.close();
-        return convenios;
+        return new ConvenioBO().getConvenios();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/ativo")
+    public List<Convenio> getConveniosAtivas() {
+        return new ConvenioBO().getConveniosAtivos();
     }
 
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Convenio getConvenio(@PathParam("id") Long id) {
-        ConvenioDAO convenioDAO = new ConvenioDAO();
-        Session session = HibernateUtil.abrirSessao();
-        Convenio convenio = convenioDAO.pesquisarPorId(id, session);
-        session.close();
-        return convenio;
+        return new ConvenioBO().getConvenio(id);
     }
-    /*
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Integer cadastrar(@FormParam("dado") String dadosJSON) {
-        Gson gson = new Gson();
-        Session session = HibernateUtil.abrirSessao();
-        Convenio convenio = gson.fromJson(dadosJSON, Convenio.class);
-        ConvenioDAO convenioDAO = new ConvenioDAO();
-        Integer lastId = convenioDAO.salvarOuAlterar(convenio, session);
-        session.close();
-        return lastId;
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Convenio cadastrar(String body) {
+        Convenio convenio = new Gson().fromJson(body, Convenio.class);
+        return new ConvenioBO().cadastrar(convenio);
     }
-
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("{id}")
-    public Boolean alterar(@PathParam("id") Long id, @FormParam("dado") String dadosJSON) {
-        Session session = HibernateUtil.abrirSessao();
-        Gson gson = new Gson();
-        Convenio convenio = gson.fromJson(dadosJSON, Convenio.class);
-
-        if (id == convenio.getId() || convenio.getId() == null) {
-            convenio.setId(id);
-        } else {
-            return false;
-        }
-
-        Boolean res = new ConvenioDAO().salvarOuAlterar(convenio, session);
-        session.close();
-        return res;
-    }*/
 }

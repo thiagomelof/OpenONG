@@ -1,6 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Convenio implements Serializable {
@@ -27,8 +30,10 @@ public class Convenio implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parceiroDeNegocio")
     private ParceiroDeNegocio parceiroDeNegocio;
-
+    @Column
     private boolean status;
+    @Transient
+    private String strStatus;
     @Lob
     private String observacoes;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -125,6 +130,20 @@ public class Convenio implements Serializable {
     public Date getValidoAte() {
         return validoAte;
     }
+
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Cancelado";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Cancelado";
+    }    
 
     public void setValidoAte(Date validoAte) {
         this.validoAte = validoAte;

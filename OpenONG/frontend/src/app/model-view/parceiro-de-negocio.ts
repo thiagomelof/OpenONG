@@ -23,7 +23,7 @@ export class ParceiroDeNegocio {
     usuarioModificacao: Usuario;
 
     constructor() {
-        this.site ="";
-        this.nome ="";
+        this.nome = "";
+        this.endereco = new Endereco();
     }
 }

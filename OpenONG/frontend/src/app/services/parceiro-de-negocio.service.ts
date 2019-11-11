@@ -1,4 +1,4 @@
-import { ParceiroDeNegocio } from './../model-view/parceirodenegocio';
+import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 

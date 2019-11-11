@@ -1,6 +1,6 @@
 import { Usuario } from './../model-view/usuario';
 import { ActivatedRoute } from '@angular/router';
-import { ParceiroDeNegocio } from './../model-view/parceirodenegocio';
+import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
