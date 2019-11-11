@@ -1,4 +1,4 @@
-import { ParceiroDeNegocio } from "./parceirodenegocio";
+import { ParceiroDeNegocio } from "./parceiro-de-negocio";
 import { Usuario } from "./usuario";
 
 export class Convenio {
@@ -6,6 +6,7 @@ export class Convenio {
     nome: string;
     parceiroDeNegocio: ParceiroDeNegocio;
     status: boolean;
+    strStatus: string;
     observacoes: string;
     validoDe: Date;
     validoAte: Date;

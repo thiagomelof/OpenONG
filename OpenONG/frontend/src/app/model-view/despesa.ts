@@ -1,4 +1,4 @@
-import { ParceiroDeNegocio } from "./parceirodenegocio";
+import { ParceiroDeNegocio } from "./parceiro-de-negocio";
 import { Convenio } from "./convenio";
 import { Usuario } from "./usuario";
 

@@ -20,8 +20,19 @@ export const appRoutes: Routes = [{
         { path: 'categoria/:id', loadChildren: '../categoria/categoria.module#CategoriaModule' },
         { path: 'item', loadChildren: '../item-servico/item-servico.module#ItemServicoModule' },
         { path: 'item/:id', loadChildren: '../item-servico/item-servico.module#ItemServicoModule' },
-
         { path: 'parceiro', loadChildren: '../parceiro-de-negocio/parceiro-de-negocio.module#ParceiroDeNegocioModule' },
-        { path: 'parceiro/:id', loadChildren: '../parceiro-de-negocio/parceiro-de-negocio.module#ParceiroDeNegocioModule' }
+        { path: 'parceiro/:id', loadChildren: '../parceiro-de-negocio/parceiro-de-negocio.module#ParceiroDeNegocioModule' },
+        { path: 'convenio', loadChildren: '../convenio/convenio.module#ConvenioModule' },
+        { path: 'convenio/:id', loadChildren: '../convenio/convenio.module#ConvenioModule' },
+        { path: 'despesa', loadChildren: '../despesa/despesa.module#DespesaModule' },
+        { path: 'despesa/:id', loadChildren: '../despesa/despesa.module#DespesaModule' },
+        { path: 'doacao', loadChildren: '../doacao/doacao.module#DoacaoModule' },
+        { path: 'doacao/:id', loadChildren: '../doacao/doacao.module#DoacaoModule' },
+
+        { path: 'beneficiado', loadChildren: '../beneficiado/beneficiado.module#BeneficiadoModule' },
+        { path: 'beneficiado/:id', loadChildren: '../beneficiado/beneficiado.module#BeneficiadoModule' },
+
+        { path: 'usuario', loadChildren: '../usuario/usuario.module#UsuarioModule' },
+        { path: 'usuario/:id', loadChildren: '../usuario/usuario.module#UsuarioModule' }
     ]
 }];

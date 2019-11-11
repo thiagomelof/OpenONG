@@ -21,7 +21,7 @@ export const menus = [
             },
             {
                 'name': 'Beneficiados',
-                'link': '/auth/material-widgets/input',
+                'link': '/auth/beneficiados',
                 'icon': 'supervisor_account',
                 'chip': false,
                 'open': true,
@@ -42,7 +42,7 @@ export const menus = [
             },
             {
                 'name': 'Usuário',
-                'link': '/auth/dashboard',
+                'link': '/auth/usuario',
                 'icon': 'account_circle',
                 'chip': false,
                 'open': true,
@@ -50,21 +50,21 @@ export const menus = [
         ]
     },
     {
-        'name': 'Projetos',
-        'link': '/auth/dashboard',
+        'name': 'Convênios',
+        'link': '/auth/convenio',
         'icon': 'assignment',
         'open': false,
     },
     {
         'name': 'Doações',
         'icon': 'favorite',
-        'link': '/auth/tables/fixed',
+        'link': '/auth/doacao',
         'open': false,
     },
     {
         'name': 'Despesas',
         'icon': 'local_grocery_store',
-        'link': '/auth/guarded-routes',
+        'link': '/auth/despesa',
         'open': false,
     },
          {
