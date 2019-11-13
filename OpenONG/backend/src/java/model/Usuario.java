@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Usuario implements Serializable {
@@ -21,6 +22,10 @@ public class Usuario implements Serializable {
     private Long id;
     @Column(length = 100, nullable = false)
     private String nome;
+    @Column
+    private boolean status;
+    @Transient
+    private String strStatus;
     @Column(length = 100)
     private String email;
     @Column(length = 30)
@@ -72,7 +77,7 @@ public class Usuario implements Serializable {
     private List<Convenio> usuarioCriacaoConvenio;
     @JsonIgnore
     @OneToMany(mappedBy = "usuarioModificacao", fetch = FetchType.LAZY)
-    private List<Convenio> usuarioModificacaoConvenio;    
+    private List<Convenio> usuarioModificacaoConvenio;
 
     private static final long serialVersionUID = 1L;
 
@@ -125,6 +130,28 @@ public class Usuario implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Inativo";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Inativo";
     }
 
     public String getEmail() {

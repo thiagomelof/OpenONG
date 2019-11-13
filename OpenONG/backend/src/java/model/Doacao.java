@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Doacao implements Serializable {
@@ -27,6 +28,8 @@ public class Doacao implements Serializable {
     private ParceiroDeNegocio parceiroDeNegocio;
     @Column
     private boolean status;
+    @Transient
+    private String strStatus;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date lancamento;
     @Lob
@@ -85,6 +88,20 @@ public class Doacao implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    public String getStrStatus() {
+        if (status) {
+            return "Ativo";
+        }
+        return "Inativo";
+    }
+
+    public void setStrStatus(String strStatus) {
+        if (status) {
+            this.strStatus = "Ativo";
+        }
+        this.strStatus = "Inativo";
     }
 
     public Date getLancamento() {
