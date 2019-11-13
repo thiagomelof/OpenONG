@@ -10,7 +10,7 @@ import { finalize, startWith, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { TipoItem } from '../model-view/const/tipoitem';
-import { Categoria } from '../model-view/Categoria';
+import { Categoria } from '../model-view/categoria';
 import { Observable } from 'rxjs';
 
 @Component({

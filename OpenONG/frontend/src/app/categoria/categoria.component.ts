@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Categoria } from '../model-view/Categoria';
+import { Categoria } from '../model-view/categoria';
 import { CategoriaService } from '../services/categoria.service';
 import { Usuario } from '../model-view/usuario';
 import { ActivatedRoute, Router } from '@angular/router';

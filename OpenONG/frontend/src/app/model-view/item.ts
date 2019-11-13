@@ -1,4 +1,4 @@
-import { Categoria } from "./Categoria";
+import { Categoria } from "./categoria";
 import { Usuario } from "./usuario";
 import { TipoItem } from "./const/tipoitem";
 

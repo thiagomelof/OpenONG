@@ -6,6 +6,7 @@ export class Doacao {
     id: number;
     parceiroDeNegocio: ParceiroDeNegocio;
     status: boolean;
+    strStatus: string;
     lancamento: Date;
     observacoes: string;
     convenio: Convenio;

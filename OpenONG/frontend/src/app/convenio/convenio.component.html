@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChange($event)" [(ngModel)]="convenio.parceiroDeNegocio.nome" matInput placeholder="ParceiroDeNegocio" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
+                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="convenio.parceiroDeNegocio.nome" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                                 <span>{{ pn.nome }}</span>
@@ -114,6 +114,75 @@
                         </table>
                     </div>
                 </div>
+
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table cellspacing="6">
+                            <tr>
+                                <td>
+                                    <mat-form-field class="width">
+                                        <input (ngModelChange)="onChangeCategoria($event)" [(ngModel)]="convenioCategoria.categoria.nome" id="cat" name="cat" matInput placeholder="Categoria de item/serviço" aria-label="Categoria" [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let pn of categoriasFiltradas | async" [value]="pn.nome">
+                                                <span>{{ pn.nome }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                    <input hidden [(ngModel)]="convenioCategoria.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
+                                </td>
+                                <td>
+                                    <td>
+                                        <mat-form-field>
+                                            <input [(ngModel)]="convenioCategoria.percentual" id="percentual" name="percentual" class="form-control" matInput placeholder="Percentual" />
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <button type="button" mat-raised-button (click)="addLinha()">Salvar Linha</button>
+                                    </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <mat-table #table [dataSource]="dataSource" style="margin-top: 20px;">
+
+                    <ng-container matColumnDef="ID">
+                        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.linha}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Categoria">
+                        <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.categoria.nome}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Percentual">
+                        <mat-header-cell *matHeaderCellDef> Percentual </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.percentual}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Editar">
+                        <mat-header-cell *matHeaderCellDef> Editar </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button type="button" mat-button>
+                                <mat-icon aria-label="Editar">edit</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Remover">
+                        <mat-header-cell *matHeaderCellDef> Remover </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button type="button" mat-button>
+                                    <mat-icon aria-label="Remover">remove_circle</mat-icon>
+                                </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <table class="example-full-width" cellspacing="6">

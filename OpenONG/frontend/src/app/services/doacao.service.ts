@@ -1,9 +1,29 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Doacao } from '../model-view/Doacao';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DoacaoService {
 
-  constructor() { }
+  doacaoUrl = 'http://localhost:8084/backend/api/doacao'
+
+  constructor(private http: HttpClient) { }
+
+  listar() {
+    return this.http.get<any[]>(this.doacaoUrl);
+  }
+
+  listarAtivas() {
+    return this.http.get<any[]>(this.doacaoUrl + "/ativo");
+  }
+
+  add(doacao: Doacao) {
+    return this.http.post(this.doacaoUrl, doacao);
+  }
+
+  getDoacao(id: number) {
+    return this.http.get<any>(this.doacaoUrl + "/" + id);
+  }
 }

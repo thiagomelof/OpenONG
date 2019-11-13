@@ -25,8 +25,7 @@ import { MatProgressSpinnerModule,
          MatMenuModule,
 
  } from '@angular/material';
-
-
+ 
 import { MaterialWidgetsRouterModule } from './material-widgets.router';
 
 import * as hljs from 'highlight.js';
