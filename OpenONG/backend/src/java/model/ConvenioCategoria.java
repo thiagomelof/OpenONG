@@ -16,6 +16,8 @@ public class ConvenioCategoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(length = 100, nullable = false)
+    private String linha; 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "convenio")
     private Convenio convenio;
@@ -45,6 +47,14 @@ public class ConvenioCategoria implements Serializable {
         this.id = id;
     }
 
+    public String getLinha() {
+        return linha;
+    }
+
+    public void setLinha(String linha) {
+        this.linha = linha;
+    }
+    
     public Convenio getConvenio() {
         return convenio;
     }

@@ -19,8 +19,8 @@ public class DespesaItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column
-    private Integer linha;
+    @Column(length = 100, nullable = false)
+    private String linha; 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "despesa")
     private Despesa despesa;
@@ -41,7 +41,7 @@ public class DespesaItem implements Serializable {
     public DespesaItem() {
     }
 
-    public DespesaItem(Integer linha, Despesa despesa, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
+    public DespesaItem(String linha, Despesa despesa, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
         this.linha = linha;
         this.despesa = despesa;
         this.item = item;
@@ -59,11 +59,11 @@ public class DespesaItem implements Serializable {
         this.id = id;
     }
 
-    public Integer getLinha() {
+    public String getLinha() {
         return linha;
     }
 
-    public void setLinha(Integer linha) {
+    public void setLinha(String linha) {
         this.linha = linha;
     }
 

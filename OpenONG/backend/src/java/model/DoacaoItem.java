@@ -19,8 +19,8 @@ public class DoacaoItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column
-    private Integer linha;
+    @Column(length = 100, nullable = false)
+    private String linha; 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doacao")
     private Doacao doacao;
@@ -41,7 +41,7 @@ public class DoacaoItem implements Serializable {
     public DoacaoItem() {
     }
 
-    public DoacaoItem(Integer linha, Doacao doacao, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
+    public DoacaoItem(String linha, Doacao doacao, Item item, double valorUnitario, double quantidade, Date vencimento, String observacoes) {
         this.linha = linha;
         this.doacao = doacao;
         this.item = item;
@@ -59,11 +59,11 @@ public class DoacaoItem implements Serializable {
         this.id = id;
     }
 
-    public Integer getLinha() {
+    public String getLinha() {
         return linha;
     }
 
-    public void setLinha(Integer linha) {
+    public void setLinha(String linha) {
         this.linha = linha;
     }
 

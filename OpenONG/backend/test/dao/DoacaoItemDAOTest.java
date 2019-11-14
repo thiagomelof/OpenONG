@@ -90,6 +90,6 @@ public class DoacaoItemDAOTest {
     }
 
     public static DoacaoItem getDoacaoItem() {
-        return new DoacaoItem(1, DoacaoDAOTest.novoDoacao(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
+        return new DoacaoItem("abc123", DoacaoDAOTest.novoDoacao(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
     }    
 }

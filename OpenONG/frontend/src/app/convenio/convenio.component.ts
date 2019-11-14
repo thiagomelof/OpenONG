@@ -1,3 +1,5 @@
+import { ConvenioMessage } from './../model-view/dto/convenio-message';
+import { UtilsService } from './../services/utils.service';
 import { CategoriaService } from './../services/categoria.service';
 import { Categoria } from './../model-view/categoria';
 import { ConvenioCategoria } from './../model-view/conveniocategoria';
@@ -27,34 +29,34 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../shared/format-datepicker';
   ]
 })
 export class ConvenioComponent implements OnInit {
-  displayedColumns = ['ID', 'Categoria', 'Percentual', 'Editar', 'Remover'];
+
+  displayedColumns = ['Categoria', 'Percentual', 'Remover'];
   dataSource: MatTableDataSource<ConvenioCategoria>;
   public progressBarMode;
-  parceiroDeNegocio: any[];
-  categoria: any[];
+  parceiroDeNegocio: ParceiroDeNegocio[];
+  categorias: Categoria[];
   convenio = new Convenio();
   convenioCategoria = new ConvenioCategoria();
+  convenioMessage = new ConvenioMessage();
   isAddMode = false;
   saving = true;
   retorno: any;
   router: Router;
   msg: string;
   parceiroDeNegociosFiltradas: Observable<any[]>;
-  categoriasFiltradas: Observable<any[]>;
   nomeFormControl = new FormControl('', [Validators.required]);
   tipoControl = new FormControl('', [Validators.required]);
   unidadeControl = new FormControl('', [Validators.required]);
   parceiroDeNegocioControl = new FormControl('', [Validators.required]);
-  categoriaControl = new FormControl('');
   matcher = new MyErrorStateMatcher();
-  constructor(private convenioServer: ConvenioService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private location: Location) {
-
+  constructor(private utilsService: UtilsService, private convenioServer: ConvenioService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private location: Location) {
+    this.convenioMessage = new ConvenioMessage();
     this.dataSource = new MatTableDataSource();
     this.convenio.usuarioCriacao = new Usuario();
-    this.convenio.usuarioModificacao = new Usuario();
     this.convenio.parceiroDeNegocio = new ParceiroDeNegocio();
     this.convenioCategoria = new ConvenioCategoria();
     this.convenioCategoria.categoria = new Categoria();
+    this.convenioCategoria.convenio = new Convenio();
 
     this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
       this.parceiroDeNegocio = pn;
@@ -65,41 +67,31 @@ export class ConvenioComponent implements OnInit {
       }
     })
 
-    this.categoriaServer.listarAtivas().subscribe(pn => {
-      this.categoria = pn;
-
-      if (this.categoria != undefined) {
-        this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(startWith(null),
-          map(categoria => categoria ? this.filtrarCategorias(categoria) : this.categoria.slice()));
-      }
+    this.categoriaServer.listarAtivas().subscribe(cat => {
+      this.categorias = cat;
     })
 
 
   }
 
-  AdicionaCategoria(id: number): ConvenioCategoria {
+  AdicionaCategoria(): ConvenioCategoria {
 
-    return {
-      linha: id,
-      categoria: {
-        nome: this.convenioCategoria.categoria.nome,
-        id: this.convenioCategoria.categoria.id,
-        status: true,
-        strStatus: "",
-        observacoes: "",
-        dataCriacao: new Date(),
-        dataModificacao: new Date(),
-        usuarioCriacao: new Usuario(),
-        usuarioModificacao: new Usuario()
-      },
-      id: 0,
-      percentual: this.convenioCategoria.percentual,
-      convenio: new Convenio()
-    };
+    let _convenio = new ConvenioCategoria();
+    _convenio.percentual = this.convenioCategoria.percentual;
+    _convenio.categoria = this.convenioCategoria.categoria;
+    _convenio.linha = this.utilsService.GerarHash();
+    _convenio.convenio = new Convenio();
+    return _convenio;
+  }
+
+  removeLinha(row) {
+    this.dataSource.data.splice(this.dataSource.data.indexOf(row), 1);
+    console.log(this.dataSource.data)
+    this.dataSource.filter = "";
   }
 
   addLinha() {
-    this.dataSource.data.push(this.AdicionaCategoria(this.dataSource.data.length + 1));
+    this.dataSource.data.push(this.AdicionaCategoria());
     this.dataSource.filter = "";
   }
 
@@ -108,10 +100,6 @@ export class ConvenioComponent implements OnInit {
       pn.nome.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
-  filtrarCategorias(name: string) {
-    return this.categoria.filter(cat =>
-      cat.nome.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  }
 
   ngOnInit() {
 
@@ -140,7 +128,10 @@ export class ConvenioComponent implements OnInit {
       this.convenio.usuarioModificacao.id = 1;
     }
 
-    this.convenioServer.add(this.convenio).pipe(finalize(() => {
+
+    this.convenioMessage.convenio = this.convenio;
+    this.convenioMessage.categorias = this.dataSource.data;
+    this.convenioServer.add(this.convenioMessage).pipe(finalize(() => {
       this.componentesRequest(false);
     })).subscribe(dados => {
 
@@ -197,17 +188,20 @@ export class ConvenioComponent implements OnInit {
     }
   }
 
+
   onChangeCategoria(event) {
-    if (this.categoria != undefined) {
+    console.log(event);
+    if (this.categorias != undefined) {
       if (event != undefined && event != "") {
         try {
-          this.convenioCategoria.categoria.id = this.categoria.find(x => x.nome === event).id;
+          this.convenioCategoria.categoria.nome = this.categorias.find(x => x.id === event).nome;
           console.log(this.convenioCategoria.categoria.id);
         } catch (error) { }
 
       }
     }
   }
+
 }
 
 

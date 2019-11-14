@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="convenio.parceiroDeNegocio.nome" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
+                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="convenio.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                                 <span>{{ pn.nome }}</span>
@@ -70,7 +70,7 @@
                                             O Doador conveniado é <strong>obrigatório</strong>
                                         </mat-error>
                                     </mat-form-field>
-                                    <input hidden [(ngModel)]="convenio.parceiroDeNegocio.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
+                                    <input hidden [(ngModel)]="convenio.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
                                 </td>
 
                             </tr>
@@ -120,15 +120,26 @@
                         <table cellspacing="6">
                             <tr>
                                 <td>
+                                    <mat-form-field>
+                                        <mat-select placeholder="Categoria de item/serviço" [(ngModel)]="convenioCategoria.categoria.id" name="cat" (ngModelChange)="onChangeCategoria($event)">
+                                            <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+                                                {{cat.nome}}
+                                            </mat-option>
+                                        </mat-select>
+
+                                        <input hidden [(ngModel)]="convenioCategoria.categoria.nome" type="text" name="nomeCat" class="form-control" matInput />
+                                    </mat-form-field>
+
+                                    <!-- 
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeCategoria($event)" [(ngModel)]="convenioCategoria.categoria.nome" id="cat" name="cat" matInput placeholder="Categoria de item/serviço" aria-label="Categoria" [matAutocomplete]="auto">
+                                        <input (ngModelChange)="onChangeCategoria($event)" [(ngModel)]="convenioCategoria.categoria.nome" id="cat" name="cat" matInput placeholder="Categoria de item/serviço" aria-label="Categoria" [matAutocomplete]="auto" [formControl]="categoriaControl">
                                         <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let pn of categoriasFiltradas | async" [value]="pn.nome">
-                                                <span>{{ pn.nome }}</span>
+                                            <mat-option *ngFor="let cat of categoriasFiltradas | async" [value]="cat.nome">
+                                                <span>{{ cat.nome }}</span>
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>
-                                    <input hidden [(ngModel)]="convenioCategoria.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
+                                    <input hidden [(ngModel)]="convenioCategoria.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id parceiroDeNegocio" /> -->
                                 </td>
                                 <td>
                                     <td>
@@ -161,19 +172,10 @@
                         <mat-cell *matCellDef="let row"> {{row.percentual}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Editar">
-                        <mat-header-cell *matHeaderCellDef> Editar </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
-                            <button type="button" mat-button>
-                                <mat-icon aria-label="Editar">edit</mat-icon>
-                            </button>
-                        </mat-cell>
-                    </ng-container>
-
                     <ng-container matColumnDef="Remover">
                         <mat-header-cell *matHeaderCellDef> Remover </mat-header-cell>
                         <mat-cell *matCellDef="let row">
-                            <button type="button" mat-button>
+                            <button type="button" mat-button (click)="removeLinha(row)">
                                     <mat-icon aria-label="Remover">remove_circle</mat-icon>
                                 </button>
                         </mat-cell>

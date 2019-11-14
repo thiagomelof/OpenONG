@@ -90,6 +90,7 @@ public class DespesaItemDAOTest {
     }
 
     public static DespesaItem getDespesaItem() {
-        return new DespesaItem(1, DespesaDAOTest.novoDespesa(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
+        
+        return new DespesaItem("abc123", DespesaDAOTest.novoDespesa(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
     }
 }

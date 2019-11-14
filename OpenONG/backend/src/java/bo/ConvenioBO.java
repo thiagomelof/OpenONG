@@ -1,25 +1,31 @@
 package bo;
 
+import dao.ConvenioCategoriaDAO;
 import dao.ConvenioDAO;
 import dao.base.HibernateUtil;
+import dto.ConvenioMessage;
 import java.util.Date;
 import java.util.List;
 import model.Convenio;
+import model.ConvenioCategoria;
 import model.ParceiroDeNegocio;
 import model.Usuario;
 import org.hibernate.Session;
 
 public class ConvenioBO {
 
-    public Convenio getConvenio(Long id) {
+    public ConvenioMessage getConvenio(Long id) {
         ConvenioDAO convenioDAO = new ConvenioDAO();
+        ConvenioCategoriaDAO categoriasDAO = new ConvenioCategoriaDAO();
         Session session = HibernateUtil.abrirSessao();
         Convenio convenio = convenioDAO.pesquisarPorId(id, session);
-
+        List<ConvenioCategoria> list = categoriasDAO.pesquisarTodosPorConvenio(convenio.getId(), session);
         formatarObjeto(convenio);
 
+        ConvenioMessage msg = new ConvenioMessage(convenio, list);
+
         session.close();
-        return convenio;
+        return msg;
     }
 
     public List<Convenio> getConvenios() {
@@ -28,7 +34,7 @@ public class ConvenioBO {
         session.close();
         return convenios;
     }
-    
+
     public List<Convenio> getConveniosAtivos() {
         Session session = HibernateUtil.abrirSessao();
         List<Convenio> convenios = new ConvenioDAO().pesquisarTodosAtivos(session);
@@ -36,13 +42,22 @@ public class ConvenioBO {
         return convenios;
     }
 
-    public Convenio cadastrar(Convenio convenio) {
+    public ConvenioMessage cadastrar(ConvenioMessage convenio) {
         Session session = HibernateUtil.abrirSessao();
         ConvenioDAO convenioDAO = new ConvenioDAO();
-        convenio.setDataCriacao(new Date());
-        boolean retorno = convenioDAO.salvarOuAlterar(convenio, session);
+        convenio.getConvenio().setDataCriacao(new Date());
+        boolean salvo = convenioDAO.salvarOuAlterar(convenio.getConvenio(), session);
+
+        if (salvo) {
+            for (ConvenioCategoria categoria : convenio.getCategorias()) {
+                
+                categoria.getConvenio().setId(convenio.getConvenio().getId());
+                salvo = new ConvenioCategoriaDAO().salvarOuAlterar(categoria, session);
+                
+            }
+        }
         session.close();
-        if (retorno) {
+        if (salvo) {
             return convenio;
         }
 
