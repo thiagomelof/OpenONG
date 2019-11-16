@@ -24,6 +24,13 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
         Query consulta = session.createQuery("from Doacao");
         return consulta.list();
     }
+    
+    public List<Doacao> pesquisarTodosAtivos(Session session) throws HibernateException {        
+        Query consulta = session.createQuery("from Doacao where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
 
     @Override
     public List<Doacao> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException {

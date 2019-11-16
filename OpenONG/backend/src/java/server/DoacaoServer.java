@@ -1,15 +1,19 @@
 package server;
 
+import bo.DoacaoBO;
+import com.google.gson.Gson;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
+import dto.DoacaoMessage;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.Doacao;
-import org.hibernate.Session;
 
 @Path("/doacao")
 public class DoacaoServer {
@@ -17,53 +21,29 @@ public class DoacaoServer {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Doacao> getDoacaos() {
-        Session session = HibernateUtil.abrirSessao();
-        List<Doacao> doacoes = new DoacaoDAO().pesquisarTodos(session);
-        session.close();
-        return doacoes;
+        return new DoacaoBO().getDoacoes();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/ativo")
+    public List<Doacao> getDoacaosAtivas() {
+        return new DoacaoBO().getDoacoesAtivos();
     }
 
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Doacao getDoacao(@PathParam("id") Long id) {
-        DoacaoDAO doacaoDAO = new DoacaoDAO();
-        Session session = HibernateUtil.abrirSessao();
-        Doacao doacao = doacaoDAO.pesquisarPorId(id, session);
-        session.close();
-        return doacao;
+    public DoacaoMessage getDoacao(@PathParam("id") Long id) {
+        return new DoacaoBO().getDoacao(id);
     }
-    /*
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Integer cadastrar(@FormParam("dado") String dadosJSON) {
-        Gson gson = new Gson();
-        Session session = HibernateUtil.abrirSessao();
-        Doacao doacao = gson.fromJson(dadosJSON, Doacao.class);
-        DoacaoDAO doacaoDAO = new DoacaoDAO();
-        Integer lastId = doacaoDAO.salvarOuAlterar(doacao, session);
-        session.close();
-        return lastId;
+    @Consumes(MediaType.APPLICATION_JSON)
+    public DoacaoMessage cadastrar(String body) {
+        DoacaoMessage doacao = new Gson().fromJson(body, DoacaoMessage.class);
+        return new DoacaoBO().cadastrar(doacao);
     }
-
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("{id}")
-    public Boolean alterar(@PathParam("id") Long id, @FormParam("dado") String dadosJSON) {
-        Session session = HibernateUtil.abrirSessao();
-        Gson gson = new Gson();
-        Doacao doacao = gson.fromJson(dadosJSON, Doacao.class);
-
-        if (id == doacao.getId() || doacao.getId() == null) {
-            doacao.setId(id);
-        } else {
-            return false;
-        }
-
-        Boolean res = new DoacaoDAO().salvarOuAlterar(doacao, session);
-        session.close();
-        return res;
-    }*/
 }

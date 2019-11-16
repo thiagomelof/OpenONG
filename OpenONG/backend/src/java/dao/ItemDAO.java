@@ -24,6 +24,13 @@ public class ItemDAO extends BaseDao<Item, Long>
         Query consulta = session.createQuery("from Item");
         return consulta.list();
     }
+    
+    public List<Item> pesquisarTodosAtivos(Session session) throws HibernateException {        
+        Query consulta = session.createQuery("from Item where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
 
     @Override
     public List<Item> pesquisarPorNome(String nome, Session session) throws HibernateException {

@@ -209,7 +209,7 @@ public class ParceiroDeNegocio implements Serializable {
         this.strStatus = "";
     }
 
-    public String getStrTipoParceiro(String strTipoParceiro) {
+    public String getStrTipoParceiro() {
         if (tipoParceiro == TipoParceiro.B) {
             return "Beneficiado";
         } else if (tipoParceiro == TipoParceiro.D) {

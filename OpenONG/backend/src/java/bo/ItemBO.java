@@ -22,6 +22,13 @@ public class ItemBO {
         session.close();
         return item;
     }
+    
+    public List<Item> getItensAtivos() {
+        Session session = HibernateUtil.abrirSessao();
+        List<Item> convenios = new ItemDAO().pesquisarTodosAtivos(session);
+        session.close();
+        return convenios;
+    }
 
     public List<Item> getItens() {
         Session session = HibernateUtil.abrirSessao();

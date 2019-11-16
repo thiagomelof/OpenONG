@@ -22,6 +22,13 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
         Query consulta = session.createQuery("from Despesa");
         return consulta.list();
     }
+    
+    public List<Despesa> pesquisarTodosAtivos(Session session) throws HibernateException {        
+        Query consulta = session.createQuery("from Despesa where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
 
     @Override
     public List<Despesa> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException {
