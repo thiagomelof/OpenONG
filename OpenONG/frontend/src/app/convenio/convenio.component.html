@@ -18,11 +18,11 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input disabled [(ngModel)]="convenio.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
+                                        <input disabled [(ngModel)]="convenio.convenio.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-checkbox [(ngModel)]="convenio.status" id="status" name="status">Ativo
+                                    <mat-checkbox [(ngModel)]="convenio.convenio.status" id="status" name="status">Ativo
                                     </mat-checkbox>
                                 </td>
                             </tr>
@@ -33,12 +33,12 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input disabled [(ngModel)]="convenio.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
+                                        <input disabled [(ngModel)]="convenio.convenio.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input disabled [(ngModel)]="convenio.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
+                                        <input disabled [(ngModel)]="convenio.convenio.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -52,7 +52,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="convenio.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
+                                        <input [(ngModel)]="convenio.convenio.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
                                         <mat-error *ngIf="nomeFormControl.hasError('required')">
                                             O nome é <strong>obrigatório</strong>
                                         </mat-error>
@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="convenio.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
+                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="convenio.convenio.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl" required>
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                                 <span>{{ pn.nome }}</span>
@@ -70,7 +70,7 @@
                                             O Doador conveniado é <strong>obrigatório</strong>
                                         </mat-error>
                                     </mat-form-field>
-                                    <input hidden [(ngModel)]="convenio.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
+                                    <input hidden [(ngModel)]="convenio.convenio.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" class="form-control" matInput placeholder="Id parceiroDeNegocio" />
                                 </td>
 
                             </tr>
@@ -81,7 +81,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="convenio.validoDe" id="valDe" name="valDe" matInput [matDatepicker]="dp3" placeholder="Válido de" disabled>
+                                        <input [(ngModel)]="convenio.convenio.validoDe" id="valDe" name="valDe" matInput [matDatepicker]="dp3" placeholder="Válido de" disabled>
 
                                         <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                         <mat-datepicker #dp3 disabled="false"></mat-datepicker>
@@ -89,7 +89,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="convenio.validoAte" id="valAte" name="valAte" matInput [matDatepicker]="dp4" placeholder="Válido até" disabled>
+                                        <input [(ngModel)]="convenio.convenio.validoAte" id="valAte" name="valAte" matInput [matDatepicker]="dp4" placeholder="Válido até" disabled>
 
                                         <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
                                         <mat-datepicker #dp4 disabled="false"></mat-datepicker>
@@ -107,13 +107,16 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <textarea [(ngModel)]="convenio.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                                        <textarea [(ngModel)]="convenio.convenio.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
                                     </mat-form-field>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
+                <h4 class="mat-subheading-1 center-align">Categorias do convênio</h4>
+
+                <mat-divider></mat-divider>
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
@@ -129,17 +132,6 @@
 
                                         <input hidden [(ngModel)]="convenioCategoria.categoria.nome" type="text" name="nomeCat" class="form-control" matInput />
                                     </mat-form-field>
-
-                                    <!-- 
-                                    <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeCategoria($event)" [(ngModel)]="convenioCategoria.categoria.nome" id="cat" name="cat" matInput placeholder="Categoria de item/serviço" aria-label="Categoria" [matAutocomplete]="auto" [formControl]="categoriaControl">
-                                        <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let cat of categoriasFiltradas | async" [value]="cat.nome">
-                                                <span>{{ cat.nome }}</span>
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                    </mat-form-field>
-                                    <input hidden [(ngModel)]="convenioCategoria.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id parceiroDeNegocio" /> -->
                                 </td>
                                 <td>
                                     <td>
@@ -148,7 +140,7 @@
                                         </mat-form-field>
                                     </td>
                                     <td>
-                                        <button type="button" mat-raised-button (click)="addLinha()">Salvar Linha</button>
+                                        <button type="button" mat-raised-button color="accent" (click)="addLinha()">Adicionar Linha</button>
                                     </td>
                             </tr>
                         </table>
@@ -176,8 +168,8 @@
                         <mat-header-cell *matHeaderCellDef> Remover </mat-header-cell>
                         <mat-cell *matCellDef="let row">
                             <button type="button" mat-button (click)="removeLinha(row)">
-                                    <mat-icon aria-label="Remover">remove_circle</mat-icon>
-                                </button>
+                                <mat-icon aria-label="Remover">remove_circle</mat-icon>
+                            </button>
                         </mat-cell>
                     </ng-container>
 
@@ -185,6 +177,7 @@
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
 
+                <br/><br/>
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <table class="example-full-width" cellspacing="6">

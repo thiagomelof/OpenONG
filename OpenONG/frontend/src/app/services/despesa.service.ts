@@ -1,6 +1,6 @@
+import { DespesaMessage } from './../model-view/dto/despesa-message';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Despesa } from '../model-view/Despesa';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class DespesaService {
     return this.http.get<any[]>(this.despesaUrl + "/ativo");
   }
 
-  add(despesa: Despesa) {
+  add(despesa: DespesaMessage) {
     return this.http.post(this.despesaUrl, despesa);
   }
 

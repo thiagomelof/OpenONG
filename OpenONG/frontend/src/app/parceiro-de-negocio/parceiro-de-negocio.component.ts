@@ -1,8 +1,8 @@
 import { Usuario } from './../model-view/usuario';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { tiposDeParceiro, estados } from './helpers.data';
 import { ParceiroDeNegocioService } from '../services/parceiro-de-negocio.service';
@@ -29,77 +29,69 @@ export class ParceiroDeNegocioComponent implements OnInit {
   parceiro = new ParceiroDeNegocio();
   isAddMode = false;
   saving = true;
-  retorno: any;
+
   msg: string;
 
-  constructor(private parceiroServer: ParceiroDeNegocioService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar) { 
-    this.parceiro.endereco = new Endereco();
-  }
+  constructor(private parceiroServer: ParceiroDeNegocioService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
+    this.parceiro.usuarioCriacao = new Usuario();
+    this.parceiro.endereco = new Endereco();
+
     this.activatedRoute.params.forEach(params => {
       if (params.id == undefined || params.id == "") {
         this.isAddMode = true;
         this.parceiro.status = true;
-        
       } else {
         this.parceiroServer.getParceiro(params.id).subscribe(pn => { this.parceiro = pn; })
         this.parceiro.usuarioCriacao = new Usuario();
-        this.parceiro.usuarioModificacao = new Usuario();
       }
     }
     )
-    this.retorno = {};
-
   }
 
   addOrUpdate() {
 
-    this.componentesRequest(true);
-    if (this.isAddMode) {
+    this.controleDeTelaRequest(true);
 
-      this.parceiro.usuarioCriacao = new Usuario();
-      this.parceiro.usuarioCriacao.id = 1;
+    this.setUsuario();
 
-    } else {
-      this.parceiro.usuarioModificacao.id = 1;
-    }
-
-    this.parceiroServer.add(this.parceiro).pipe(finalize(() => {
-
-      this.componentesRequest(false);
-
-    })
-
-    ).subscribe(dados => {
-
+    this.parceiroServer.add(this.parceiro).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
 
       if (dados != undefined) {
         if (this.isAddMode) {
           this.msg = "Parceiro cadastrada com sucesso!";
-          this.parceiro = new ParceiroDeNegocio();
-          this.parceiro.endereco = new Endereco();
         }
         else {
           this.msg = "Parceiro atualizada com sucesso!";
         }
+
+        this.router.navigate(['auth/parceiro/list']);
+
       } else {
         if (this.isAddMode) {
           this.msg = "Erro ao cadastrar parceiro";
-          this.parceiro = new ParceiroDeNegocio();
-          this.parceiro.endereco = new Endereco();
         }
         else {
           this.msg = "Erro ao atualizar parceiro";
         }
       }
-      this.retornoRequest(this.msg);
+      this.getStatusBar(this.msg);
     }
     );
 
   }
 
-  componentesRequest(progressBar: boolean) {
+  private setUsuario() {
+    if (this.isAddMode) {
+      this.parceiro.usuarioCriacao.id = 1;
+    }
+    else {
+      this.parceiro.usuarioModificacao.id = 1;
+    }
+  }
+
+  controleDeTelaRequest(progressBar: boolean) {
     if (progressBar) {
       this.progressBarMode = "indeterminate";
       this.saving = false;
@@ -109,12 +101,8 @@ export class ParceiroDeNegocioComponent implements OnInit {
     }
   }
 
-  retornoRequest(msgSnack: string) {
-    this.snackBar.open(msgSnack, "OK", {
-      duration: 2000,
+  getStatusBar(msgSnack: string) { this.snackBar.open(msgSnack, "OK", { duration: 4000 }); }
 
-    });
-  }
 }
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

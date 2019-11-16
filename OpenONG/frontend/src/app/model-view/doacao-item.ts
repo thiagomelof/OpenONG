@@ -1,13 +1,17 @@
-import { Despesa } from "./Despesa";
+import { Doacao } from "./doacao";
 import { Item } from "./item";
 
-export class DespesaItem {
+export class DoacaoItem {
     id: number;
-    linha: number;
-    despesa: Despesa;
+    linha: string;
+    doacao: Doacao;
     item: Item;
     valorUnitario: number;
     quantidade: number;
     vencimento: Date;
     observacoes: string;
+
+    constructor(){
+        
+    }
 }

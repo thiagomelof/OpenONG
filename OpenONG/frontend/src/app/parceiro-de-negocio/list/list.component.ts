@@ -16,7 +16,7 @@ import { ParceiroDeNegocioService } from '../../services/parceiro-de-negocio.ser
 
 export class ListComponent implements OnInit {
   public progressBarMode;
-  displayedColumns = ['ID', 'Nome', 'Tipo', /**'Categoria', */ 'Status', 'Editar'];
+  displayedColumns = ['ID', 'Nome', 'Tipo', 'Status', 'Editar'];
   parceirodenegocioDao = new ParceiroDeNegocioDao(this.parceirodenegocioService);
   dataSource: ParceiroDeNegocioDataSource | null;
 
@@ -27,19 +27,10 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new ParceiroDeNegocioDataSource(this.parceirodenegocioDao, this.paginator, this.sort);
-    observableFromEvent(this.filter.nativeElement, 'keyup').pipe(
-      debounceTime(150), distinctUntilChanged()).subscribe(() => {
-        if (!this.dataSource) { return; }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
-  }
-
-  componentesRequest(progressBar: boolean) {
-    if (progressBar) {
-      this.progressBarMode = "indeterminate";
-    } else {
-      this.progressBarMode = "";
-    }
+    observableFromEvent(this.filter.nativeElement, 'keyup').pipe(debounceTime(150), distinctUntilChanged()).subscribe(() => {
+      if (!this.dataSource) { return; }
+      this.dataSource.filter = this.filter.nativeElement.value;
+    });
   }
 
   paginatorLength() {

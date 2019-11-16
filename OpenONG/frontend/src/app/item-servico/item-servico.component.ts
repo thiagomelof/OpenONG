@@ -2,7 +2,7 @@ import { CategoriaService } from './../services/categoria.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Item } from '../model-view/Item';
+import { Item } from '../model-view/item';
 import { ItemService } from '../services/item.service';
 import { Usuario } from '../model-view/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,6 @@ export class ItemServicoComponent implements OnInit {
   isAddMode = false;
   saving = true;
   retorno: any;
-  router: Router;
   msg: string;
   categoriasFiltradas: Observable<any[]>;
   nomeFormControl = new FormControl('', [Validators.required]);
@@ -40,7 +39,7 @@ export class ItemServicoComponent implements OnInit {
   unidadeControl = new FormControl('', [Validators.required]);
   categoriaControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
-  constructor(private itemServer: ItemService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private location: Location) {
+  constructor(private itemServer: ItemService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) {
     this.item.categoria = new Categoria();
     this.categoriaServer.listarAtivas().subscribe(cat => {
       this.categorias = cat;
@@ -102,12 +101,11 @@ export class ItemServicoComponent implements OnInit {
       if (dados != undefined) {
         if (this.isAddMode) {
           this.msg = "Item cadastrado com sucesso!";
-          this.item = new Item();
-          this.item.categoria = new Categoria();
         }
         else {
           this.msg = "Item atualizado com sucesso!";
         }
+        this.router.navigate(['auth/item/list']);
       } else {
         if (this.isAddMode) {
           this.msg = "Erro ao cadastrar item";

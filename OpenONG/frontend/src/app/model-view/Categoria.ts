@@ -11,4 +11,8 @@ export class Categoria {
     dataModificacao: Date;
     usuarioCriacao: Usuario;
     usuarioModificacao: Usuario;
+
+    constructor(){
+        
+    }
 }

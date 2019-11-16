@@ -1,6 +1,6 @@
+import { DoacaoMessage } from './../model-view/dto/doacao-message';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Doacao } from '../model-view/Doacao';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class DoacaoService {
     return this.http.get<any[]>(this.doacaoUrl + "/ativo");
   }
 
-  add(doacao: Doacao) {
+  add(doacao: DoacaoMessage) {
     return this.http.post(this.doacaoUrl, doacao);
   }
 

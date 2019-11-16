@@ -18,75 +18,69 @@ export class CategoriaComponent implements OnInit {
   categoria = new Categoria();
   isAddMode = false;
   saving = true;
-  retorno: any;
   msg: string;
 
   nomeFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
 
-  constructor(private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar) { }
+  constructor(private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
+    this.categoria.usuarioCriacao = new Usuario();
+
     this.activatedRoute.params.forEach(params => {
       if (params.id == undefined || params.id == "") {
         this.isAddMode = true;
         this.categoria.status = true;
       } else {
         this.categoriaServer.getCategoria(params.id).subscribe(cat => { this.categoria = cat; })
-        this.categoria.usuarioCriacao = new Usuario();
         this.categoria.usuarioModificacao = new Usuario();
       }
     }
     )
-    this.retorno = {};
-
   }
 
   addOrUpdate() {
 
-    this.componentesRequest(true);
-    if (this.isAddMode) {
+    this.controleDeTelaRequest(true);
 
-      this.categoria.usuarioCriacao = new Usuario();
-      this.categoria.usuarioCriacao.id = 1;
+    this.setUsuario();
 
-    } else {
-      this.categoria.usuarioModificacao.id = 1;
-    }
-
-    this.categoriaServer.add(this.categoria).pipe(finalize(() => {
-
-      this.componentesRequest(false);
-
-    })
-
-    ).subscribe(dados => {
-
-
+    this.categoriaServer.add(this.categoria).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
+      
       if (dados != undefined) {
         if (this.isAddMode) {
           this.msg = "Categoria cadastrada com sucesso!";
-          this.categoria = new Categoria();
         }
         else {
           this.msg = "Categoria atualizada com sucesso!";
         }
+        this.router.navigate(['auth/categoria/list']);
+
       } else {
         if (this.isAddMode) {
           this.msg = "Erro ao cadastrar categoria";
-          this.categoria = new Categoria();
         }
         else {
           this.msg = "Erro ao atualizar categoria";
         }
-      }
-      this.retornoRequest(this.msg);
+      }      
+      this.getStatusBar(this.msg);
     }
     );
 
   }
 
-  componentesRequest(progressBar: boolean) {
+  private setUsuario() {
+    if (this.isAddMode) {
+      this.categoria.usuarioCriacao.id = 1;
+    }
+    else {
+      this.categoria.usuarioModificacao.id = 1;
+    }
+  }
+
+  controleDeTelaRequest(progressBar: boolean) {
     if (progressBar) {
       this.progressBarMode = "indeterminate";
       this.saving = false;
@@ -96,14 +90,13 @@ export class CategoriaComponent implements OnInit {
     }
   }
 
-  retornoRequest(msgSnack: string) {
+  getStatusBar(msgSnack: string) {
     this.snackBar.open(msgSnack, "OK", {
       duration: 2000,
-
+      verticalPosition: "top"
     });
   }
 }
-
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {

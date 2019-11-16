@@ -39,14 +39,14 @@ export const menus = [
                 'icon': 'list',
                 'chip': false,
                 'open': true,
-            },
-            {
-                'name': 'Usuário',
-                'link': '/auth/usuario',
-                'icon': 'account_circle',
-                'chip': false,
-                'open': true,
             }
+            // ,{
+            //     'name': 'Usuário',
+            //     'link': '/auth/usuario',
+            //     'icon': 'account_circle',
+            //     'chip': false,
+            //     'open': true,
+            // }
         ]
     },
     {

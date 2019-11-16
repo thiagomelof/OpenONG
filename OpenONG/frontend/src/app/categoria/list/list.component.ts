@@ -20,10 +20,11 @@ export class ListComponent implements OnInit {
 	categoriaDao = new CategoriaDao(this.categoriaService);
 	dataSource: CategoriaDataSource | null;
 
-	constructor(private categoriaService: CategoriaService) { }
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
+
+	constructor(private categoriaService: CategoriaService) { }
 
 	ngOnInit() {
 		this.dataSource = new CategoriaDataSource(this.categoriaDao, this.paginator, this.sort);
@@ -32,14 +33,6 @@ export class ListComponent implements OnInit {
 				if (!this.dataSource) { return; }
 				this.dataSource.filter = this.filter.nativeElement.value;
 			});
-	}
-
-	componentesRequest(progressBar: boolean) {
-		if (progressBar) {
-			this.progressBarMode = "indeterminate";
-		} else {
-			this.progressBarMode = "";
-		}
 	}
 
 	paginatorLength() {

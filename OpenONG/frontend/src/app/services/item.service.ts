@@ -15,6 +15,10 @@ export class ItemService {
     return this.http.get<any[]>(this.itemUrl);
   }
 
+  listarAtivos() {
+    return this.http.get<any[]>(this.itemUrl + "/ativo");
+  }
+
   add(item: Item) {
     return this.http.post(this.itemUrl, item);
   }

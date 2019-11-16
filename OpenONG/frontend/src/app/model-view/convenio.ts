@@ -14,4 +14,8 @@ export class Convenio {
     dataModificacao: Date;
     usuarioCriacao: Usuario;
     usuarioModificacao: Usuario;
+
+    constructor(){
+        
+    }
 }

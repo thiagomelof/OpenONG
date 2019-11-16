@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule, MatIconModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatPaginatorModule, MatSortModule, MatTooltipModule, MatChipsModule, MatButtonToggleModule } from '@angular/material';
+import { MatSnackBarModule, MatIconModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatPaginatorModule, MatSortModule, MatTooltipModule, MatChipsModule, MatButtonToggleModule, MatAutocompleteModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -50,6 +50,7 @@ const appRoutes: Routes = [
     MatTooltipModule,
     MatChipsModule,
     MatButtonToggleModule,
+    MatAutocompleteModule,
     RouterModule.forChild(appRoutes),
     SharedModule
   ],
