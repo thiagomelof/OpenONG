@@ -43,20 +43,20 @@ public class CategoriaBO {
     public RetornoMessage cadastrar(Categoria categoria) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
-        
+
         List<Erro> erros = validacoes(categoria, session);
 
         if (erros.size() > 0) {
             msg.getErros().addAll(erros);
         } else {
             CategoriaDAO categoriaDAO = new CategoriaDAO();
-            
+
             if (categoria.getDataCriacao() == null) {
                 categoria.setDataCriacao(new Date());
             } else {
                 categoria.setDataModificacao(new Date());
             }
-            
+
             boolean retorno = categoriaDAO.salvarOuAlterar(categoria, session);
 
             if (retorno) {
@@ -81,11 +81,16 @@ public class CategoriaBO {
     }
 
     private List<Erro> validacoes(Categoria cat, Session session) {
+        long id = 0;
+        if (cat.getId() != null) {
+            id = cat.getId();
+        }
+        
         List<Erro> erros = new ArrayList<>();
         if (cat.getNome() == "" || cat.getNome() == null || cat.getNome().isEmpty()) {
             erros.add(new Erro(CodigoErro.CATEGORIAAA, "Necessário informar o nome."));
         } else {
-            boolean exists = new CategoriaDAO().categoriaExists(cat.getNome(), session);
+            boolean exists = new CategoriaDAO().categoriaExists(id, cat.getNome(), session);
             if (exists) {
                 erros.add(new Erro(CodigoErro.CATEGORIAAB, "Está categoria já existe."));
             }

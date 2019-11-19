@@ -91,10 +91,16 @@ public class ConvenioBO {
 
     private List<Erro> validacoes(ConvenioMessage convenio, Session session) {
         List<Erro> erros = new ArrayList<>();
+        long id = 0;
+
+        if (convenio.getConvenio().getId() != null) {
+            id = convenio.getConvenio().getId();
+        }
+
         if (convenio.getConvenio().getNome() == "" || convenio.getConvenio().getNome() == null || convenio.getConvenio().getNome().isEmpty()) {
             erros.add(new Erro(CodigoErro.CONVENIOAA, "Necessário informar o nome."));
         } else {
-            boolean exists = new ConvenioDAO().convenioExists(convenio.getConvenio().getNome(), session);
+            boolean exists = new ConvenioDAO().convenioExists(id, convenio.getConvenio().getNome(), session);
             if (exists) {
                 erros.add(new Erro(CodigoErro.CONVENIOAB, "Este convênio já existe."));
             }
@@ -107,7 +113,7 @@ public class ConvenioBO {
         if (convenio.getConvenio().getValidoDe() == null) {
             erros.add(new Erro(CodigoErro.CONVENIOAD, "Necessário informar uma data inicial de validade."));
         }
-        
+
         if (convenio.getConvenio().getValidoAte() == null) {
             erros.add(new Erro(CodigoErro.CONVENIOAE, "Necessário informar uma data final de validade."));
         }

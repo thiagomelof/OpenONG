@@ -41,9 +41,12 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return parceiros;
     }
 
-    public boolean parceiroExists(String nome, Session session) throws HibernateException {
+    public boolean parceiroExists(Long id, String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
         criteria.add(Restrictions.eq("nome", nome));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<ParceiroDeNegocio> parceiros = criteria.list();
 
         if (parceiros.size() > 0) {
@@ -52,9 +55,12 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return false;
     }
 
-    public boolean cnpjExists(String cnpj, Session session) throws HibernateException {
+    public boolean cnpjExists(Long id, String cnpj, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
         criteria.add(Restrictions.eq("cnpj", cnpj));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<ParceiroDeNegocio> parceiros = criteria.list();
 
         if (parceiros.size() > 0) {
@@ -63,11 +69,14 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return false;
     }
 
-    public boolean cpfExists(String cpf, Session session) throws HibernateException {
+    public boolean cpfExists(Long id, String cpf, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
-        criteria.add(Restrictions.eq("cpf",cpf));
+        criteria.add(Restrictions.eq("cpf", cpf));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<ParceiroDeNegocio> parceiros = criteria.list();
-
+        
         if (parceiros.size() > 0) {
             return true;
         }

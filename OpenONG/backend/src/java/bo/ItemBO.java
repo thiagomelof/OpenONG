@@ -72,22 +72,27 @@ public class ItemBO {
         return msg;
     }
 
-    private List<Erro> validacoes(Item cat, Session session) {
+    private List<Erro> validacoes(Item item, Session session) {
         List<Erro> erros = new ArrayList<>();
-        if (cat.getNome() == "" || cat.getNome() == null || cat.getNome().isEmpty()) {
+        long id = 0;
+
+        if (item.getId() != null) {
+            id = item.getId();
+        }
+        if (item.getNome() == "" || item.getNome() == null || item.getNome().isEmpty()) {
             erros.add(new Erro(CodigoErro.ITEMAA, "Necessário informar o nome."));
         } else {
-            boolean exists = new ItemDAO().itemExists(cat.getNome(), session);
+            boolean exists = new ItemDAO().itemExists(id, item.getNome(), session);
             if (exists) {
                 erros.add(new Erro(CodigoErro.ITEMAB, "Este item já existe."));
             }
         }
 
-        if (cat.getCategoria().getId() == null || cat.getCategoria().getId() == -1) {
+        if (item.getCategoria().getId() == null || item.getCategoria().getId() == -1) {
             erros.add(new Erro(CodigoErro.ITEMAC, "Necessário informar uma categoria válida."));
         }
 
-        if (cat.getTipoItem() == null) {
+        if (item.getTipoItem() == null) {
             erros.add(new Erro(CodigoErro.ITEMAD, "Necessário informar um tipo do item válido."));
         }
 

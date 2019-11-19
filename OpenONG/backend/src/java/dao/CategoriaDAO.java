@@ -41,9 +41,12 @@ public class CategoriaDAO extends BaseDao<Categoria, Long>
         return categorias;
     }
 
-    public boolean categoriaExists(String nome, Session session) throws HibernateException {
+    public boolean categoriaExists(long id, String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(Categoria.class);
         criteria.add(Restrictions.eq("nome", nome));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<Categoria> categorias = criteria.list();
 
         if (categorias.size() > 0) {

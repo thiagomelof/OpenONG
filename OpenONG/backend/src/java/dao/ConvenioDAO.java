@@ -24,8 +24,8 @@ public class ConvenioDAO extends BaseDao<Convenio, Long>
         Query consulta = session.createQuery("from Convenio");
         return consulta.list();
     }
-    
-    public List<Convenio> pesquisarTodosAtivos(Session session) throws HibernateException {        
+
+    public List<Convenio> pesquisarTodosAtivos(Session session) throws HibernateException {
         Query consulta = session.createQuery("from Convenio where status =:statusHQL");
         consulta.setParameter("statusHQL", true);
 
@@ -49,10 +49,13 @@ public class ConvenioDAO extends BaseDao<Convenio, Long>
 
         return convenios;
     }
-    
-    public boolean convenioExists(String nome, Session session) throws HibernateException {
+
+    public boolean convenioExists(long id, String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(Convenio.class);
         criteria.add(Restrictions.eq("nome", nome));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<Convenio> categorias = criteria.list();
 
         if (categorias.size() > 0) {

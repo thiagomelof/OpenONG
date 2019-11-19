@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 public class ItemDAO extends BaseDao<Item, Long>
-        implements IItemDAO, Serializable{
+        implements IItemDAO, Serializable {
 
     @Override
     public Item pesquisarPorId(Long id, Session session) throws HibernateException {
@@ -24,8 +24,8 @@ public class ItemDAO extends BaseDao<Item, Long>
         Query consulta = session.createQuery("from Item");
         return consulta.list();
     }
-    
-    public List<Item> pesquisarTodosAtivos(Session session) throws HibernateException {        
+
+    public List<Item> pesquisarTodosAtivos(Session session) throws HibernateException {
         Query consulta = session.createQuery("from Item where status =:statusHQL");
         consulta.setParameter("statusHQL", true);
 
@@ -40,9 +40,13 @@ public class ItemDAO extends BaseDao<Item, Long>
 
         return itens;
     }
-    public boolean itemExists(String nome, Session session) throws HibernateException {
+
+    public boolean itemExists(long id, String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(Item.class);
         criteria.add(Restrictions.eq("nome", nome));
+        if (id > 0) {
+            criteria.add(Restrictions.ne("id", id));
+        }
         List<Item> itens = criteria.list();
 
         if (itens.size() > 0) {
@@ -50,5 +54,5 @@ public class ItemDAO extends BaseDao<Item, Long>
         }
         return false;
     }
-    
+
 }
