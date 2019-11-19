@@ -1,3 +1,4 @@
+import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { CategoriaService } from './../services/categoria.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
@@ -31,7 +32,6 @@ export class ItemServicoComponent implements OnInit {
   item = new Item();
   isAddMode = false;
   saving = true;
-  retorno: any;
   msg: string;
   categoriasFiltradas: Observable<any[]>;
   nomeFormControl = new FormControl('', [Validators.required]);
@@ -39,6 +39,7 @@ export class ItemServicoComponent implements OnInit {
   unidadeControl = new FormControl('', [Validators.required]);
   categoriaControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
+  retorno = new RetornoMessage();
   constructor(private itemServer: ItemService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) {
     this.item.categoria = new Categoria();
     this.categoriaServer.listarAtivas().subscribe(cat => {
@@ -73,13 +74,11 @@ export class ItemServicoComponent implements OnInit {
       }
     }
     )
-    this.retorno = {};
-
   }
 
   addOrUpdate(form: NgForm) {
 
-    this.componentesRequest(true);
+    this.controleDeTelaRequest(true);
     if (this.isAddMode) {
 
       this.item.usuarioCriacao = new Usuario();
@@ -89,16 +88,12 @@ export class ItemServicoComponent implements OnInit {
       this.item.usuarioModificacao.id = 1;
     }
 
-    this.itemServer.add(this.item).pipe(finalize(() => {
-
-      this.componentesRequest(false);
-
-    })
-
-    ).subscribe(dados => {
-
-
-      if (dados != undefined) {
+    this.itemServer.add(this.item).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
+      this.retorno = <RetornoMessage>dados;
+      this.msg = "";
+      if (this.retorno.erros.length > 0) {
+        this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
+      } else {
         if (this.isAddMode) {
           this.msg = "Item cadastrado com sucesso!";
         }
@@ -106,22 +101,14 @@ export class ItemServicoComponent implements OnInit {
           this.msg = "Item atualizado com sucesso!";
         }
         this.router.navigate(['auth/item/list']);
-      } else {
-        if (this.isAddMode) {
-          this.msg = "Erro ao cadastrar item";
-          this.item = new Item();
-        }
-        else {
-          this.msg = "Erro ao atualizar item";
-        }
       }
-      this.retornoRequest(this.msg);
+      this.getStatusBar(this.msg);
     }
     );
 
   }
 
-  componentesRequest(progressBar: boolean) {
+  controleDeTelaRequest(progressBar: boolean) {
     if (progressBar) {
       this.progressBarMode = "indeterminate";
       this.saving = false;
@@ -131,19 +118,17 @@ export class ItemServicoComponent implements OnInit {
     }
   }
 
-  retornoRequest(msgSnack: string) {
-    this.snackBar.open(msgSnack, "OK", {
-      duration: 2000,
-
-    });
+  getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
   }
 
   onChange(event) {
+    this.item.categoria.id = -1;
     if (this.categorias != undefined) {
       if (event != undefined && event != "") {
         try {
           this.item.categoria.id = this.categorias.find(x => x.nome === event).id;
-          console.log(this.item.categoria.id);
+
         } catch (error) { }
 
       }

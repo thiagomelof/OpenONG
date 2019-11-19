@@ -49,4 +49,16 @@ public class ConvenioDAO extends BaseDao<Convenio, Long>
 
         return convenios;
     }
+    
+    public boolean convenioExists(String nome, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(Convenio.class);
+        criteria.add(Restrictions.eq("nome", nome));
+        List<Convenio> categorias = criteria.list();
+
+        if (categorias.size() > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }

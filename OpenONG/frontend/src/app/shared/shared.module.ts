@@ -1,3 +1,4 @@
+
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { FormHeaderComponent } from './../form-header/form-header.component';
+import { LogModificacaoComponent } from './../log-modificacao/log-modificacao.component';
 import { NgModule } from '@angular/core';
 
 @NgModule
@@ -24,8 +26,8 @@ import { NgModule } from '@angular/core';
             FlexLayoutModule,
             RouterModule,
         ],
-        declarations: [FormHeaderComponent],
-        exports: [FormHeaderComponent]
+        declarations: [FormHeaderComponent, LogModificacaoComponent],
+        exports: [FormHeaderComponent, LogModificacaoComponent]
     })
 
 export class SharedModule {

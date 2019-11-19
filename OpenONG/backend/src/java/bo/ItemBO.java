@@ -1,17 +1,21 @@
-
 package bo;
 
+import constantes.CodigoErro;
+import constantes.TipoRegistro;
 import dao.ItemDAO;
 import dao.base.HibernateUtil;
+import dto.RetornoMessage;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Categoria;
+import model.Erro;
 import model.Item;
 import model.Usuario;
 import org.hibernate.Session;
 
 public class ItemBO {
-    
+
     public Item getItem(Long id) {
         ItemDAO itemDAO = new ItemDAO();
         Session session = HibernateUtil.abrirSessao();
@@ -22,7 +26,7 @@ public class ItemBO {
         session.close();
         return item;
     }
-    
+
     public List<Item> getItensAtivos() {
         Session session = HibernateUtil.abrirSessao();
         List<Item> convenios = new ItemDAO().pesquisarTodosAtivos(session);
@@ -36,18 +40,58 @@ public class ItemBO {
         session.close();
         return itens;
     }
-    
-    public Item cadastrar(Item item) {
+
+    public RetornoMessage cadastrar(Item item) {
+
+        RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
-        ItemDAO itemDAO = new ItemDAO();
-        item.setDataCriacao(new Date());
-        boolean retorno = itemDAO.salvarOuAlterar(item, session);
+
+        List<Erro> erros = validacoes(item, session);
+
+        if (erros.size() > 0) {
+            msg.getErros().addAll(erros);
+        } else {
+            ItemDAO itemDAO = new ItemDAO();
+
+            if (item.getDataCriacao() == null) {
+                item.setDataCriacao(new Date());
+            } else {
+                item.setDataModificacao(new Date());
+            }
+
+            boolean retorno = itemDAO.salvarOuAlterar(item, session);
+
+            if (retorno) {
+                msg.getResultado().setId(item.getId());
+                msg.getResultado().setTipoRegistro(TipoRegistro.ITEM);
+            } else {
+                msg.getErros().add(new Erro(CodigoErro.ERROBANCO, "Erro ao inserir o item no banco de dados"));
+            }
+        }
         session.close();
-        if (retorno) {
-            return item;
+        return msg;
+    }
+
+    private List<Erro> validacoes(Item cat, Session session) {
+        List<Erro> erros = new ArrayList<>();
+        if (cat.getNome() == "" || cat.getNome() == null || cat.getNome().isEmpty()) {
+            erros.add(new Erro(CodigoErro.ITEMAA, "Necessário informar o nome."));
+        } else {
+            boolean exists = new ItemDAO().itemExists(cat.getNome(), session);
+            if (exists) {
+                erros.add(new Erro(CodigoErro.ITEMAB, "Este item já existe."));
+            }
         }
 
-        return null;
+        if (cat.getCategoria().getId() == null || cat.getCategoria().getId() == -1) {
+            erros.add(new Erro(CodigoErro.ITEMAC, "Necessário informar uma categoria válida."));
+        }
+
+        if (cat.getTipoItem() == null) {
+            erros.add(new Erro(CodigoErro.ITEMAD, "Necessário informar um tipo do item válido."));
+        }
+
+        return erros;
     }
 
     private void formatarObjeto(Item item) {
@@ -56,10 +100,10 @@ public class ItemBO {
         }
         if (item.getUsuarioModificacao() == null) {
             item.setUsuarioModificacao(new Usuario());
-        }        
-        if (item.getCategoria()== null) {
+        }
+        if (item.getCategoria() == null) {
             item.setCategoria(new Categoria());
         }
     }
-    
+
 }

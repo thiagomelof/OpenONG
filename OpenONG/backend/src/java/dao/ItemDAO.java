@@ -40,5 +40,15 @@ public class ItemDAO extends BaseDao<Item, Long>
 
         return itens;
     }
+    public boolean itemExists(String nome, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(Item.class);
+        criteria.add(Restrictions.eq("nome", nome));
+        List<Item> itens = criteria.list();
+
+        if (itens.size() > 0) {
+            return true;
+        }
+        return false;
+    }
     
 }

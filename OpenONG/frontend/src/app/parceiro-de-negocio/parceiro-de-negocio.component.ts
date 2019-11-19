@@ -1,3 +1,4 @@
+import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { Usuario } from './../model-view/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
@@ -21,7 +22,7 @@ export class ParceiroDeNegocioComponent implements OnInit {
   estados = estados;
   nomeFormControl = new FormControl('', [Validators.required]);
   codigoFormControl = new FormControl('', [Validators.required]);
-  emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
+  emailFormControl = new FormControl('', [Validators.pattern(EMAIL_REGEX)]);
   tipoDeParceiroControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
 
@@ -31,6 +32,7 @@ export class ParceiroDeNegocioComponent implements OnInit {
   saving = true;
 
   msg: string;
+  retorno = new RetornoMessage();
 
   constructor(private parceiroServer: ParceiroDeNegocioService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
 
@@ -57,24 +59,18 @@ export class ParceiroDeNegocioComponent implements OnInit {
     this.setUsuario();
 
     this.parceiroServer.add(this.parceiro).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
-
-      if (dados != undefined) {
+      this.retorno = <RetornoMessage>dados;
+      this.msg = "";
+      if (this.retorno.erros.length > 0) {
+        this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
+      } else {
         if (this.isAddMode) {
-          this.msg = "Parceiro cadastrada com sucesso!";
+          this.msg = "Parceiro cadastrado com sucesso!";
         }
         else {
           this.msg = "Parceiro atualizada com sucesso!";
         }
-
         this.router.navigate(['auth/parceiro/list']);
-
-      } else {
-        if (this.isAddMode) {
-          this.msg = "Erro ao cadastrar parceiro";
-        }
-        else {
-          this.msg = "Erro ao atualizar parceiro";
-        }
       }
       this.getStatusBar(this.msg);
     }
@@ -101,7 +97,9 @@ export class ParceiroDeNegocioComponent implements OnInit {
     }
   }
 
-  getStatusBar(msgSnack: string) { this.snackBar.open(msgSnack, "OK", { duration: 4000 }); }
+  getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
+  }
 
 }
 

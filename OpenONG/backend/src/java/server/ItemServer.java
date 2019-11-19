@@ -2,6 +2,7 @@ package server;
 
 import bo.ItemBO;
 import com.google.gson.Gson;
+import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,7 +40,7 @@ public class ItemServer {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Item cadastrar(String body) {
+    public RetornoMessage cadastrar(String body) {
         Item item = new Gson().fromJson(body, Item.class);
         return new ItemBO().cadastrar(item);
     }

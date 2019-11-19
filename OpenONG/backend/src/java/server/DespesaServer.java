@@ -3,6 +3,7 @@ package server;
 import bo.DespesaBO;
 import com.google.gson.Gson;
 import dto.DespesaMessage;
+import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -40,7 +41,7 @@ public class DespesaServer {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public DespesaMessage cadastrar(String body) {
+    public RetornoMessage cadastrar(String body) {
         DespesaMessage despesa = new Gson().fromJson(body, DespesaMessage.class);
         return new DespesaBO().cadastrar(despesa);
     }

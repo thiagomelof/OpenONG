@@ -1,3 +1,4 @@
+import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -19,6 +20,7 @@ export class CategoriaComponent implements OnInit {
   isAddMode = false;
   saving = true;
   msg: string;
+  retorno = new RetornoMessage();
 
   nomeFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
@@ -47,8 +49,11 @@ export class CategoriaComponent implements OnInit {
     this.setUsuario();
 
     this.categoriaServer.add(this.categoria).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
-      
-      if (dados != undefined) {
+      this.retorno = <RetornoMessage>dados;
+      this.msg = "";
+      if (this.retorno.erros.length > 0) {
+        this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
+      } else {
         if (this.isAddMode) {
           this.msg = "Categoria cadastrada com sucesso!";
         }
@@ -56,19 +61,10 @@ export class CategoriaComponent implements OnInit {
           this.msg = "Categoria atualizada com sucesso!";
         }
         this.router.navigate(['auth/categoria/list']);
-
-      } else {
-        if (this.isAddMode) {
-          this.msg = "Erro ao cadastrar categoria";
-        }
-        else {
-          this.msg = "Erro ao atualizar categoria";
-        }
-      }      
+      }
       this.getStatusBar(this.msg);
     }
     );
-
   }
 
   private setUsuario() {
@@ -91,10 +87,7 @@ export class CategoriaComponent implements OnInit {
   }
 
   getStatusBar(msgSnack: string) {
-    this.snackBar.open(msgSnack, "OK", {
-      duration: 2000,
-      verticalPosition: "top"
-    });
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
   }
 }
 

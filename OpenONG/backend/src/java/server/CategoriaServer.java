@@ -2,6 +2,7 @@ package server;
 
 import bo.CategoriaBO;
 import com.google.gson.Gson;
+import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,7 +40,7 @@ public class CategoriaServer {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Categoria cadastrar(String body) {
+    public RetornoMessage cadastrar(String body) {
         Categoria categoria = new Gson().fromJson(body, Categoria.class);
         return new CategoriaBO().cadastrar(categoria);
     }

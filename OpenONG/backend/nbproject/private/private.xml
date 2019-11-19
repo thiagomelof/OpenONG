@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/dao/base/BaseDao.java</file>
-            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/ConvenioServer.java</file>
-            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/model/Convenio.java</file>
-            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/bo/ConvenioBO.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/dao/ParceiroDeNegocioDAO.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/bo/CategoriaBO.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/bo/ParceiroDeNegocioBO.java</file>
+            <file>file:/C:/Users/thiag/Documents/Repositorios/Senac/TCC_REP/OpenONG/backend/src/java/server/ParceiroDeNegocioServer.java</file>
         </group>
     </open-files>
 </project-private>

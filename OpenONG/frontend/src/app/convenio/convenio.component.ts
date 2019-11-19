@@ -1,3 +1,4 @@
+import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { ConvenioMessage } from './../model-view/dto/convenio-message';
 import { UtilsService } from './../services/utils.service';
 import { CategoriaService } from './../services/categoria.service';
@@ -44,6 +45,7 @@ export class ConvenioComponent implements OnInit {
   parceiroDeNegocioControl = new FormControl('', [Validators.required]);
   nomeFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
+  retorno = new RetornoMessage();
 
   constructor(private utilsService: UtilsService, private convenioServer: ConvenioService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private categoriaServer: CategoriaService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
 
@@ -97,7 +99,7 @@ export class ConvenioComponent implements OnInit {
     _convenio.linha = this.utilsService.GerarHash();
 
     return _convenio;
-    
+
   }
 
   removeLinha(row) {
@@ -132,23 +134,18 @@ export class ConvenioComponent implements OnInit {
 
     this.convenioServer.add(this.convenio).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
 
-      if (dados != undefined) {
-        if (this.isAddMode) {
-          this.msg = "Convenio cadastrado com sucesso!";
-        }
-        else {
-          this.msg = "Convenio atualizado com sucesso!";
-        }
-
-        this.router.navigate(['auth/convenio/list']);
-
+      this.retorno = <RetornoMessage>dados;
+      this.msg = "";
+      if (this.retorno.erros.length > 0) {
+        this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
       } else {
         if (this.isAddMode) {
-          this.msg = "Erro ao cadastrar convenio";
+          this.msg = "Convênio cadastrado com sucesso!";
         }
         else {
-          this.msg = "Erro ao atualizar convenio";
+          this.msg = "Convênio atualizado com sucesso!";
         }
+        this.router.navigate(['auth/convenio/list']);
       }
       this.getStatusBar(this.msg);
     }
@@ -176,13 +173,11 @@ export class ConvenioComponent implements OnInit {
   }
 
   getStatusBar(msgSnack: string) {
-    this.snackBar.open(msgSnack, "OK", {
-      duration: 2000,
-
-    });
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
   }
 
   onChangeParceiro(event) {
+    this.convenio.convenio.parceiroDeNegocio.id = -1;
     if (this.parceiroDeNegocio != undefined) {
       if (event != undefined && event != "") {
         try {

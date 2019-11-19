@@ -1,3 +1,4 @@
+import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { ConvenioService } from './../services/convenio.service';
 import { Convenio } from './../model-view/convenio';
 import { DespesaMessage } from './../model-view/dto/despesa-message';
@@ -45,6 +46,7 @@ export class DespesaComponent implements OnInit {
   parceiroDeNegociosFiltradas: Observable<any[]>;
   parceiroDeNegocioControl = new FormControl('', [Validators.required]);
   nomeFormControl = new FormControl('', [Validators.required]);
+  retorno = new RetornoMessage();
 
   matcher = new MyErrorStateMatcher();
   constructor(private utilsService: UtilsService, private despesaServer: DespesaService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService, private itemServer: ItemService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
@@ -65,12 +67,12 @@ export class DespesaComponent implements OnInit {
         this.despesa.despesa.status = true;
       } else {
         this.despesa.despesa.usuarioModificacao = new Usuario();
-        
+
         this.despesaServer.getDespesa(params.id).subscribe(d => {
           this.despesa = d;
           this.despesa.itens.forEach(item => {
             this.addLinhaEdit(item);
-          }); 
+          });
 
         })
       }
@@ -95,12 +97,12 @@ export class DespesaComponent implements OnInit {
     })
   }
 
-  
+
   AdicionaItem(): DespesaItem {
 
     let despesa = new DespesaItem();
     despesa = JSON.parse(JSON.stringify(this.despesaItem))
-    despesa.linha = this.utilsService.GerarHash(); 
+    despesa.linha = this.utilsService.GerarHash();
 
     return despesa;
   }
@@ -127,31 +129,28 @@ export class DespesaComponent implements OnInit {
 
   addOrUpdate() {
 
-    this.getStatusBar(true);
+    this.controleDeTelaRequest(true);
 
     this.setUsuario();
 
     this.despesa.itens = this.dataSource.data;
 
-    this.despesaServer.add(this.despesa).pipe(finalize(() => { this.getStatusBar(false); })).subscribe(dados => {
+    this.despesaServer.add(this.despesa).pipe(finalize(() => { this.controleDeTelaRequest(false); })).subscribe(dados => {
 
-      if (dados != undefined) {
-        if (this.isAddMode) {
-          this.msg = "Doação cadastrado com sucesso!";
-        }
-        else {
-          this.msg = "Doação atualizado com sucesso!";
-        }
-        this.router.navigate(['auth/despesa/list']);
+      this.retorno = <RetornoMessage>dados;
+      this.msg = "";
+      if (this.retorno.erros.length > 0) {
+        this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
       } else {
         if (this.isAddMode) {
-          this.msg = "Erro ao cadastrar doação";
+          this.msg = "Despesa cadastrada com sucesso!";
         }
         else {
-          this.msg = "Erro ao atualizar doação";
+          this.msg = "Despesa atualizada com sucesso!";
         }
+        this.router.navigate(['auth/despesa/list']);
       }
-      this.controleDeTelaRequest(this.msg);
+      this.getStatusBar(this.msg);
     }
     );
 
@@ -166,7 +165,7 @@ export class DespesaComponent implements OnInit {
     }
   }
 
-  getStatusBar(progressBar: boolean) {
+  controleDeTelaRequest(progressBar: boolean) {
     if (progressBar) {
       this.progressBarMode = "indeterminate";
       this.saving = false;
@@ -176,11 +175,12 @@ export class DespesaComponent implements OnInit {
     }
   }
 
-  controleDeTelaRequest(msgSnack: string) {
-    this.snackBar.open(msgSnack, "OK", { duration: 2000 });
+  getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
   }
 
   onChangeParceiro(event) {
+    this.despesa.despesa.parceiroDeNegocio.id = -1;
     if (this.parceirosDeNegocio != undefined) {
       if (event != undefined && event != "") {
         try {

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
 import dto.DoacaoMessage;
+import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -42,7 +43,7 @@ public class DoacaoServer {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public DoacaoMessage cadastrar(String body) {
+    public RetornoMessage cadastrar(String body) {
         DoacaoMessage doacao = new Gson().fromJson(body, DoacaoMessage.class);
         return new DoacaoBO().cadastrar(doacao);
     }

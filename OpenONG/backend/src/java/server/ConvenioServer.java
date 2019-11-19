@@ -3,6 +3,7 @@ package server;
 import bo.ConvenioBO;
 import com.google.gson.Gson;
 import dto.ConvenioMessage;
+import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,13 +16,13 @@ import model.Convenio;
 
 @Path("/convenio")
 public class ConvenioServer {
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Convenio> getConvenios() {
         return new ConvenioBO().getConvenios();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/ativo")
@@ -29,7 +30,6 @@ public class ConvenioServer {
         return new ConvenioBO().getConveniosAtivos();
     }
 
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -40,7 +40,7 @@ public class ConvenioServer {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ConvenioMessage cadastrar(String body) {
+    public RetornoMessage cadastrar(String body) {
         ConvenioMessage convenio = new Gson().fromJson(body, ConvenioMessage.class);
         return new ConvenioBO().cadastrar(convenio);
     }

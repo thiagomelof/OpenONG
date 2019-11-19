@@ -24,8 +24,8 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         Query consulta = session.createQuery("from ParceiroDeNegocio");
         return consulta.list();
     }
-    
-    public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {        
+
+    public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {
         Query consulta = session.createQuery("from ParceiroDeNegocio where status =:statusHQL");
         consulta.setParameter("statusHQL", true);
 
@@ -39,5 +39,38 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         List<ParceiroDeNegocio> parceiros = criteria.list();
 
         return parceiros;
+    }
+
+    public boolean parceiroExists(String nome, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
+        criteria.add(Restrictions.eq("nome", nome));
+        List<ParceiroDeNegocio> parceiros = criteria.list();
+
+        if (parceiros.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cnpjExists(String cnpj, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
+        criteria.add(Restrictions.eq("cnpj", cnpj));
+        List<ParceiroDeNegocio> parceiros = criteria.list();
+
+        if (parceiros.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cpfExists(String cpf, Session session) throws HibernateException {
+        Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
+        criteria.add(Restrictions.eq("cpf",cpf));
+        List<ParceiroDeNegocio> parceiros = criteria.list();
+
+        if (parceiros.size() > 0) {
+            return true;
+        }
+        return false;
     }
 }
