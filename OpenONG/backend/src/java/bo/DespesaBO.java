@@ -2,18 +2,15 @@ package bo;
 
 import constantes.CodigoErro;
 import constantes.TipoRegistro;
-import dao.CategoriaDAO;
-import dao.ConvenioCategoriaDAO;
 import dao.DespesaItemDAO;
 import dao.DespesaDAO;
 import dao.base.HibernateUtil;
 import dto.DespesaMessage;
+import dto.RelatorioDespesaParameters;
 import dto.RetornoMessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.Categoria;
-import model.ConvenioCategoria;
 import model.Despesa;
 import model.DespesaItem;
 import model.Erro;
@@ -37,20 +34,49 @@ public class DespesaBO {
         return msg;
     }
 
-    public List<Despesa> getDoacoes() {
+    public List<Despesa> getDespesas() {
         Session session = HibernateUtil.abrirSessao();
-        List<Despesa> doacoes = new DespesaDAO().pesquisarTodos(session);
+        List<Despesa> despesas = new DespesaDAO().pesquisarTodos(session);
+        session.close();
+        return despesas;
+    }
+    
+    public List<DespesaItem> getRelatorioDespesas() {
+        Session session = HibernateUtil.abrirSessao();
+        List<DespesaItem> despesas = new DespesaDAO().relatorioDeDespesa(session);
+        session.close();
+        return despesas;
+    }
+
+    public List<Despesa> getDespesasAtivas() {
+        Session session = HibernateUtil.abrirSessao();
+        List<Despesa> despesas = new DespesaDAO().pesquisarTodosAtivos(session);
+        session.close();
+        return despesas;
+    }
+
+    public List<DespesaItem> relatorioDeDespesa(RelatorioDespesaParameters parametros) {
+        Session session = HibernateUtil.abrirSessao();
+        long idParceiro = 0;
+        long idConvenio = 0;
+
+        if (parametros.getParceiro().getId() != null) {
+            if (parametros.getParceiro().getId() > 0) {
+                idParceiro = parametros.getParceiro().getId();
+            }
+        }
+
+        if (parametros.getConvenio().getId() != null) {
+            if (parametros.getConvenio().getId() > 0) {
+                idConvenio = parametros.getConvenio().getId();
+            }
+        }
+        List<DespesaItem> doacoes = new DespesaDAO().relatorioDeDespesa(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
+        
         session.close();
         return doacoes;
     }
-
-    public List<Despesa> getDoacoesAtivos() {
-        Session session = HibernateUtil.abrirSessao();
-        List<Despesa> doacoes = new DespesaDAO().pesquisarTodosAtivos(session);
-        session.close();
-        return doacoes;
-    }
-
+    
     public RetornoMessage cadastrar(DespesaMessage despesa) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
@@ -74,7 +100,9 @@ public class DespesaBO {
             }
 
             if (retorno) {
+                resetLinhasDespesa(despesa.getDespesa().getId(), session);
                 for (DespesaItem item : despesa.getItens()) {
+                    item.setId(null);
                     item.getDespesa().setId(despesa.getDespesa().getId());
                     retorno = new DespesaItemDAO().salvarOuAlterar(item, session);
                 }
@@ -123,6 +151,18 @@ public class DespesaBO {
         }
         if (despesa.getParceiroDeNegocio() == null) {
             despesa.setParceiroDeNegocio(new ParceiroDeNegocio());
+        }
+    }
+    
+    private void resetLinhasDespesa(Long idDocao, Session session) {
+        List<DespesaItem> itens = new DespesaItemDAO().pesquisarTodosPorDespesa(idDocao, session);
+        for (DespesaItem item : itens) {
+            if (item.getId() != null) {
+                if (item.getId() > 0) {
+                    new DespesaItemDAO().excluir(item, session);
+                    item.setId(null);
+                }
+            }
         }
     }
 }

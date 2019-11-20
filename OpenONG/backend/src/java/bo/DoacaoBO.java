@@ -6,6 +6,7 @@ import dao.DoacaoItemDAO;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
 import dto.DoacaoMessage;
+import dto.RelatorioDoacaoParameters;
 import dto.RetornoMessage;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,28 @@ public class DoacaoBO {
         return doacoes;
     }
 
+    public List<DoacaoItem> relatorioDeDoacao(RelatorioDoacaoParameters parametros) {
+        Session session = HibernateUtil.abrirSessao();
+        long idParceiro = 0;
+        long idConvenio = 0;
+
+        if (parametros.getParceiro().getId() != null) {
+            if (parametros.getParceiro().getId() > 0) {
+                idParceiro = parametros.getParceiro().getId();
+            }
+        }
+
+        if (parametros.getConvenio().getId() != null) {
+            if (parametros.getConvenio().getId() > 0) {
+                idConvenio = parametros.getConvenio().getId();
+            }
+        }
+        List<DoacaoItem> doacoes = new DoacaoDAO().relatorioDeDoacao(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
+        
+        session.close();
+        return doacoes;
+    }
+
     public RetornoMessage cadastrar(DoacaoMessage doacao) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
@@ -70,7 +93,9 @@ public class DoacaoBO {
             }
 
             if (retorno) {
+                resetLinhasDoacao(doacao.getDoacao().getId(), session);
                 for (DoacaoItem item : doacao.getItens()) {
+                    item.setId(null);
                     item.getDoacao().setId(doacao.getDoacao().getId());
                     retorno = new DoacaoItemDAO().salvarOuAlterar(item, session);
                 }
@@ -119,6 +144,18 @@ public class DoacaoBO {
         }
         if (doacao.getParceiroDeNegocio() == null) {
             doacao.setParceiroDeNegocio(new ParceiroDeNegocio());
+        }
+    }
+
+    private void resetLinhasDoacao(Long idDocao, Session session) {
+        List<DoacaoItem> itens = new DoacaoItemDAO().pesquisarTodosPorDoacao(idDocao, session);
+        for (DoacaoItem item : itens) {
+            if (item.getId() != null) {
+                if (item.getId() > 0) {
+                    new DoacaoItemDAO().excluir(item, session);
+                    item.setId(null);
+                }
+            }
         }
     }
 }
