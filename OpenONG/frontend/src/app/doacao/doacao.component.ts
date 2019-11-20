@@ -36,7 +36,7 @@ export class DoacaoComponent implements OnInit {
   saving = true;
   msg: string;
 
-  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Editar', 'Remover'];
+  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Remover'];
   doacao = new DoacaoMessage();
   doacaoItem = new DoacaoItem();
   dataSource: MatTableDataSource<DoacaoItem>;

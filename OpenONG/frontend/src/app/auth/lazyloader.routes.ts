@@ -28,11 +28,10 @@ export const appRoutes: Routes = [{
         { path: 'despesa/:id', loadChildren: '../despesa/despesa.module#DespesaModule' },
         { path: 'doacao', loadChildren: '../doacao/doacao.module#DoacaoModule' },
         { path: 'doacao/:id', loadChildren: '../doacao/doacao.module#DoacaoModule' },
-
         { path: 'beneficiado', loadChildren: '../beneficiado/beneficiado.module#BeneficiadoModule' },
         { path: 'beneficiado/:id', loadChildren: '../beneficiado/beneficiado.module#BeneficiadoModule' },
-
         { path: 'usuario', loadChildren: '../usuario/usuario.module#UsuarioModule' },
-        { path: 'usuario/:id', loadChildren: '../usuario/usuario.module#UsuarioModule' }
+        { path: 'usuario/:id', loadChildren: '../usuario/usuario.module#UsuarioModule' },
+        { path: 'relatorio', loadChildren: '../relatorio/relatorio.module#RelatorioModule' }
     ]
 }];

@@ -77,17 +77,12 @@ export const menus = [
                 'name': 'Relatório de despesas',
                 'icon': 'description',
                 'open': false,
-                'link': '../login',
+                'link': '/auth/relatorio/reldespesa',
             }, {
                 'name': 'Relatório de doações',
                 'icon': 'description',
                 'open': false,
-                'link': 'pages/services',
-            }, {
-                'name': 'Relatório de transparência',
-                'icon': 'description',
-                'open': false,
-                'link': 'pages/contact'
+                'link': '/auth/relatorio/reldoacao',
             }
         ]
     }

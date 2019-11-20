@@ -23,8 +23,8 @@
 
 
                 <ng-container matColumnDef="Data">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.dataCriacao | date : "dd/MM/yyyy"}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Data de lançamento </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.lancamento | date : "dd/MM/yyyy"}} </mat-cell>
                 </ng-container>
 
 

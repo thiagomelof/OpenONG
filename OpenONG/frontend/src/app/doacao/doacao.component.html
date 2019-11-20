@@ -22,7 +22,8 @@
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-checkbox [(ngModel)]="doacao.doacao.status" id="status" name="status">Ativo</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="doacao.doacao.status" id="status" name="status">Ativo
+                                    </mat-checkbox>
                                 </td>
                             </tr>
                         </table>
@@ -50,6 +51,13 @@
                         <table cellspacing="6">
                             <tr>
                                 <td>
+                                    <mat-form-field>
+                                        <input [(ngModel)]="doacao.doacao.lancamento" id="dtLanc" name="dtLanc" matInput [matDatepicker]="dp3" placeholder="Data de lançamento" disabled>
+                                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td>
                                     <mat-form-field class="width">
                                         <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="doacao.doacao.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto">
                                         <mat-autocomplete #auto="matAutocomplete">
@@ -60,6 +68,12 @@
                                     </mat-form-field>
                                     <input hidden [(ngModel)]="doacao.doacao.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" matInput placeholder="Id parceiroDeNegocio" />
                                 </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+                        <table cellspacing="6">
+                            <tr>
                                 <td>
                                     <mat-form-field>
                                         <mat-select placeholder="Convênio" [(ngModel)]="doacao.doacao.convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
@@ -110,16 +124,17 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="doacaoItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
+                                        <input type="number" [(ngModel)]="doacaoItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="doacaoItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
+                                        <input type="number" [(ngModel)]="doacaoItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <button type="button" mat-raised-button color="accent" (click)="addLinha()">Salvar Linha</button>
+                                    <button type="button" mat-raised-button color="accent" (click)="addLinha()">Salvar
+                                        Linha</button>
                                 </td>
                             </tr>
                         </table>
@@ -152,25 +167,25 @@
                         <mat-header-cell *matHeaderCellDef> Remover </mat-header-cell>
                         <mat-cell *matCellDef="let row">
                             <button type="button" mat-button (click)="removeLinha(row)">
-                                    <mat-icon aria-label="Remover">remove_circle</mat-icon>
-                                </button>
+                                <mat-icon aria-label="Remover">remove_circle</mat-icon>
+                            </button>
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Editar">
+                    <!-- <ng-container matColumnDef="Editar">
                         <mat-header-cell *matHeaderCellDef> Editar </mat-header-cell>
                         <mat-cell *matCellDef="let row">
                             <button type="button" mat-button (click)="editaLinha(row)">
-                                        <mat-icon aria-label="Editar">edit</mat-icon>
-                                    </button>
+                                <mat-icon aria-label="Editar">edit</mat-icon>
+                            </button>
                         </mat-cell>
-                    </ng-container>
+                    </ng-container> -->
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
 
-                <br/><br/>
+                <br /><br />
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <table class="example-full-width" cellspacing="6">

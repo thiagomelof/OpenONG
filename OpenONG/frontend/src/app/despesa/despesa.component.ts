@@ -36,7 +36,7 @@ export class DespesaComponent implements OnInit {
   saving = true;
   msg: string;
 
-  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Editar', 'Remover'];
+  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Remover'];
   despesa = new DespesaMessage();
   despesaItem = new DespesaItem();
   dataSource: MatTableDataSource<DespesaItem>;
