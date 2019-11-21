@@ -23,6 +23,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { RelatorioComponent } from './relatorio.component';
+import { NgxPrintModule } from 'ngx-print';
 
 
 const appRoutes: Routes = [
@@ -60,7 +61,8 @@ const appRoutes: Routes = [
         MatChipsModule,
         MatButtonToggleModule,
         RouterModule.forChild(appRoutes),
-        SharedModule
+        SharedModule,
+        NgxPrintModule
     ],
     exports: [],
     declarations: [RelatorioComponent, RelDoacaoComponent, RelDespesaComponent]

@@ -66,9 +66,11 @@ export class ConvenioComponent implements OnInit {
         this.isAddMode = true;
         this.convenio.convenio.status = true;
       } else {
+
         this.convenio.convenio.usuarioModificacao = new Usuario();
 
         this.convenioServer.getConvenio(params.id).subscribe(conv => {
+
           this.convenio = conv;
           this.convenio.categorias.forEach(cat => {
             this.addLinhaEdit(cat);
@@ -177,8 +179,11 @@ export class ConvenioComponent implements OnInit {
   }
 
   onChangeParceiro(event) {
-    this.convenio.convenio.parceiroDeNegocio.id = -1;
+
     if (this.parceiroDeNegocio != undefined) {
+
+      this.convenio.convenio.parceiroDeNegocio.id = -1;
+
       if (event != undefined && event != "") {
         try {
           this.convenio.convenio.parceiroDeNegocio.id = this.parceiroDeNegocio.find(x => x.nome === event).id;

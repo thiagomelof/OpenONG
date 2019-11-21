@@ -1,3 +1,4 @@
+import { RelatoriosService } from './services/relatorios.service';
 import { CategoriaService } from './services/categoria.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { ParceiroDeNegocioService } from './services/parceiro-de-negocio.service';
 import { LoginService } from './services/login.service';
 import { ItemService } from './services/item.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,7 @@ import { ItemService } from './services/item.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [ParceiroDeNegocioService, LoginService, CategoriaService, ItemService],
+  providers: [ParceiroDeNegocioService, LoginService, CategoriaService, ItemService, RelatoriosService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

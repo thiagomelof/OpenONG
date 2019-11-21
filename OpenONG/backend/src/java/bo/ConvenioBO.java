@@ -72,7 +72,9 @@ public class ConvenioBO {
             }
 
             if (retorno) {
+                resetLinhasConvenio(convenio.getConvenio().getId(), session);
                 for (ConvenioCategoria categoria : convenio.getCategorias()) {
+                    categoria.setId(null);
                     categoria.getConvenio().setId(convenio.getConvenio().getId());
                     retorno = new ConvenioCategoriaDAO().salvarOuAlterar(categoria, session);
                 }
@@ -142,6 +144,18 @@ public class ConvenioBO {
             }
         }
         return erros;
+    }
+
+    private void resetLinhasConvenio(Long idDocao, Session session) {
+        List<ConvenioCategoria> categorias = new ConvenioCategoriaDAO().pesquisarTodosPorConvenio(idDocao, session);
+        for (ConvenioCategoria cat : categorias) {
+            if (cat.getId() != null) {
+                if (cat.getId() > 0) {
+                    new ConvenioCategoriaDAO().excluir(cat, session);
+                    cat.setId(null);
+                }
+            }
+        }
     }
 
     private void formatarObjeto(Convenio convenio) {

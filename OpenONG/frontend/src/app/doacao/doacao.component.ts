@@ -180,8 +180,8 @@ export class DoacaoComponent implements OnInit {
   }
 
   onChangeParceiro(event) {
-    this.doacao.doacao.parceiroDeNegocio.id = -1;
     if (this.parceirosDeNegocio != undefined) {
+      this.doacao.doacao.parceiroDeNegocio.id = -1;
       if (event != undefined && event != "") {
         try {
           this.doacao.doacao.parceiroDeNegocio.id = this.parceirosDeNegocio.find(x => x.nome === event).id;

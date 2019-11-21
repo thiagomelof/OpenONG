@@ -1,3 +1,31 @@
-<p>
-  despesa works!
-</p>
+<div id="print-section">
+    <h1>teste H1</h1>
+    <table>
+        <thead>
+            <th>Despesa</th>
+            <th>Doador</th>
+            <th>Lançamento</th>
+            <th>Convênio</th>
+            <th>Nome Item</th>
+            <th>Valor</th>
+            <th>Observações</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of itens">
+                <td>{{i.despesa.id}}</td>
+                <td>{{i.despesa.parceiroDeNegocio.nome}}</td>
+                <td>{{i.despesa.lancamento}}</td>
+                <td>{{i.despesa.convenio.nome}}</td>
+                <td>{{i.item.nome}}</td>
+                <td>{{i.valorUnitario}}</td>
+                <td>{{i.observacoes}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button [printStyle]="{h1 : {'color': 'red'}, h2 : {'border': 'solid 1px'}}" printSectionId="print-section" ngxPrint>Imprimir</button>
+
+<style>
+
+</style>
