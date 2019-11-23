@@ -8,14 +8,15 @@ export class AppDateAdapter extends NativeDateAdapter {
       let month: string = (date.getMonth() + 1).toString();
       month = +month < 10 ? "0" + month : month;
       let year = date.getFullYear();
-      return `${day}-${month}-${year}`;
+      return `${day}/${month}/${year}`;
     }
     return date.toDateString();
   }
 }
 export const APP_DATE_FORMATS: MatDateFormats = {
   parse: {
-    dateInput: { month: "short", year: "numeric", day: "numeric" },
+    dateInput: { month: "short", year: "numeric", day: "numeric"
+   },
   },
   display: {
     dateInput: "input",

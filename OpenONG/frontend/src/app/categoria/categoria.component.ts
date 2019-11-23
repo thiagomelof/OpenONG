@@ -1,7 +1,8 @@
+import { AppDateAdapter, APP_DATE_FORMATS } from './../shared/format-datepicker';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Categoria } from '../model-view/categoria';
 import { CategoriaService } from '../services/categoria.service';
 import { Usuario } from '../model-view/usuario';
@@ -12,7 +13,11 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-categoria',
   templateUrl: './categoria.component.html',
-  styleUrls: ['../shared/shared-form.component.scss']
+  styleUrls: ['../shared/shared-form.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ]
 })
 export class CategoriaComponent implements OnInit {
   public progressBarMode;

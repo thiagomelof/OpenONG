@@ -51,7 +51,7 @@ export class DespesaComponent implements OnInit {
   retorno = new RetornoMessage();
 
   matcher = new MyErrorStateMatcher();
-  constructor(private utilsService: UtilsService, private despesaServer: DespesaService, private relatorioServer: RelatoriosService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService, private itemServer: ItemService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
+  constructor(private utilsService: UtilsService, private despesaServer: DespesaService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService, private itemServer: ItemService, private activatedRoute: ActivatedRoute, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -67,23 +67,6 @@ export class DespesaComponent implements OnInit {
       if (params.id == undefined || params.id == "") {
         this.isAddMode = true;
         this.despesa.despesa.status = true;
-        let params = new DespesaParameters();
-        params.convenio = new Convenio();
-        params.parceiro = new ParceiroDeNegocio();
-        params.convenio.id = 0;
-        params.parceiro.id = 0;
-        params.dataInicio = new Date("2019/01/01");
-        params.dataFim = new Date("2019-12-20");
-
-        this.relatorioServer.getRelatorioDespesa(params).subscribe(dados => {
-          this.despesa.itens = dados;
-          console.log(dados);
-          this.despesa.itens.forEach(item => {
-            this.addLinhaEdit(item);
-          });
-
-        })
-
 
       } else {
         this.despesa.despesa.usuarioModificacao = new Usuario();
@@ -216,7 +199,7 @@ export class DespesaComponent implements OnInit {
     if (this.convenios != undefined) {
       if (event != undefined && event != "") {
         try {
-          this.despesa.despesa.convenio.id = this.convenios.find(x => x.nome === event).id;
+          this.despesa.despesa.convenio.nome = this.convenios.find(x => x.id === event).nome;
         } catch (error) { }
 
       }

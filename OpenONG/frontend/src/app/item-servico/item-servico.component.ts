@@ -1,8 +1,9 @@
+import { AppDateAdapter, APP_DATE_FORMATS } from './../shared/format-datepicker';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { CategoriaService } from './../services/categoria.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Item } from '../model-view/item';
 import { ItemService } from '../services/item.service';
 import { Usuario } from '../model-view/usuario';
@@ -17,7 +18,11 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-item-servico',
   templateUrl: './item-servico.component.html',
-  styleUrls: ['../shared/shared-form.component.scss']
+  styleUrls: ['../shared/shared-form.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ]
 })
 export class ItemServicoComponent implements OnInit {
 
