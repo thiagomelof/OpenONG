@@ -1,5 +1,5 @@
 export enum TipoParceiro {
     Doador = "D",
-    Fornecedor = "S",
+    Fornecedor = "F",
     Beneficiado = "B"
 }

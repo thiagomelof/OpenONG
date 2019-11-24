@@ -1,54 +1,101 @@
+import { DoacoesPorPeriodoMessage } from './../../model-view/dto/doacoes-por-periodo-message';
+import { DashboardService } from './../../services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'cdk-line-graph',
-  templateUrl: './line-graph.component.html',
-  styleUrls: ['./line-graph.component.scss']
+    selector: 'cdk-line-graph',
+    templateUrl: './line-graph.component.html',
+    styleUrls: ['./line-graph.component.scss']
 })
 export class LineGraphComponent implements OnInit {
+    valoresAtual: number[];
+    valoresPassado: number[];
+    doacoesPorPeriodoMessage: DoacoesPorPeriodoMessage[];
+    constructor(private dashboardService: DashboardService) { }
 
-  constructor() { }
+    ngOnInit() {
+        this.valoresAtual = [];
+        this.valoresPassado = [];
+        this.doacoesPorPeriodoMessage = [];
 
-  ngOnInit() {
-    setTimeout(() => {
-        this.createLineChart();
-    },500)
-  }
-  createLineChart() {
-      new Chart('line-graph', {
-                type: 'line',
-                data: {
-                    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago","Set",'Out'],
-                    datasets: [{
-                        backgroundColor: 'rgba(92, 107, 192, 0.36)',
-                        borderColor: 'rgba(92, 107, 192,.5)',
-                        data: [7000, 10000, 9500, 15000, 5000.85, 13000.91, 20000.36, 12000.66, 3000.36, 7000.66],
-                        label: 'Dataset',
-                        fill: 'start'
-                    }]
+        this.dashboardService.listarDoacoesPorPeriodo(new Date().getFullYear())
+
+            .pipe(finalize(() => {
+
+
+                this.dashboardService.listarDoacoesPorPeriodo(new Date().getFullYear() - 1).subscribe(d => {
+                    this.doacoesPorPeriodoMessage = d;
+
+                    this.doacoesPorPeriodoMessage.forEach(element => {
+                        this.valoresPassado.push(element.valor);
+                    });
+
+                    setTimeout(() => {
+                        this.createLineChart();
+                    }, 500)
+                });
+
+
+
+
+            }))
+
+
+            .subscribe(d => {
+                this.doacoesPorPeriodoMessage = d;
+
+                this.doacoesPorPeriodoMessage.forEach(element => {
+                    this.valoresAtual.push(element.valor);
+                });
+            });
+
+
+    }
+
+    createLineChart() {
+        new Chart('line-graph', {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    backgroundColor: 'rgba(92, 107, 192, 0.36)',
+                    borderColor: 'rgba(92, 107, 192,.5)',
+                    data: this.valoresAtual,
+                    label: new Date().getFullYear(),
+                    fill: 'start'
                 },
-                options: {
-                    elements : {
-                        line: {
-                            tension: 0.000001
-                        }
-                    },
-                    legend: {
-                        display: false
-                    },
-                    maintainAspectRatio: false,
-                    plugins: {
-                        filler: {
-                            propagate: false
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'DOAÇÕES MENSAIS'
-                    }
+                {
+                    backgroundColor: 'rgba(255, 99, 132,.7)',
+                    borderColor: 'rgba(255, 99, 132,.7)',
+                    data: this.valoresPassado,
+                    label: new Date().getFullYear() - 1,
+                    fill: 'start'
                 }
+                ]
+            },
+            options: {
+                elements: {
+                    line: {
+                        tension: 0.000001
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+                plugins: {
+                    filler: {
+                        propagate: false
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'COMPARATIVO DE DOAÇÕES ' + (new Date().getFullYear() - 1) + ' x ' + new Date().getFullYear()
+                }
+            }
         })
-  }
+    }
 
 }

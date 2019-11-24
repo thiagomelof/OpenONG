@@ -1,4 +1,7 @@
+import { ConvenioService } from './../services/convenio.service';
+import { DashboardService } from './../services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
+import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
 @Component({
     selector: 'app-dashboard-crm',
@@ -7,26 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DashboardCrmComponent implements OnInit {
+    countBeneficiados: number;
+    countDoadores: number;
+    countConvenio: number;
 
-    public dashCard = [
-        { colorDark: '#5C6BC0', colorLight: '#7986CB', number: 254, title: 'BENEFICIADOS', icon: 'supervisor_account' },
-        // { colorDark: '#42A5F5', colorLight: '#64B5F6', number: 1221, title: 'LEADS', icon: 'new_releases' },
-        { colorDark: '#26A69A', colorLight: '#4DB6AC', number: 10, title: 'PROJETOS', icon: 'assignments' },
-        { colorDark: '#66BB6A', colorLight: '#81C784', number: 320, title: 'DOADORES', icon: 'favorite' }
-    ];
+    public dashCard = [];
 
-    tableData = [
-        { country: 'India', sales: 5400, percentage: '40%' },
-        { country: 'Us', sales: 3200, percentage: '30.33%' },
-        { country: 'Australia', sales: 2233, percentage: '18.056%' },
-        { country: 'Spaim', sales: 600, percentage: '6%' },
-        { country: 'China', sales: 200, percentage: '4.50%' },
-        { country: 'Brazil', sales: 100, percentage: '2.50%' },
-    ];
-
-    constructor() { }
+    constructor(private dashboardService: DashboardService, private convenioService: ConvenioService) { }
 
     ngOnInit() {
+        this.dashboardService.listarParceirosAtivosPorTipo(TipoParceiro.Beneficiado).subscribe(b => {
+            this.countBeneficiados = b.length;
+            this.dashCard.push({ colorDark: '#5C6BC0', colorLight: '#7986CB', number: this.countBeneficiados, title: 'BENEFICIADOS', icon: 'supervisor_account' })
+        })
+
+        this.dashboardService.listarParceirosAtivosPorTipo(TipoParceiro.Doador).subscribe(d => {
+            this.countDoadores = d.length;
+            this.dashCard.push({ colorDark: '#66BB6A', colorLight: '#81C784', number: this.countDoadores, title: 'DOADORES', icon: 'favorite' })
+        })
+
+        this.convenioService.listarAtivos().subscribe(c => {
+            this.countConvenio = c.length;
+            this.dashCard.push({ colorDark: '#26A69A', colorLight: '#4DB6AC', number: this.countConvenio, title: 'CONVÊNIOS', icon: 'assignments' });
+        })
     }
 
 }

@@ -27,6 +27,8 @@ export class RelDespesaComponent implements OnInit {
   dataSource: MatTableDataSource<DespesaItem>;
   fornecedor: boolean;
   convenio: boolean;
+  total: number;
+  totalbool: boolean;
   itens: DespesaItem[];
   convenios: Convenio[];
   params: DespesaParameters;
@@ -45,6 +47,8 @@ export class RelDespesaComponent implements OnInit {
     this.params.parceiro.id = 0;
     this.fornecedor = false;
     this.convenio = false;
+    this.totalbool = false;
+    this.total = 0;
 
     this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
       this.parceirosDeNegocio = pn;
@@ -110,13 +114,17 @@ export class RelDespesaComponent implements OnInit {
   filtrar() {
     this.dataSource.data = [];
     this.dataSource.filter = "";
-
+    this.total = 0;
+    this.totalbool = false;
     this.relatorioServer.getRelatorioDespesa(this.params).subscribe(dados => {
       this.itens = dados;
 
       this.itens.forEach(item => {
         this.addLinha(item);
+        this.total = this.total + (item.valorUnitario * item.quantidade);
       });
+
+      this.totalbool = true;
     })
   }
 

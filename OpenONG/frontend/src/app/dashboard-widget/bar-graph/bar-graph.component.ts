@@ -1,32 +1,53 @@
+import { ParceirosPorPeriodoMessage } from './../../model-view/dto/parceiros-por-periodo-message';
+import { DashboardService } from './../../services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { TipoParceiro } from '../../model-view/const/tipoparceiro';
 
 
 @Component({
-  selector: 'cdk-bar-graph',
-  templateUrl: './bar-graph.component.html',
-  styleUrls: ['./bar-graph.component.scss']
+    selector: 'cdk-bar-graph',
+    templateUrl: './bar-graph.component.html',
+    styleUrls: ['./bar-graph.component.scss']
 })
 export class BarGraphComponent implements OnInit {
+    data: number[];
+    parceirosPorPeriodoMessage: ParceirosPorPeriodoMessage[];
 
-  constructor() { }
+    constructor(private dashboardService: DashboardService) { }
 
-  ngOnInit() {
-      setTimeout(() => {
-          this.createBarGraph();
-      },500)
-  }
 
-  createBarGraph() {
-      new Chart('dash-bar-graph', {
+
+    ngOnInit() {
+        this.data = [];
+        this.dashboardService.listarParceirosQuantidadeAtivosPorTipoEPeriodo(TipoParceiro.Doador).subscribe(d => {
+            this.parceirosPorPeriodoMessage = d;
+
+            this.parceirosPorPeriodoMessage.forEach(element => {
+                this.data.push(element.quantidade);
+            });
+
+            setTimeout(() => {
+                this.createBarGraph();
+            }, 500)
+
+        });
+
+
+
+
+    }
+
+    createBarGraph() {
+        new Chart('dash-bar-graph', {
             type: 'bar',
             data: {
-                labels: [ "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out"],
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
                 datasets: [
                     {
                         backgroundColor: 'rgba(102, 187, 106, .7)',
                         borderColor: 'rgba(255, 99, 132)',
-                        data: [10, 11, 13, 25, 4, 1, 5, 6,2,15],
+                        data: this.data,
                         label: 'Doadores',
                         fill: 'true'
                     }
@@ -36,7 +57,7 @@ export class BarGraphComponent implements OnInit {
                 legend: {
                     display: false
                 },
-                elements : {
+                elements: {
                     line: {
                         tension: 0.000001
                     }
@@ -53,5 +74,5 @@ export class BarGraphComponent implements OnInit {
                 }
             }
         })
-  }
+    }
 }

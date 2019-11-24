@@ -1,6 +1,6 @@
 export const menus = [
     {
-        'name': 'Dashboards',
+        'name': 'Gráficos',
         'link': '/auth/dashboard',
         'icon': 'assessment',
         'open': false,

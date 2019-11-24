@@ -57,6 +57,7 @@
         <h5 class="mat-subheading-1 center-align">Data de lançamento : {{params.dataInicio | date : "dd/MM/yyyy"}} até {{params.dataFim | date : "dd/MM/yyyy"}}</h5>
         <h5 *ngIf="fornecedor" class="mat-subheading-1 center-align">Fornecedor: {{params.parceiro.nome}}</h5>
         <h5 *ngIf="convenio" class="mat-subheading-1 center-align">Convênio: {{params.convenio.nome}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align">Total em despesas: R$ {{total}}</h5>
         <br/>
         <mat-divider></mat-divider>
 
