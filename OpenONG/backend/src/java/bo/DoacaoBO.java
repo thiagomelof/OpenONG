@@ -5,18 +5,27 @@ import constantes.TipoRegistro;
 import dao.DoacaoItemDAO;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
+import dto.DespesasPorCategoriaMessage;
 import dto.DoacaoMessage;
+import dto.DoacoesPorPeriodoMessage;
 import dto.RelatorioDoacaoParameters;
 import dto.RetornoMessage;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import model.Doacao;
 import model.DoacaoItem;
 import model.Erro;
 import model.ParceiroDeNegocio;
 import model.Usuario;
 import org.hibernate.Session;
+import util.DataUtils;
 
 public class DoacaoBO {
 
@@ -65,9 +74,46 @@ public class DoacaoBO {
             }
         }
         List<DoacaoItem> doacoes = new DoacaoDAO().relatorioDeDoacao(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
-        
+
         session.close();
         return doacoes;
+    }
+
+    public List<DoacoesPorPeriodoMessage> doacoesPorPeriodo(int ano) {
+        Session session = HibernateUtil.abrirSessao();
+        List<DoacaoItem> doacaos = new DoacaoDAO().doacoesPorPeriodo(DataUtils.primeiroDiaDoAno(ano), DataUtils.ultimoDiaDoAno(ano), session);
+        session.close();
+
+        List<DoacoesPorPeriodoMessage> msg = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            DoacoesPorPeriodoMessage d = new DoacoesPorPeriodoMessage();
+            d.setMes(i);
+            d.setValor(0);
+            msg.add(d);
+        }
+
+        for (DoacaoItem doacao : doacaos) {
+            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("america/sao_paulo"));
+            cal.setTime(doacao.getDoacao().getLancamento());
+            int mes = (cal.get(Calendar.MONTH) + 1);
+            for (DoacoesPorPeriodoMessage doacoesPorPeriodoMessage : msg) {
+                if (doacoesPorPeriodoMessage.getMes() == mes) {
+                    double soma = doacoesPorPeriodoMessage.getValor() + (doacao.getQuantidade() * doacao.getValorUnitario());
+                    doacoesPorPeriodoMessage.setValor(soma);
+                    break;
+                }
+            }
+        }
+
+        Collections.sort(msg, new Comparator<DoacoesPorPeriodoMessage>() {
+            @Override
+            public int compare(DoacoesPorPeriodoMessage c1, DoacoesPorPeriodoMessage c2) {
+                return Double.compare(c1.getMes(), c2.getMes());
+            }
+        });
+
+        return msg;
     }
 
     public RetornoMessage cadastrar(DoacaoMessage doacao) {

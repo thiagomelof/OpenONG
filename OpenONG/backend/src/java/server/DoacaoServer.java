@@ -1,8 +1,11 @@
 package server;
 
+import bo.DespesaBO;
 import bo.DoacaoBO;
 import com.google.gson.Gson;
+import dto.DespesasPorCategoriaMessage;
 import dto.DoacaoMessage;
+import dto.DoacoesPorPeriodoMessage;
 import dto.RelatorioDoacaoParameters;
 import dto.RetornoMessage;
 import java.text.ParseException;
@@ -75,5 +78,13 @@ public class DoacaoServer {
         parametros.setDataFim(_dtFim);
 
         return new DoacaoBO().relatorioDeDoacao(parametros);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/porperiodo")
+    public List<DoacoesPorPeriodoMessage> doacoesPorPeriodo(@QueryParam("ano") String ano) {
+        return new DoacaoBO().doacoesPorPeriodo(Integer.parseInt(ano));
     }
 }

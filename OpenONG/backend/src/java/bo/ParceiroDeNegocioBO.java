@@ -1,18 +1,27 @@
 package bo;
 
 import constantes.CodigoErro;
+import constantes.TipoParceiro;
 import constantes.TipoRegistro;
 import dao.ParceiroDeNegocioDAO;
 import dao.base.HibernateUtil;
+import dto.ParceirosPorPeriodoMessage;
+import dto.ParceirosPorPeriodoMessage;
 import dto.RetornoMessage;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+import model.DoacaoItem;
 import model.Endereco;
 import model.Erro;
 import model.ParceiroDeNegocio;
 import model.Usuario;
 import org.hibernate.Session;
+import util.DataUtils;
 
 public class ParceiroDeNegocioBO {
 
@@ -39,6 +48,49 @@ public class ParceiroDeNegocioBO {
         List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarTodosAtivos(session);
         session.close();
         return parceirosdenegocio;
+    }
+
+    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro) {
+        Session session = HibernateUtil.abrirSessao();
+        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipoAtivos(tipoParceiro, session);
+        session.close();
+        return parceirosdenegocio;
+    }
+
+    public List<ParceirosPorPeriodoMessage> pesquisarParceirosPorPeriodo(TipoParceiro tipoParceiro) {
+        Session session = HibernateUtil.abrirSessao();
+        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipoAtivos(tipoParceiro, DataUtils.primeiroDiaDoAno(), DataUtils.ultimoDiaDoAno(), session);
+        session.close();
+
+        List<ParceirosPorPeriodoMessage> msg = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            ParceirosPorPeriodoMessage d = new ParceirosPorPeriodoMessage();
+            d.setMes(i);
+            d.setQuantidade(0);
+            msg.add(d);
+        }
+
+        for (ParceiroDeNegocio pn : parceirosdenegocio) {
+            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("america/sao_paulo"));
+            cal.setTime(pn.getDataCriacao());
+            int mes = (cal.get(Calendar.MONTH) + 1);
+            for (ParceirosPorPeriodoMessage pnPorPeriodo : msg) {
+                if (pnPorPeriodo.getMes() == mes) {
+                    pnPorPeriodo.setQuantidade(pnPorPeriodo.getQuantidade() + 1);
+                    break;
+                }
+            }
+        }
+
+        Collections.sort(msg, new Comparator<ParceirosPorPeriodoMessage>() {
+            @Override
+            public int compare(ParceirosPorPeriodoMessage c1, ParceirosPorPeriodoMessage c2) {
+                return Double.compare(c1.getMes(), c2.getMes());
+            }
+        });
+
+        return msg;
     }
 
     public RetornoMessage cadastrar(ParceiroDeNegocio parceirodenegocio) {

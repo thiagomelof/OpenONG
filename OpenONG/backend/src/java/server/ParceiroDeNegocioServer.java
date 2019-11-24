@@ -2,6 +2,8 @@ package server;
 
 import bo.ParceiroDeNegocioBO;
 import com.google.gson.Gson;
+import constantes.TipoParceiro;
+import dto.ParceirosPorPeriodoMessage;
 import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -10,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import model.ParceiroDeNegocio;
 
@@ -42,5 +45,23 @@ public class ParceiroDeNegocioServer {
     public RetornoMessage cadastrar(String body) {
         ParceiroDeNegocio parceirodenegocio = new Gson().fromJson(body, ParceiroDeNegocio.class);
         return new ParceiroDeNegocioBO().cadastrar(parceirodenegocio);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/tipo")
+    public List<ParceiroDeNegocio> getParceirosDeNegocioPorTipoAtivos(@QueryParam("tipo") String tipo) {
+
+        return new ParceiroDeNegocioBO().pesquisarPorTipoAtivos(TipoParceiro.valueOf(tipo));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/porperiodo")
+    public List<ParceirosPorPeriodoMessage> getParceirosPorPeriodo(@QueryParam("tipo") String tipo) {
+
+        return new ParceiroDeNegocioBO().pesquisarParceirosPorPeriodo(TipoParceiro.valueOf(tipo));
     }
 }

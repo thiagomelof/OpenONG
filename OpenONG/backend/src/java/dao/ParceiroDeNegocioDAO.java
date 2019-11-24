@@ -1,8 +1,10 @@
 package dao;
 
+import constantes.TipoParceiro;
 import dao.base.BaseDao;
 import dao.interfaces.IParceiroDeNegocioDAO;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import model.ParceiroDeNegocio;
 import org.hibernate.Criteria;
@@ -25,13 +27,6 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return consulta.list();
     }
 
-    public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from ParceiroDeNegocio where status =:statusHQL");
-        consulta.setParameter("statusHQL", true);
-
-        return consulta.list();
-    }
-
     @Override
     public List<ParceiroDeNegocio> pesquisarPorNome(String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
@@ -39,6 +34,30 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         List<ParceiroDeNegocio> parceiros = criteria.list();
 
         return parceiros;
+    }
+
+    public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {
+        Query consulta = session.createQuery("from ParceiroDeNegocio where status =:statusHQL");
+        consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
+
+    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro, Session session) throws HibernateException {
+        Query consulta = session.createQuery("from ParceiroDeNegocio where tipoParceiro =:tipoHQL");
+        consulta.setParameter("tipoHQL", tipoParceiro);
+
+        return consulta.list();
+    }
+
+    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro, Date dtInicio, Date dtFim, Session session) throws HibernateException {
+        Query consulta = session.createQuery("from ParceiroDeNegocio where tipoParceiro =:tipoHQL"
+                + " and dataCriacao BETWEEN :dtInicioHQL and :dtFimHQL ");
+        consulta.setParameter("tipoHQL", tipoParceiro);
+        consulta.setParameter("dtInicioHQL", dtInicio);
+        consulta.setParameter("dtFimHQL", dtFim);
+
+        return consulta.list();
     }
 
     public boolean parceiroExists(Long id, String nome, Session session) throws HibernateException {
@@ -76,7 +95,7 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
             criteria.add(Restrictions.ne("id", id));
         }
         List<ParceiroDeNegocio> parceiros = criteria.list();
-        
+
         if (parceiros.size() > 0) {
             return true;
         }

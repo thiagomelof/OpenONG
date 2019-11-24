@@ -68,4 +68,16 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
         
         return consulta.list();
     }
+    
+    public List<DoacaoItem> doacoesPorPeriodo(Date dtInicio, Date dtFim, Session session) throws HibernateException {
+
+        String query = " from DoacaoItem DOACAOITEM "
+                + " join fetch DOACAOITEM.doacao DOACAO "
+                + " where DOACAO.status =:statusHQL "
+                + " and DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
+
+        Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim);
+
+        return consulta.list();
+    }
 }

@@ -3,6 +3,7 @@ package server;
 import bo.DespesaBO;
 import com.google.gson.Gson;
 import dto.DespesaMessage;
+import dto.DespesasPorCategoriaMessage;
 import dto.RelatorioDespesaParameters;
 import dto.RetornoMessage;
 import java.text.ParseException;
@@ -30,22 +31,14 @@ public class DespesaServer {
     public List<Despesa> getDespesas() {
         return new DespesaBO().getDespesas();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/ativo")
     public List<Despesa> getDespesasAtivas() {
         return new DespesaBO().getDespesasAtivas();
     }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/relatorio")
-    public List<DespesaItem> getRelatorioDespesas() {
-        return new DespesaBO().getRelatorioDespesas();
-    }
 
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -60,7 +53,7 @@ public class DespesaServer {
         DespesaMessage despesa = new Gson().fromJson(body, DespesaMessage.class);
         return new DespesaBO().cadastrar(despesa);
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,5 +76,13 @@ public class DespesaServer {
         parametros.setDataFim(_dtFim);
 
         return new DespesaBO().relatorioDeDespesa(parametros);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/porcategoria")
+    public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoria() {
+        return new DespesaBO().DespesasAtivasPorCategoria();
     }
 }

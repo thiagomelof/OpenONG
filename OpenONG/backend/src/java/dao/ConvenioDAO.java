@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import dao.interfaces.IConvenioDAO;
+import java.util.Date;
 
 public class ConvenioDAO extends BaseDao<Convenio, Long>
         implements IConvenioDAO, Serializable {

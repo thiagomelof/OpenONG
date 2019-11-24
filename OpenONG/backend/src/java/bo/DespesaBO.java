@@ -6,9 +6,12 @@ import dao.DespesaItemDAO;
 import dao.DespesaDAO;
 import dao.base.HibernateUtil;
 import dto.DespesaMessage;
+import dto.DespesasPorCategoriaMessage;
 import dto.RelatorioDespesaParameters;
 import dto.RetornoMessage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import model.Despesa;
@@ -17,6 +20,7 @@ import model.Erro;
 import model.ParceiroDeNegocio;
 import model.Usuario;
 import org.hibernate.Session;
+import util.DataUtils;
 
 public class DespesaBO {
 
@@ -37,13 +41,6 @@ public class DespesaBO {
     public List<Despesa> getDespesas() {
         Session session = HibernateUtil.abrirSessao();
         List<Despesa> despesas = new DespesaDAO().pesquisarTodos(session);
-        session.close();
-        return despesas;
-    }
-    
-    public List<DespesaItem> getRelatorioDespesas() {
-        Session session = HibernateUtil.abrirSessao();
-        List<DespesaItem> despesas = new DespesaDAO().relatorioDeDespesa(session);
         session.close();
         return despesas;
     }
@@ -72,11 +69,47 @@ public class DespesaBO {
             }
         }
         List<DespesaItem> doacoes = new DespesaDAO().relatorioDeDespesa(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
-        
+
         session.close();
         return doacoes;
     }
-    
+
+    public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoria() {
+        Session session = HibernateUtil.abrirSessao();
+        List<DespesaItem> despesas = new DespesaDAO().DespesasAtivasPorCategoria(DataUtils.primeiroDiaDoMes(), DataUtils.ultimoDiaDoMes(), session);
+        session.close();
+        List<DespesasPorCategoriaMessage> msg = new ArrayList<>();
+
+        for (DespesaItem despesa : despesas) {
+
+            Boolean exists = false;
+            for (DespesasPorCategoriaMessage despesasPorCategoriaMessage : msg) {
+                if (despesasPorCategoriaMessage.getCategoria() == despesa.getItem().getCategoria().getNome()) {
+                    double soma = despesasPorCategoriaMessage.getValor() + (despesa.getQuantidade() * despesa.getValorUnitario());
+                    despesasPorCategoriaMessage.setValor(soma);
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                DespesasPorCategoriaMessage item = new DespesasPorCategoriaMessage();
+                item.setCategoria(despesa.getItem().getCategoria().getNome());
+                item.setValor((despesa.getQuantidade() * despesa.getValorUnitario()));
+                msg.add(item);
+            }
+        }
+
+        Collections.sort(msg, new Comparator<DespesasPorCategoriaMessage>() {
+            @Override
+            public int compare(DespesasPorCategoriaMessage c1, DespesasPorCategoriaMessage c2) {
+                return Double.compare(c2.getValor(), c1.getValor());
+            }
+        });
+
+        return msg;
+    }
+
     public RetornoMessage cadastrar(DespesaMessage despesa) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
@@ -153,7 +186,7 @@ public class DespesaBO {
             despesa.setParceiroDeNegocio(new ParceiroDeNegocio());
         }
     }
-    
+
     private void resetLinhasDespesa(Long idDocao, Session session) {
         List<DespesaItem> itens = new DespesaItemDAO().pesquisarTodosPorDespesa(idDocao, session);
         for (DespesaItem item : itens) {
