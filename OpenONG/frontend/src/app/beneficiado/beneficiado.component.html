@@ -89,7 +89,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input mask="000.000.000-00" [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
+                                        <input type="text" mask="000.000.000-00" [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -135,7 +135,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
+                                        <input type="text" mask="00000-000" [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
                                     </mat-form-field>
                                 </td>
                                 <td>
