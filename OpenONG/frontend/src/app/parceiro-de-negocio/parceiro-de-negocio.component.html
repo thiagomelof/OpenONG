@@ -74,7 +74,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.telefone" id="telefone" name="telefone" type="tel" matInput placeholder="Telefone">
+                                        <input type="text" mask="(00) 0000-0000" [(ngModel)]="parceiro.telefone" id="telefone" name="telefone" type="tel" matInput placeholder="Telefone">
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -85,7 +85,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.celular" id="celular" name="celular" type="tel" matInput placeholder="Celular">
+                                        <input type="text" mask="(00) 00000-0000" [(ngModel)]="parceiro.celular" id="celular" name="celular" type="tel" matInput placeholder="Celular">
                                     </mat-form-field>
                                 </td>
                                 <td>
@@ -105,12 +105,12 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
+                                        <input type="text" mask="000.000.000-00" [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.cnpj" matInput id="cnpj" name="cnpj" placeholder="CNPJ">
+                                        <input type="text" mask="00.000.000/0000-00" [(ngModel)]="parceiro.cnpj" matInput id="cnpj" name="cnpj" placeholder="CNPJ">
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -156,7 +156,7 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
+                                        <input type="text" mask="00000-000" [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
                                     </mat-form-field>
                                 </td>
                                 <td>

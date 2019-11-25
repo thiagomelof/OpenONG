@@ -18,10 +18,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { ParceiroDeNegocioComponent } from './parceiro-de-negocio.component';
 import { ListComponent } from './list/list.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
 const appRoutes: Routes = [
   { path: '', component: ParceiroDeNegocioComponent },
   { path: 'list', component: ListComponent, data: { animation: 'list' } }
 ]
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = undefined;
 
 @NgModule({
   imports: [
@@ -51,7 +55,8 @@ const appRoutes: Routes = [
     MatChipsModule,
     MatButtonToggleModule,
     RouterModule.forChild(appRoutes),
-    SharedModule
+    SharedModule,
+    NgxMaskModule.forRoot(options)
   ],
   exports: [],
   declarations: [ParceiroDeNegocioComponent, ListComponent]

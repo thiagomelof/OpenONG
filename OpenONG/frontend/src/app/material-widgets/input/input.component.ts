@@ -1,8 +1,10 @@
+import { Status } from './../../model-view/const/status';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { input_HELPERS, Messages, Links } from './helpers.data';
 import { ParceiroDeNegocioService } from '../../services/parceiro-de-negocio.service';
+import { TipoParceiro } from '../../model-view/const/tipoparceiro';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
 	isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -30,9 +32,9 @@ export class InputComponent implements OnInit {
 	tipoDeParceiroControl = new FormControl('', [Validators.required]);
 	matcher = new MyErrorStateMatcher();
 
-	
 
-	
+
+
 
 	parceiros: Array<any>;
 	parceiro: any;
@@ -47,7 +49,7 @@ export class InputComponent implements OnInit {
 
 
 	listar() {
-		this.parceiroDeNegocioService.listar().subscribe(dados => this.parceiros = dados);
+		this.parceiroDeNegocioService.listarParceirosPorTipo(TipoParceiro.Todos, Status.Todos).subscribe(dados => this.parceiros = dados);
 	}
 
 	criar(frm: FormGroup) {

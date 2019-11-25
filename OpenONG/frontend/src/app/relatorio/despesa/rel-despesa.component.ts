@@ -1,3 +1,4 @@
+import { Status } from './../../model-view/const/status';
 import { AppDateAdapter, APP_DATE_FORMATS } from './../../shared/format-datepicker';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ConvenioService } from './../../services/convenio.service';
@@ -12,6 +13,7 @@ import { RelatoriosService } from './../../services/relatorios.service';
 import { Component, OnInit } from '@angular/core';
 import { Convenio } from '../../model-view/convenio';
 import { ParceiroDeNegocio } from '../../model-view/parceiro-de-negocio';
+import { TipoParceiro } from '../../model-view/const/tipoparceiro';
 
 @Component({
   selector: 'app-rel-despesa',
@@ -50,7 +52,7 @@ export class RelDespesaComponent implements OnInit {
     this.totalbool = false;
     this.total = 0;
 
-    this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
+    this.parceiroDeNegocioServer.listarParceirosPorTipo(TipoParceiro.Fornecedor, Status.Todos).subscribe(pn => {
       this.parceirosDeNegocio = pn;
 
       if (this.parceirosDeNegocio != undefined) {

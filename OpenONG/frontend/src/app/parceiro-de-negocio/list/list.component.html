@@ -8,7 +8,7 @@
         <div class="table-container">
             <div class="example-header" style="padding: 0 20px;">
                 <mat-form-field floatPlaceholder="never" style="color: black; width: 100%;">
-                    <input matInput #filter placeholder="Filtrar itens">
+                    <input matInput #filter placeholder="Filtrar doadores e fornecedores">
                 </mat-form-field>
             </div>
             <div fxLayout="row" class="example-header example-selection-header mat-headline center-align ">
@@ -52,7 +52,7 @@
             </mat-table>
 
             <div class="example-no-results" [style.display]="dataSource?.listaRenderizada.length == 0 ? '' : 'none'">
-                Item não encontrado.
+                doador ou fornecedor não encontrado.
             </div>
 
             <mat-paginator #paginator [length]="paginatorLength()" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">

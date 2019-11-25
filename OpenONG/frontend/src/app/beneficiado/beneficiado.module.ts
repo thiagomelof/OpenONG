@@ -1,3 +1,4 @@
+import { IConfig } from 'ngx-mask';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,8 @@ const appRoutes: Routes = [
   { path: '', component: BeneficiadoComponent },
   { path: 'list', component: ListComponent, data: { animation: 'list' } }
 ]
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = undefined;
 
 @NgModule({
   imports: [
@@ -51,7 +54,8 @@ const appRoutes: Routes = [
     MatChipsModule,
     MatButtonToggleModule,
     RouterModule.forChild(appRoutes),
-    SharedModule
+    SharedModule,
+    NgxMaskModule.forRoot(options)
   ],
   exports: [],
   declarations: [BeneficiadoComponent, ListComponent]

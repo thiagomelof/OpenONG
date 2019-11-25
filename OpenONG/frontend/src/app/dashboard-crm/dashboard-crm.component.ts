@@ -1,5 +1,6 @@
+import { Status } from './../model-view/const/status';
+import { ParceiroDeNegocioService } from './../services/parceiro-de-negocio.service';
 import { ConvenioService } from './../services/convenio.service';
-import { DashboardService } from './../services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
@@ -16,15 +17,15 @@ export class DashboardCrmComponent implements OnInit {
 
     public dashCard = [];
 
-    constructor(private dashboardService: DashboardService, private convenioService: ConvenioService) { }
+    constructor(private parceiroService: ParceiroDeNegocioService, private convenioService: ConvenioService) { }
 
     ngOnInit() {
-        this.dashboardService.listarParceirosAtivosPorTipo(TipoParceiro.Beneficiado).subscribe(b => {
+        this.parceiroService.listarParceirosPorTipo(TipoParceiro.Beneficiado, Status.Ativo).subscribe(b => {
             this.countBeneficiados = b.length;
             this.dashCard.push({ colorDark: '#5C6BC0', colorLight: '#7986CB', number: this.countBeneficiados, title: 'BENEFICIADOS', icon: 'supervisor_account' })
         })
 
-        this.dashboardService.listarParceirosAtivosPorTipo(TipoParceiro.Doador).subscribe(d => {
+        this.parceiroService.listarParceirosPorTipo(TipoParceiro.Doador, Status.Ativo).subscribe(d => {
             this.countDoadores = d.length;
             this.dashCard.push({ colorDark: '#66BB6A', colorLight: '#81C784', number: this.countDoadores, title: 'DOADORES', icon: 'favorite' })
         })

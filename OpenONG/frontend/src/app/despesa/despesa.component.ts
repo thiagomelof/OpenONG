@@ -1,3 +1,4 @@
+import { Status } from './../model-view/const/status';
 import { RelatoriosService } from './../services/relatorios.service';
 import { DespesaParameters } from './../model-view/dto/despesa-parameters';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
@@ -22,6 +23,7 @@ import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Observable } from 'rxjs';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../shared/format-datepicker';
+import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
 @Component({
   selector: 'app-despesa',
@@ -38,7 +40,7 @@ export class DespesaComponent implements OnInit {
   saving = true;
   msg: string;
 
-  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Remover'];
+  displayedColumns = ['Item', 'Quantidade', 'Valor', 'Observações', 'Remover'];
   despesa = new DespesaMessage();
   despesaItem = new DespesaItem();
   dataSource: MatTableDataSource<DespesaItem>;
@@ -82,7 +84,7 @@ export class DespesaComponent implements OnInit {
     }
     )
 
-    this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
+    this.parceiroDeNegocioServer.listarParceirosPorTipo(TipoParceiro.Fornecedor, Status.Ativo).subscribe(pn => {
       this.parceirosDeNegocio = pn;
 
       if (this.parceirosDeNegocio != undefined) {
@@ -96,7 +98,12 @@ export class DespesaComponent implements OnInit {
     })
 
     this.convenioServer.listarAtivos().subscribe(conv => {
+      let convenioVazio = new Convenio();
+      convenioVazio.id = 0;
+      convenioVazio.nome = "Selecione...";
+      this.convenios = [];
       this.convenios = conv;
+      this.convenios.splice(0, 0, convenioVazio);
     })
   }
 
@@ -121,8 +128,27 @@ export class DespesaComponent implements OnInit {
   }
 
   addLinha() {
-    this.dataSource.data.push(this.AdicionaItem());
-    this.dataSource.filter = "";
+    let msg = "";
+    if (this.despesaItem.item.id == undefined || this.despesaItem.item.id <= 0) {
+      msg += "Necessário informar um item/serviço. ";
+    }
+    if (this.despesaItem.quantidade == undefined || this.despesaItem.quantidade <= 0) {
+      msg += "Necessário informar uma quantidade. ";
+    }
+
+    if (this.despesaItem.valorUnitario == undefined || this.despesaItem.valorUnitario <= 0) {
+      msg += "Necessário informar um valor. ";
+    }
+
+    if (msg != "") {
+      this.getStatusBar(msg);
+    } else {
+      this.dataSource.data.push(this.AdicionaItem());
+      this.dataSource.filter = "";
+      this.despesaItem = new DespesaItem();
+      this.despesaItem.item = new Item();
+      this.despesaItem.despesa = new Despesa();
+    }
   }
 
   filtrarParceiroDeNegocios(name: string) {

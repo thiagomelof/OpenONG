@@ -124,12 +124,18 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input type="number" [(ngModel)]="despesaItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
+                                        <input type="number" [(ngModel)]="despesaItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input type="number" [(ngModel)]="despesaItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
+                                        <input type="number" [(ngModel)]="despesaItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
+                                    </mat-form-field>
+                                </td>
+
+                                <td>
+                                    <mat-form-field>
+                                        <textarea [(ngModel)]="despesaItem.observacoes" id="itemObservacoes" name="itemObservacoes" matInput placeholder="Observações do item" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
                                     </mat-form-field>
                                 </td>
                                 <td>
@@ -152,14 +158,19 @@
                         <mat-cell *matCellDef="let row"> {{row.item.nome}} </mat-cell>
                     </ng-container>
 
+                    <ng-container matColumnDef="Quantidade">
+                        <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.quantidade}} </mat-cell>
+                    </ng-container>
+
                     <ng-container matColumnDef="Valor">
                         <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.valorUnitario}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Quantidade">
-                        <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.quantidade}} </mat-cell>
+                    <ng-container matColumnDef="Observações">
+                        <mat-header-cell *matHeaderCellDef> Observações </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.observacoes}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Remover">
@@ -170,15 +181,6 @@
                             </button>
                         </mat-cell>
                     </ng-container>
-
-                    <!-- <ng-container matColumnDef="Editar">
-                        <mat-header-cell *matHeaderCellDef> Editar </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
-                            <button type="button" mat-button (click)="editaLinha(row)">
-                                <mat-icon aria-label="Editar">edit</mat-icon>
-                            </button>
-                        </mat-cell>
-                    </ng-container> -->
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

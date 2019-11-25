@@ -1,3 +1,4 @@
+import { Status } from './../model-view/const/status';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { ConvenioService } from './../services/convenio.service';
 import { Convenio } from './../model-view/convenio';
@@ -20,6 +21,7 @@ import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Observable } from 'rxjs';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../shared/format-datepicker';
+import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
 @Component({
   selector: 'app-doacao',
@@ -36,7 +38,7 @@ export class DoacaoComponent implements OnInit {
   saving = true;
   msg: string;
 
-  displayedColumns = ['Item', 'Valor', 'Quantidade', 'Remover'];
+  displayedColumns = ['Item', 'Valor', 'Remover'];
   doacao = new DoacaoMessage();
   doacaoItem = new DoacaoItem();
   dataSource: MatTableDataSource<DoacaoItem>;
@@ -60,6 +62,8 @@ export class DoacaoComponent implements OnInit {
     this.doacao.doacao.parceiroDeNegocio = new ParceiroDeNegocio();
     this.doacaoItem = new DoacaoItem();
     this.doacaoItem.item = new Item();
+    this.doacaoItem.quantidade = 1;
+    this.doacaoItem.item.id = 1;
     this.doacaoItem.doacao = new Doacao();
     this.activatedRoute.params.forEach(params => {
       if (params.id == undefined || params.id == "") {
@@ -71,7 +75,12 @@ export class DoacaoComponent implements OnInit {
         this.doacaoServer.getDoacao(params.id).subscribe(d => {
           this.doacao = d;
           this.doacao.itens.forEach(item => {
-            this.addLinhaEdit(item);
+            //this.addLinhaEdit(item);
+            this.doacaoItem.item = item.item;
+            this.doacaoItem.linha = item.linha;
+            this.doacaoItem.observacoes = item.observacoes;
+            this.doacaoItem.quantidade = item.quantidade;
+            this.doacaoItem.valorUnitario = item.valorUnitario;
           });
 
         })
@@ -79,7 +88,7 @@ export class DoacaoComponent implements OnInit {
     }
     )
 
-    this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
+    this.parceiroDeNegocioServer.listarParceirosPorTipo(TipoParceiro.Doador, Status.Ativo).subscribe(pn => {
       this.parceirosDeNegocio = pn;
 
       if (this.parceirosDeNegocio != undefined) {
@@ -93,7 +102,12 @@ export class DoacaoComponent implements OnInit {
     })
 
     this.convenioServer.listarAtivos().subscribe(conv => {
+      let convenioVazio = new Convenio();
+      convenioVazio.id = 0;
+      convenioVazio.nome = "Selecione...";
+      this.convenios = [];
       this.convenios = conv;
+      this.convenios.splice(0, 0, convenioVazio);
     })
   }
 
@@ -101,6 +115,7 @@ export class DoacaoComponent implements OnInit {
   AdicionaItem(): DoacaoItem {
 
     let doacao = new DoacaoItem();
+    this.doacaoItem.observacoes = this.doacao.doacao.observacoes;
     doacao = JSON.parse(JSON.stringify(this.doacaoItem))
     doacao.linha = this.utilsService.GerarHash();
 
@@ -132,6 +147,8 @@ export class DoacaoComponent implements OnInit {
     this.controleDeTelaRequest(true);
 
     this.setUsuario();
+
+    this.addLinha();
 
     this.doacao.itens = this.dataSource.data;
 

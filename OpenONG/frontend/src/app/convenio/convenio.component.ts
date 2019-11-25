@@ -1,3 +1,4 @@
+import { Status } from './../model-view/const/status';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { ConvenioMessage } from './../model-view/dto/convenio-message';
 import { UtilsService } from './../services/utils.service';
@@ -18,6 +19,7 @@ import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Observable } from 'rxjs';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../shared/format-datepicker';
+import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
 @Component({
   selector: 'app-convenio',
@@ -80,7 +82,7 @@ export class ConvenioComponent implements OnInit {
     }
     )
 
-    this.parceiroDeNegocioServer.listarAtivas().subscribe(pn => {
+    this.parceiroDeNegocioServer.listarParceirosPorTipo(TipoParceiro.Doador, Status.Ativo).subscribe(pn => {
       this.parceiroDeNegocio = pn;
 
       if (this.parceiroDeNegocio != undefined) {
@@ -115,9 +117,25 @@ export class ConvenioComponent implements OnInit {
   }
 
   addLinha() {
-    this.categoriasConvenio.push(this.AdicionaCategoria());
-    this.dataSource.data = this.categoriasConvenio;
-    this.dataSource.filter = "";
+    let msg = "";
+    if (this.convenioCategoria.categoria.id == undefined || this.convenioCategoria.categoria.id <= 0) {
+      msg += "Necessário informar uma categoria. ";
+    }
+    if (this.convenioCategoria.percentual == undefined || this.convenioCategoria.percentual <= 0) {
+      msg += "Necessário informar um percentual válido. ";
+    }
+
+    if (msg != "") {
+      this.getStatusBar(msg);
+    } else {
+      this.categoriasConvenio.push(this.AdicionaCategoria());
+      this.dataSource.data = this.categoriasConvenio;
+      this.dataSource.filter = "";
+      
+      this.convenioCategoria = new ConvenioCategoria();
+      this.convenioCategoria.categoria = new Categoria();
+      this.convenioCategoria.convenio = new Convenio();
+    }
   }
 
   filtrarParceiroDeNegocios(name: string) {

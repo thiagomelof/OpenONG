@@ -1,21 +1,23 @@
+import { Status } from './../../model-view/const/status';
 import { merge as observableMerge, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 
-import { Beneficiado } from '../../model-view/beneficiado';
-import { BeneficiadoService } from '../../services/beneficiado.service';
+import { ParceiroDeNegocio } from '../../model-view/parceiro-de-negocio';
+import { ParceiroDeNegocioService } from '../../services/parceiro-de-negocio.service';
+import { TipoParceiro } from '../../model-view/const/tipoparceiro';
 
 export class BeneficiadoDao {
-  itens: Array<Beneficiado>;
-  beneficiado: Beneficiado;
+  itens: Array<ParceiroDeNegocio>;
+  beneficiado: ParceiroDeNegocio;
 
-  dataChange: BehaviorSubject<Beneficiado[]> = new BehaviorSubject<Beneficiado[]>([]);
+  dataChange: BehaviorSubject<ParceiroDeNegocio[]> = new BehaviorSubject<ParceiroDeNegocio[]>([]);
 
-  get data(): Beneficiado[] { return this.dataChange.value; }
+  get data(): ParceiroDeNegocio[] { return this.dataChange.value; }
 
-  constructor(private beneficiadoService: BeneficiadoService) {
-    beneficiadoService.listar().subscribe(
+  constructor(private beneficiadoService: ParceiroDeNegocioService) {
+    beneficiadoService.listarParceirosPorTipo(TipoParceiro.Beneficiado, Status.Todos).subscribe(
       listBeneficiados => {
         this.itens = listBeneficiados;
 
@@ -26,7 +28,7 @@ export class BeneficiadoDao {
     );
   }
 
-  addBeneficiado(beneficiado: Beneficiado) {
+  addBeneficiado(beneficiado: ParceiroDeNegocio) {
     const copiedData = this.data.slice();
     copiedData.push(beneficiado);
     this.dataChange.next(copiedData);
@@ -38,8 +40,8 @@ export class BeneficiadoDataSource extends DataSource<any> {
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
 
-  listaFiltrada: Beneficiado[] = [];
-  listaRenderizada: Beneficiado[] = [];
+  listaFiltrada: ParceiroDeNegocio[] = [];
+  listaRenderizada: ParceiroDeNegocio[] = [];
 
   constructor(private _beneficiadoDao: BeneficiadoDao, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
@@ -48,7 +50,7 @@ export class BeneficiadoDataSource extends DataSource<any> {
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<Beneficiado[]> {
+  connect(): Observable<ParceiroDeNegocio[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this._beneficiadoDao.dataChange,
@@ -59,7 +61,7 @@ export class BeneficiadoDataSource extends DataSource<any> {
 
     return observableMerge(...displayDataChanges).pipe(map(() => {
       // Filter data
-      this.listaFiltrada = this._beneficiadoDao.data.slice().filter((beneficiado: Beneficiado) => {
+      this.listaFiltrada = this._beneficiadoDao.data.slice().filter((beneficiado: ParceiroDeNegocio) => {
         let searchStr = (beneficiado.nome + beneficiado.strTipoParceiro + beneficiado.id + beneficiado.strStatus).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) != -1;
       });
@@ -77,7 +79,7 @@ export class BeneficiadoDataSource extends DataSource<any> {
   disconnect() { }
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: Beneficiado[]): Beneficiado[] {
+  sortData(data: ParceiroDeNegocio[]): ParceiroDeNegocio[] {
     if (!this._sort.active || this._sort.direction == '') { return data; }
 
     return data.sort((a, b) => {

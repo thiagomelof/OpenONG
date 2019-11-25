@@ -1,3 +1,4 @@
+import { Status } from './../../model-view/const/status';
 import { merge as observableMerge, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
@@ -5,6 +6,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 
 import { ParceiroDeNegocio } from '../../model-view/parceiro-de-negocio';
 import { ParceiroDeNegocioService } from '../../services/parceiro-de-negocio.service';
+import { TipoParceiro } from '../../model-view/const/tipoparceiro';
 
 export class ParceiroDeNegocioDao {
   itens: Array<ParceiroDeNegocio>;
@@ -15,7 +17,7 @@ export class ParceiroDeNegocioDao {
   get data(): ParceiroDeNegocio[] { return this.dataChange.value; }
 
   constructor(private parceirodenegocioService: ParceiroDeNegocioService) {
-    parceirodenegocioService.listar().subscribe(
+    parceirodenegocioService.listarParceirosPorTipo(TipoParceiro.DoadorOuFornecedor, Status.Todos).subscribe(
       listParceiroDeNegocios => {
         this.itens = listParceiroDeNegocios;
 

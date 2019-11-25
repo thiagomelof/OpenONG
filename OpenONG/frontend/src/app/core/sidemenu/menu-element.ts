@@ -21,7 +21,7 @@ export const menus = [
             },
             {
                 'name': 'Beneficiados',
-                'link': '/auth/beneficiados',
+                'link': '/auth/beneficiado',
                 'icon': 'supervisor_account',
                 'chip': false,
                 'open': true,

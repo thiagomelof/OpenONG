@@ -1,5 +1,6 @@
+import { Status } from './../../model-view/const/status';
+import { ParceiroDeNegocioService } from './../../services/parceiro-de-negocio.service';
 import { ParceirosPorPeriodoMessage } from './../../model-view/dto/parceiros-por-periodo-message';
-import { DashboardService } from './../../services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { TipoParceiro } from '../../model-view/const/tipoparceiro';
@@ -14,13 +15,13 @@ export class BarGraphComponent implements OnInit {
     data: number[];
     parceirosPorPeriodoMessage: ParceirosPorPeriodoMessage[];
 
-    constructor(private dashboardService: DashboardService) { }
+    constructor(private parceiroService: ParceiroDeNegocioService) { }
 
 
 
     ngOnInit() {
         this.data = [];
-        this.dashboardService.listarParceirosQuantidadeAtivosPorTipoEPeriodo(TipoParceiro.Doador).subscribe(d => {
+        this.parceiroService.listarParceirosQuantidadePorTipoEPeriodo(TipoParceiro.Doador, Status.Ativo).subscribe(d => {
             this.parceirosPorPeriodoMessage = d;
 
             this.parceirosPorPeriodoMessage.forEach(element => {
