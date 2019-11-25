@@ -1,4 +1,4 @@
-import { IConfig } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
