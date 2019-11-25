@@ -19,9 +19,9 @@ public class Endereco implements Serializable {
     private String bairro;
     @Column(length = 20)
     private String cep;
-    @Column(length = 11)
+    @Column(length = 100)
     private String cidade;
-    @Column(length = 11)
+    @Column(length = 100)
     private String estado;
     @Column(length = 100)
     private String pontoDeReferencia;
