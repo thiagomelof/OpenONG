@@ -47,7 +47,8 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
                 + " join fetch ITEM.despesa DESPESA "
                 + " join fetch DESPESA.parceiroDeNegocio PARCEIRO "
                 + " join fetch DESPESA.convenio CONVENIO "
-                + " where DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
+                + " where DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
+                + " and DESPESA.status =:statusHQL ";
 
         if (idParceiro > 0) {
             query += " AND PARCEIRO.id =:parceiroHQL ";
@@ -56,7 +57,7 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
             query += " AND CONVENIO.id =:convenioHQL ";
         }
 
-        Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim);
+        Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
 
         if (idParceiro > 0) {
             consulta.setParameter("parceiroHQL", idParceiro);

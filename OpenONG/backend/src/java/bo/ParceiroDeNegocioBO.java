@@ -1,6 +1,7 @@
 package bo;
 
 import constantes.CodigoErro;
+import constantes.Status;
 import constantes.TipoParceiro;
 import constantes.TipoRegistro;
 import dao.ParceiroDeNegocioDAO;
@@ -50,16 +51,16 @@ public class ParceiroDeNegocioBO {
         return parceirosdenegocio;
     }
 
-    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro) {
+    public List<ParceiroDeNegocio> pesquisarPorTipo(TipoParceiro tipoParceiro, Status status) {
         Session session = HibernateUtil.abrirSessao();
-        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipoAtivos(tipoParceiro, session);
+        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipo(tipoParceiro, status, null, null, session);
         session.close();
         return parceirosdenegocio;
     }
 
-    public List<ParceirosPorPeriodoMessage> pesquisarParceirosPorPeriodo(TipoParceiro tipoParceiro) {
+    public List<ParceirosPorPeriodoMessage> pesquisarParceirosPorPeriodo(TipoParceiro tipoParceiro, Status status) {
         Session session = HibernateUtil.abrirSessao();
-        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipoAtivos(tipoParceiro, DataUtils.primeiroDiaDoAno(), DataUtils.ultimoDiaDoAno(), session);
+        List<ParceiroDeNegocio> parceirosdenegocio = new ParceiroDeNegocioDAO().pesquisarPorTipo(tipoParceiro, status, DataUtils.primeiroDiaDoAno(), DataUtils.ultimoDiaDoAno(), session);
         session.close();
 
         List<ParceirosPorPeriodoMessage> msg = new ArrayList<>();

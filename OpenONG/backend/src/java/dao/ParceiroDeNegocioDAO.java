@@ -1,5 +1,6 @@
 package dao;
 
+import constantes.Status;
 import constantes.TipoParceiro;
 import dao.base.BaseDao;
 import dao.interfaces.IParceiroDeNegocioDAO;
@@ -43,19 +44,47 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return consulta.list();
     }
 
-    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro, Session session) throws HibernateException {
-        Query consulta = session.createQuery("from ParceiroDeNegocio where tipoParceiro =:tipoHQL");
-        consulta.setParameter("tipoHQL", tipoParceiro);
+    public List<ParceiroDeNegocio> pesquisarPorTipo(TipoParceiro tipoParceiro, Status status, Date dtInicio, Date dtFim, Session session) throws HibernateException {
+        String query = " from ParceiroDeNegocio where 1=1 ";
 
-        return consulta.list();
-    }
+        if (dtInicio != null || dtFim != null) {
+            query += " and dataCriacao BETWEEN :dtInicioHQL and :dtFimHQL ";
+        }
 
-    public List<ParceiroDeNegocio> pesquisarPorTipoAtivos(TipoParceiro tipoParceiro, Date dtInicio, Date dtFim, Session session) throws HibernateException {
-        Query consulta = session.createQuery("from ParceiroDeNegocio where tipoParceiro =:tipoHQL"
-                + " and dataCriacao BETWEEN :dtInicioHQL and :dtFimHQL ");
-        consulta.setParameter("tipoHQL", tipoParceiro);
-        consulta.setParameter("dtInicioHQL", dtInicio);
-        consulta.setParameter("dtFimHQL", dtFim);
+        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D) {
+            query += " and tipoParceiro =:tipoHQL ";
+        }
+
+        if (tipoParceiro == TipoParceiro.DF) {
+            query += " and ( tipoParceiro !=:tipoHQL ) ";
+        }
+
+        if (status == Status.A || status == Status.I) {
+            query += " and status=:statusHQL ";
+        }
+
+        Query consulta = session.createQuery(query);
+
+        if (dtInicio != null || dtFim != null) {
+            consulta.setParameter("dtInicioHQL", dtInicio);
+            consulta.setParameter("dtFimHQL", dtFim);
+        }
+
+        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D) {
+            consulta.setParameter("tipoHQL", tipoParceiro);
+        }
+
+        if (tipoParceiro == TipoParceiro.DF) {
+            consulta.setParameter("tipoHQL", TipoParceiro.B);
+        }
+
+        if (status == Status.A) {
+            consulta.setParameter("statusHQL", true);
+        }
+
+        if (status == Status.I) {
+            consulta.setParameter("statusHQL", false);
+        }
 
         return consulta.list();
     }

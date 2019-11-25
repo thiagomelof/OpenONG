@@ -5,13 +5,10 @@ import constantes.TipoRegistro;
 import dao.DoacaoItemDAO;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
-import dto.DespesasPorCategoriaMessage;
 import dto.DoacaoMessage;
 import dto.DoacoesPorPeriodoMessage;
 import dto.RelatorioDoacaoParameters;
 import dto.RetornoMessage;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -19,6 +16,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import model.Convenio;
 import model.Doacao;
 import model.DoacaoItem;
 import model.Erro;
@@ -132,6 +130,7 @@ public class DoacaoBO {
             } else {
                 doacao.getDoacao().setDataModificacao(new Date());
             }
+
             boolean retorno = doacaoDAO.salvarOuAlterar(doacao.getDoacao(), session);
 
             if (!retorno) {
@@ -159,9 +158,20 @@ public class DoacaoBO {
     }
 
     private List<Erro> validacoes(DoacaoMessage doacao, Session session) {
+
+        if (doacao.getDoacao().getConvenio().getId() == null) {
+            doacao.getDoacao().setConvenio(null);
+        }
+
+        if (doacao.getDoacao().getConvenio() != null && doacao.getDoacao().getConvenio().getId() != null) {
+            if (doacao.getDoacao().getConvenio().getId() == 0) {
+                doacao.getDoacao().setConvenio(null);
+            }
+        }
+
         List<Erro> erros = new ArrayList<>();
         if (doacao.getDoacao().getParceiroDeNegocio().getId() == null || doacao.getDoacao().getParceiroDeNegocio().getId() == -1) {
-            erros.add(new Erro(CodigoErro.DOACAOAA, "Necessário informar um fornecedor válido."));
+            erros.add(new Erro(CodigoErro.DOACAOAA, "Necessário informar um doador válido."));
         }
 
         List<Erro> errosItens = validacoesItens(doacao.getItens(), session);
@@ -190,6 +200,9 @@ public class DoacaoBO {
         }
         if (doacao.getParceiroDeNegocio() == null) {
             doacao.setParceiroDeNegocio(new ParceiroDeNegocio());
+        }
+        if (doacao.getConvenio()== null) {
+            doacao.setConvenio(new Convenio());
         }
     }
 

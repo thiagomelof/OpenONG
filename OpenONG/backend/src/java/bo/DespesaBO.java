@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import model.Convenio;
 import model.Despesa;
 import model.DespesaItem;
 import model.Erro;
@@ -153,6 +154,17 @@ public class DespesaBO {
     }
 
     private List<Erro> validacoes(DespesaMessage despesa, Session session) {
+        
+        if (despesa.getDespesa().getConvenio().getId() == null) {
+            despesa.getDespesa().setConvenio(null);
+        }
+
+        if (despesa.getDespesa().getConvenio() != null && despesa.getDespesa().getConvenio().getId() != null) {
+            if (despesa.getDespesa().getConvenio().getId() == 0) {
+                despesa.getDespesa().setConvenio(null);
+            }
+        }
+        
         List<Erro> erros = new ArrayList<>();
         if (despesa.getDespesa().getParceiroDeNegocio().getId() == null || despesa.getDespesa().getParceiroDeNegocio().getId() == -1) {
             erros.add(new Erro(CodigoErro.DESPESAAA, "Necessário informar um fornecedor válido."));
@@ -184,6 +196,9 @@ public class DespesaBO {
         }
         if (despesa.getParceiroDeNegocio() == null) {
             despesa.setParceiroDeNegocio(new ParceiroDeNegocio());
+        }
+        if (despesa.getConvenio()== null) {
+            despesa.setConvenio(new Convenio());
         }
     }
 

@@ -3,6 +3,7 @@ package server;
 import bo.ParceiroDeNegocioBO;
 import com.google.gson.Gson;
 import constantes.TipoParceiro;
+import constantes.Status;
 import dto.ParceirosPorPeriodoMessage;
 import dto.RetornoMessage;
 import java.util.List;
@@ -51,17 +52,17 @@ public class ParceiroDeNegocioServer {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/tipo")
-    public List<ParceiroDeNegocio> getParceirosDeNegocioPorTipoAtivos(@QueryParam("tipo") String tipo) {
+    public List<ParceiroDeNegocio> getParceirosDeNegocioPorTipoAtivos(@QueryParam("tipo") String tipo, @QueryParam("status") String status) {
 
-        return new ParceiroDeNegocioBO().pesquisarPorTipoAtivos(TipoParceiro.valueOf(tipo));
+        return new ParceiroDeNegocioBO().pesquisarPorTipo(TipoParceiro.valueOf(tipo), Status.valueOf(status));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/porperiodo")
-    public List<ParceirosPorPeriodoMessage> getParceirosPorPeriodo(@QueryParam("tipo") String tipo) {
+    public List<ParceirosPorPeriodoMessage> getParceirosPorPeriodo(@QueryParam("tipo") String tipo, @QueryParam("status") String status) {
 
-        return new ParceiroDeNegocioBO().pesquisarParceirosPorPeriodo(TipoParceiro.valueOf(tipo));
+        return new ParceiroDeNegocioBO().pesquisarParceirosPorPeriodo(TipoParceiro.valueOf(tipo), Status.valueOf(status));
     }
 }

@@ -18,7 +18,7 @@ import model.Usuario;
 import org.hibernate.Session;
 
 public class ConvenioBO {
-
+    
     public ConvenioMessage getConvenio(Long id) {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         ConvenioCategoriaDAO categoriasDAO = new ConvenioCategoriaDAO();
@@ -26,51 +26,51 @@ public class ConvenioBO {
         Convenio convenio = convenioDAO.pesquisarPorId(id, session);
         List<ConvenioCategoria> list = categoriasDAO.pesquisarTodosPorConvenio(convenio.getId(), session);
         formatarObjeto(convenio);
-
+        
         ConvenioMessage msg = new ConvenioMessage(convenio, list);
-
+        
         session.close();
         return msg;
     }
-
+    
     public List<Convenio> getConvenios() {
         Session session = HibernateUtil.abrirSessao();
         List<Convenio> convenios = new ConvenioDAO().pesquisarTodos(session);
         session.close();
         return convenios;
     }
-
+    
     public List<Convenio> getConveniosAtivos() {
         Session session = HibernateUtil.abrirSessao();
         List<Convenio> convenios = new ConvenioDAO().pesquisarTodosAtivos(session);
         session.close();
         return convenios;
     }
-
+    
     public RetornoMessage cadastrar(ConvenioMessage convenio) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
-
+        
         List<Erro> erros = validacoes(convenio, session);
-
+        
         if (erros.size() > 0) {
             msg.getErros().addAll(erros);
         } else {
-
+            
             ConvenioDAO convenioDAO = new ConvenioDAO();
-
+            
             if (convenio.getConvenio().getDataCriacao() == null) {
                 convenio.getConvenio().setDataCriacao(new Date());
             } else {
                 convenio.getConvenio().setDataModificacao(new Date());
             }
-
+            
             boolean retorno = convenioDAO.salvarOuAlterar(convenio.getConvenio(), session);
-
+            
             if (!retorno) {
                 msg.getErros().add(new Erro(CodigoErro.ERROBANCO, "Erro ao inserir o convênio no banco de dados"));
             }
-
+            
             if (retorno) {
                 resetLinhasConvenio(convenio.getConvenio().getId(), session);
                 for (ConvenioCategoria categoria : convenio.getCategorias()) {
@@ -79,7 +79,7 @@ public class ConvenioBO {
                     retorno = new ConvenioCategoriaDAO().salvarOuAlterar(categoria, session);
                 }
             }
-
+            
             if (retorno) {
                 msg.getResultado().setId(convenio.getConvenio().getId());
                 msg.getResultado().setTipoRegistro(TipoRegistro.CONVENIO);
@@ -90,15 +90,15 @@ public class ConvenioBO {
         session.close();
         return msg;
     }
-
+    
     private List<Erro> validacoes(ConvenioMessage convenio, Session session) {
         List<Erro> erros = new ArrayList<>();
         long id = 0;
-
+        
         if (convenio.getConvenio().getId() != null) {
             id = convenio.getConvenio().getId();
         }
-
+        
         if (convenio.getConvenio().getNome() == "" || convenio.getConvenio().getNome() == null || convenio.getConvenio().getNome().isEmpty()) {
             erros.add(new Erro(CodigoErro.CONVENIOAA, "Necessário informar o nome."));
         } else {
@@ -107,28 +107,28 @@ public class ConvenioBO {
                 erros.add(new Erro(CodigoErro.CONVENIOAB, "Este convênio já existe."));
             }
         }
-
+        
         if (convenio.getConvenio().getParceiroDeNegocio().getId() == null || convenio.getConvenio().getParceiroDeNegocio().getId() == -1) {
             erros.add(new Erro(CodigoErro.CONVENIOAC, "Necessário informar um doador válido."));
         }
-
+        
         if (convenio.getConvenio().getValidoDe() == null) {
             erros.add(new Erro(CodigoErro.CONVENIOAD, "Necessário informar uma data inicial de validade."));
         }
-
+        
         if (convenio.getConvenio().getValidoAte() == null) {
             erros.add(new Erro(CodigoErro.CONVENIOAE, "Necessário informar uma data final de validade."));
         }
-
+        
         List<Erro> errosCategorias = validacoesCategorias(convenio.getCategorias(), session);
-
+        
         if (errosCategorias.size() > 0) {
             erros.addAll(errosCategorias);
         }
-
+        
         return erros;
     }
-
+    
     private List<Erro> validacoesCategorias(List<ConvenioCategoria> categorias, Session session) {
         List<Erro> erros = new ArrayList<>();
         if (categorias.size() == 0) {
@@ -145,7 +145,7 @@ public class ConvenioBO {
         }
         return erros;
     }
-
+    
     private void resetLinhasConvenio(Long idDocao, Session session) {
         List<ConvenioCategoria> categorias = new ConvenioCategoriaDAO().pesquisarTodosPorConvenio(idDocao, session);
         for (ConvenioCategoria cat : categorias) {
@@ -157,7 +157,7 @@ public class ConvenioBO {
             }
         }
     }
-
+    
     private void formatarObjeto(Convenio convenio) {
         if (convenio.getUsuarioCriacao() == null) {
             convenio.setUsuarioCriacao(new Usuario());

@@ -46,9 +46,9 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
         String query = " from DoacaoItem ITEM "
                 + " join fetch ITEM.doacao DOACAO "
                 + " join fetch DOACAO.parceiroDeNegocio PARCEIRO "
-                + " join fetch DOACAO.convenio CONVENIO "
-                
-                + " where DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
+                + " join fetch DOACAO.convenio CONVENIO "                
+                + " where DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
+                + " and DOACAO.status =:statusHQL ";
 
         if (idParceiro > 0) {
             query += " AND PARCEIRO.id =:parceiroHQL ";
@@ -57,7 +57,7 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
             query += " AND CONVENIO.id =:convenioHQL ";
         }
 
-        Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim);
+        Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
             
         if (idParceiro > 0) {
             consulta.setParameter("parceiroHQL", idParceiro);

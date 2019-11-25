@@ -94,15 +94,15 @@ public class Despesa implements Serializable {
         if (status) {
             return "Ativo";
         }
-        return "Inativo";
+        return "Cancelado";
     }
 
     public void setStrStatus(String strStatus) {
         if (status) {
             this.strStatus = "Ativo";
         }
-        this.strStatus = "Inativo";
-    }
+        this.strStatus = "Cancelado";
+    } 
 
     public Date getLancamento() {
         return lancamento;
