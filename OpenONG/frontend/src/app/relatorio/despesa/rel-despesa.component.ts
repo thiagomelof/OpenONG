@@ -1,6 +1,11 @@
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
 import { Status } from './../../model-view/const/status';
-import { AppDateAdapter, APP_DATE_FORMATS } from './../../shared/format-datepicker';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ConvenioService } from './../../services/convenio.service';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
@@ -19,9 +24,9 @@ import { TipoParceiro } from '../../model-view/const/tipoparceiro';
   selector: 'app-rel-despesa',
   templateUrl: './rel-despesa.component.html',
   styleUrls: ['./../../shared/shared-table.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt' },
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+  { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 export class RelDespesaComponent implements OnInit {

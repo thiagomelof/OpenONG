@@ -1,0 +1,35 @@
+<mat-toolbar style="text-align: center;" class="input-header">
+    <h1 class="mat-subheading-1 center-align">Open ONG - Promoção da transparência</h1>
+</mat-toolbar>
+
+<div style="text-align:center;">
+    <mat-form-field style="padding: 5px;">
+        <mat-select placeholder="Mês" [(ngModel)]="mes" name="mes" (ngModelChange)="onChangeMes($event)">
+            <mat-option *ngFor="let mes of meses" [value]="mes.id">
+                {{mes.nome}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field style="padding: 5px;">
+        <mat-select placeholder="Ano" [(ngModel)]="ano" name="Ano" (ngModelChange)="onChangeAno($event)">
+            <mat-option *ngFor="let ano of anos" [value]="ano.id">
+                {{ano.id}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<mat-table #table [dataSource]="dataSource" style="margin-top: 20px;">
+
+    <ng-container matColumnDef="Categoria">
+        <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.categoria}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Valor">
+        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+        <mat-cell *matCellDef="let row"> R$ {{row.valor}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

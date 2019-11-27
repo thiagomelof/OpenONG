@@ -77,7 +77,7 @@ export class DoughnutGraphComponent implements OnInit {
                 },
                 title: {
                     display: true,
-                    text: 'DESPESAS POR CATEGORIA EM ' + DateUtils.getMes(this.mes.getMonth()).toUpperCase()
+                    text: 'DESPESAS POR CATEGORIA EM ' + DateUtils.getMes(this.mes.getMonth() + 1).toUpperCase()
                 }
             }
 

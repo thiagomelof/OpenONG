@@ -1,25 +1,26 @@
-import { AppDateAdapter, APP_DATE_FORMATS } from './../shared/format-datepicker';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { Usuario } from './../model-view/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { estados } from '../parceiro-de-negocio/helpers.data';
 import { ParceiroDeNegocioService } from '../services/parceiro-de-negocio.service';
 import { finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { Endereco } from '../model-view/Endereco';
 import { TipoParceiro } from '../model-view/const/tipoparceiro';
+import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @Component({
   selector: 'app-beneficiado',
   templateUrl: './beneficiado.component.html',
   styleUrls: ['../shared/shared-form.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 

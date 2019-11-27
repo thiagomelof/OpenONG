@@ -2,40 +2,40 @@ export class DateUtils {
 
 
     static getMes(mes: number): string {
-        if (mes == 1) {
+        if (mes == 0) {
             return "Janeiro"
         }
-        if (mes == 2) {
+        if (mes == 1) {
             return "Fevereiro"
         }
-        if (mes == 3) {
+        if (mes == 2) {
             return "Março"
         }
-        if (mes == 4) {
+        if (mes == 3) {
             return "Abril"
         }
-        if (mes == 5) {
+        if (mes == 4) {
             return "Maio"
         }
-        if (mes == 6) {
+        if (mes == 5) {
             return "Junho"
         }
-        if (mes == 7) {
+        if (mes == 6) {
             return "Julho"
         }
-        if (mes == 8) {
+        if (mes == 7) {
             return "Agosto"
         }
-        if (mes == 9) {
+        if (mes == 8) {
             return "Setembro"
         }
-        if (mes == 10) {
+        if (mes == 9) {
             return "Outubro"
         }
-        if (mes == 11) {
+        if (mes == 10) {
             return "Novembro"
         }
-        if (mes == 12) {
+        if (mes == 11) {
             return "Dezembro"
         }
 

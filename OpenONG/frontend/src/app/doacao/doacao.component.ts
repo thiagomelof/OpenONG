@@ -1,3 +1,4 @@
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { Status } from './../model-view/const/status';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { ConvenioService } from './../services/convenio.service';
@@ -10,7 +11,7 @@ import { DoacaoItem } from '../model-view/doacao-item';
 import { ParceiroDeNegocioService } from './../services/parceiro-de-negocio.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { ErrorStateMatcher, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Doacao } from '../model-view/Doacao';
 import { DoacaoService } from '../services/doacao.service';
 import { Usuario } from '../model-view/usuario';
@@ -20,16 +21,15 @@ import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Observable } from 'rxjs';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../shared/format-datepicker';
 import { TipoParceiro } from '../model-view/const/tipoparceiro';
 
 @Component({
   selector: 'app-doacao',
   templateUrl: './doacao.component.html',
   styleUrls: ['../shared/shared-form.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt' },
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+  { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 export class DoacaoComponent implements OnInit {

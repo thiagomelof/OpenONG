@@ -1,0 +1,64 @@
+@mixin auth($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    .input-header {
+        background-color: #327ebd;
+        color: white;
+        padding: 0 5px;
+    }
+    .input-container {
+        padding: 5px 15px 15px 15px;
+    }
+    .input-component-holder {
+        border: 1px solid #327ebd;
+        background-color: white;
+        h4 {
+            color: #327ebd;
+            margin: 14px 0;
+        }
+        mat-divider {
+            margin-bottom: 10px;
+        }
+    }
+    .sidenav {
+        background: #327ebd;
+        overflow: hidden;
+        position: relative;
+        width: 250px;
+    }
+    .drawer {
+        background: mat-color($primary, 400);
+        overflow: hidden;
+        position: relative;
+        width: 80px;
+    }
+    [no-over-flow] {
+        overflow: hidden;
+    }
+    .router-outlet {
+        position: relative;
+        padding: 0px 5px;
+    }
+    .spacer {
+        width: 100%;
+    }
+    .logo {
+        font-size: 26px;
+        font-family: Roboto;
+        color: white;
+        margin-top: 8px;
+    }
+    .table-header {
+        background-color: #327ebd;
+        color: white;
+        padding: 0 5px;
+    }
+    .table-container {
+        padding: 5px 15px 15px 15px;
+    }
+    .table-component-holder {
+        border: 1px solid #327ebd;
+        background-color: white;
+    }
+}

@@ -1,11 +1,11 @@
-import { AppDateAdapter, APP_DATE_FORMATS } from './../shared/format-datepicker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { RetornoMessage } from './../model-view/dto/retorno-message';
 import { Usuario } from './../model-view/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParceiroDeNegocio } from '../model-view/parceiro-de-negocio';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ErrorStateMatcher, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { tiposDeParceiro, estados } from './helpers.data';
 import { ParceiroDeNegocioService } from '../services/parceiro-de-negocio.service';
 import { finalize } from 'rxjs/operators';
@@ -16,9 +16,9 @@ import { Endereco } from '../model-view/Endereco';
   selector: 'app-parceiro-de-negocio',
   templateUrl: './parceiro-de-negocio.component.html',
   styleUrls: ['../shared/shared-form.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt' },
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+  { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 
