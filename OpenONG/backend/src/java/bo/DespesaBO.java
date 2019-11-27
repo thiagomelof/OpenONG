@@ -111,6 +111,42 @@ public class DespesaBO {
         return msg;
     }
 
+    public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoriaMes(String mes, String ano) {
+        Session session = HibernateUtil.abrirSessao();
+        List<DespesaItem> despesas = new DespesaDAO().DespesasAtivasPorCategoria(DataUtils.primeiroDiaDoMes(mes, ano), DataUtils.ultimoDiaDoMes(mes, ano), session);
+            session.close();
+        List<DespesasPorCategoriaMessage> msg = new ArrayList<>();
+
+        for (DespesaItem despesa : despesas) {
+
+            Boolean exists = false;
+            for (DespesasPorCategoriaMessage despesasPorCategoriaMessage : msg) {
+                if (despesasPorCategoriaMessage.getCategoria() == despesa.getItem().getCategoria().getNome()) {
+                    double soma = despesasPorCategoriaMessage.getValor() + (despesa.getQuantidade() * despesa.getValorUnitario());
+                    despesasPorCategoriaMessage.setValor(soma);
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                DespesasPorCategoriaMessage item = new DespesasPorCategoriaMessage();
+                item.setCategoria(despesa.getItem().getCategoria().getNome());
+                item.setValor((despesa.getQuantidade() * despesa.getValorUnitario()));
+                msg.add(item);
+            }
+        }
+
+        Collections.sort(msg, new Comparator<DespesasPorCategoriaMessage>() {
+            @Override
+            public int compare(DespesasPorCategoriaMessage c1, DespesasPorCategoriaMessage c2) {
+                return Double.compare(c2.getValor(), c1.getValor());
+            }
+        });
+
+        return msg;
+    }
+
     public RetornoMessage cadastrar(DespesaMessage despesa) {
         RetornoMessage msg = new RetornoMessage();
         Session session = HibernateUtil.abrirSessao();
@@ -154,7 +190,7 @@ public class DespesaBO {
     }
 
     private List<Erro> validacoes(DespesaMessage despesa, Session session) {
-        
+
         if (despesa.getDespesa().getConvenio().getId() == null) {
             despesa.getDespesa().setConvenio(null);
         }
@@ -164,7 +200,7 @@ public class DespesaBO {
                 despesa.getDespesa().setConvenio(null);
             }
         }
-        
+
         List<Erro> erros = new ArrayList<>();
         if (despesa.getDespesa().getParceiroDeNegocio().getId() == null || despesa.getDespesa().getParceiroDeNegocio().getId() == -1) {
             erros.add(new Erro(CodigoErro.DESPESAAA, "Necessário informar um fornecedor válido."));
@@ -197,7 +233,7 @@ public class DespesaBO {
         if (despesa.getParceiroDeNegocio() == null) {
             despesa.setParceiroDeNegocio(new ParceiroDeNegocio());
         }
-        if (despesa.getConvenio()== null) {
+        if (despesa.getConvenio() == null) {
             despesa.setConvenio(new Convenio());
         }
     }

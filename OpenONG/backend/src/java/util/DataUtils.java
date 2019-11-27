@@ -25,6 +25,41 @@ public class DataUtils {
         return data;
     }
 
+    public static Date primeiroDiaDoMes(String mes, String ano) {
+
+        Date dataParam = new Date();
+        try {
+            dataParam = (new SimpleDateFormat("dd/MM/yyyy")).parse("01" + "/" + mes + "/" + ano);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        return dataParam;
+    }
+
+    public static Date ultimoDiaDoMes(String mes, String ano) {
+        
+        Date dataParam = new Date();
+        try {
+            dataParam = (new SimpleDateFormat("dd/MM/yyyy")).parse("01" + "/" + mes + "/" + ano);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.setTime(dataParam);
+
+        int dia = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        
+        Date data = new Date();
+        try {
+            data = (new SimpleDateFormat("dd/MM/yyyy")).parse(dia + "/" + mes + "/" + ano);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+    
     public static Date ultimoDiaDoMes() {
         Calendar cal = GregorianCalendar.getInstance();
         cal.setTime(new Date());

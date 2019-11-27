@@ -85,4 +85,12 @@ public class DespesaServer {
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoria() {
         return new DespesaBO().DespesasAtivasPorCategoria();
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/porcategoriames")
+    public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoriaMes(@QueryParam("mes") String mes, @QueryParam("ano") String ano) {
+        return new DespesaBO().DespesasAtivasPorCategoriaMes(mes, ano);
+    }
 }

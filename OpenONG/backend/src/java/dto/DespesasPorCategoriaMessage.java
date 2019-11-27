@@ -1,7 +1,6 @@
 package dto;
 
-public class DespesasPorCategoriaMessage {
-
+public class DespesasPorCategoriaMessage {    
     private String categoria;
     private double valor;
 
