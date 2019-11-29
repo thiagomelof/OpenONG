@@ -4,6 +4,7 @@ import bo.DespesaBO;
 import com.google.gson.Gson;
 import dto.DespesaMessage;
 import dto.DespesasPorCategoriaMessage;
+import dto.DespesasPorPeriodoMessage;
 import dto.RelatorioDespesaParameters;
 import dto.RetornoMessage;
 import java.text.ParseException;
@@ -92,5 +93,13 @@ public class DespesaServer {
     @Path("/porcategoriames")
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoriaMes(@QueryParam("mes") String mes, @QueryParam("ano") String ano) {
         return new DespesaBO().DespesasAtivasPorCategoriaMes(mes, ano);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/porperiodo")
+    public List<DespesasPorPeriodoMessage> DespesasPorPeriodo(@QueryParam("ano") String ano) {
+        return new DespesaBO().despesasPorPeriodo(Integer.parseInt(ano));
     }
 }

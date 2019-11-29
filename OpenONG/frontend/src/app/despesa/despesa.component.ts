@@ -69,7 +69,7 @@ export class DespesaComponent implements OnInit {
       if (params.id == undefined || params.id == "") {
         this.isAddMode = true;
         this.despesa.despesa.status = true;
-
+        this.despesa.despesa.lancamento = new Date();
       } else {
         this.despesa.despesa.usuarioModificacao = new Usuario();
 
@@ -93,9 +93,7 @@ export class DespesaComponent implements OnInit {
       }
     })
 
-    this.itemServer.listarAtivos().subscribe(cat => {
-      this.itens = cat;
-    })
+    this.getItens(0);
 
     this.convenioServer.listarAtivos().subscribe(conv => {
       let convenioVazio = new Convenio();
@@ -222,13 +220,34 @@ export class DespesaComponent implements OnInit {
   }
 
   onChangeConvenio(event) {
+
     if (this.convenios != undefined) {
       if (event != undefined && event != "") {
         try {
           this.despesa.despesa.convenio.nome = this.convenios.find(x => x.id === event).nome;
+
+          this.getItens(event);
+
         } catch (error) { }
 
+      } else {
+        this.getItens(0);
       }
+    }
+  }
+  getItens(idConvenio: number) {
+    this.despesaItem = new DespesaItem();
+    this.despesaItem.item = new Item();
+    this.despesaItem.despesa = new Despesa();
+    this.itens = [];
+    if (idConvenio > 0) {
+      this.itemServer.listarPorCategoriasDoConvenio(idConvenio).subscribe(cat => {
+        this.itens = cat;
+      })
+    } else {
+      this.itemServer.listarAtivos().subscribe(cat => {
+        this.itens = cat;
+      })
     }
   }
 

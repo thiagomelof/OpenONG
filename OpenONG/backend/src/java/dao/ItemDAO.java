@@ -21,13 +21,23 @@ public class ItemDAO extends BaseDao<Item, Long>
 
     @Override
     public List<Item> pesquisarTodos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Item");
+        Query consulta = session.createQuery("from Item order by nome asc");
         return consulta.list();
     }
 
     public List<Item> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Item where status =:statusHQL");
+        Query consulta = session.createQuery("from Item where status =:statusHQL order by nome asc");
         consulta.setParameter("statusHQL", true);
+
+        return consulta.list();
+    }
+
+    public List<Item> pesquisarTodosAtivosPorCategoriasDeConvenio(long idConvenio, Session session) throws HibernateException {
+        Query categorias = session.createQuery("select c.categoria.id from ConvenioCategoria c where c.convenio.id=:idConvenioHQL").setParameter("idConvenioHQL", idConvenio);
+
+        Query consulta = session.createQuery("from Item ITEM"
+                + " join fetch ITEM.categoria CAT  "
+                + " where CAT.id in (:idsHQL)").setParameterList("idsHQL", categorias.list());
 
         return consulta.list();
     }

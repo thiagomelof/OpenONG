@@ -51,7 +51,7 @@ export class ParceiroDeNegocioComponent implements OnInit {
         this.parceiro.status = true;
       } else {
         this.parceiroServer.getParceiro(params.id).subscribe(pn => { this.parceiro = pn; })
-        this.parceiro.usuarioCriacao = new Usuario();
+        this.parceiro.usuarioModificacao = new Usuario();
       }
     }
     )

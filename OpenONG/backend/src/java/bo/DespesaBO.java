@@ -7,13 +7,16 @@ import dao.DespesaDAO;
 import dao.base.HibernateUtil;
 import dto.DespesaMessage;
 import dto.DespesasPorCategoriaMessage;
+import dto.DespesasPorPeriodoMessage;
 import dto.RelatorioDespesaParameters;
 import dto.RetornoMessage;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import model.Convenio;
 import model.Despesa;
 import model.DespesaItem;
@@ -69,12 +72,49 @@ public class DespesaBO {
                 idConvenio = parametros.getConvenio().getId();
             }
         }
-        List<DespesaItem> doacoes = new DespesaDAO().relatorioDeDespesa(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
+        List<DespesaItem> despesas = new DespesaDAO().relatorioDeDespesa(idParceiro, idConvenio, parametros.getDataInicio(), parametros.getDataFim(), session);
 
         session.close();
-        return doacoes;
+        return despesas;
     }
 
+    public List<DespesasPorPeriodoMessage> despesasPorPeriodo(int ano) {
+        Session session = HibernateUtil.abrirSessao();
+        List<DespesaItem> despesas = new DespesaDAO().despesasPorPeriodo(DataUtils.primeiroDiaDoAno(ano), DataUtils.ultimoDiaDoAno(ano), session);
+        session.close();
+
+        List<DespesasPorPeriodoMessage> msg = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            DespesasPorPeriodoMessage d = new DespesasPorPeriodoMessage();
+            d.setMes(i);
+            d.setValor(0);
+            msg.add(d);
+        }
+
+        for (DespesaItem despesa : despesas) {
+            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("america/sao_paulo"));
+            cal.setTime(despesa.getDespesa().getLancamento());
+            int mes = (cal.get(Calendar.MONTH) + 1);
+            for (DespesasPorPeriodoMessage despesasPorPeriodoMessage : msg) {
+                if (despesasPorPeriodoMessage.getMes() == mes) {
+                    double soma = despesasPorPeriodoMessage.getValor() + (despesa.getQuantidade() * despesa.getValorUnitario());
+                    despesasPorPeriodoMessage.setValor(soma);
+                    break;
+                }
+            }
+        }
+
+        Collections.sort(msg, new Comparator<DespesasPorPeriodoMessage>() {
+            @Override
+            public int compare(DespesasPorPeriodoMessage c1, DespesasPorPeriodoMessage c2) {
+                return Double.compare(c1.getMes(), c2.getMes());
+            }
+        });
+
+        return msg;
+    }
+    
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoria() {
         Session session = HibernateUtil.abrirSessao();
         List<DespesaItem> despesas = new DespesaDAO().DespesasAtivasPorCategoria(DataUtils.primeiroDiaDoMes(), DataUtils.ultimoDiaDoMes(), session);

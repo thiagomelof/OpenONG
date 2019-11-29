@@ -69,6 +69,7 @@ export class DoacaoComponent implements OnInit {
       if (params.id == undefined || params.id == "") {
         this.isAddMode = true;
         this.doacao.doacao.status = true;
+        this.doacao.doacao.lancamento = new Date();
       } else {
         this.doacao.doacao.usuarioModificacao = new Usuario();
 
@@ -101,14 +102,7 @@ export class DoacaoComponent implements OnInit {
       this.itens = cat;
     })
 
-    this.convenioServer.listarAtivos().subscribe(conv => {
-      let convenioVazio = new Convenio();
-      convenioVazio.id = 0;
-      convenioVazio.nome = "Selecione...";
-      this.convenios = [];
-      this.convenios = conv;
-      this.convenios.splice(0, 0, convenioVazio);
-    })
+    this.getConvenios(0);
   }
 
 
@@ -202,10 +196,40 @@ export class DoacaoComponent implements OnInit {
       if (event != undefined && event != "") {
         try {
           this.doacao.doacao.parceiroDeNegocio.id = this.parceirosDeNegocio.find(x => x.nome === event).id;
+
+          this.getConvenios(this.doacao.doacao.parceiroDeNegocio.id);
+
         } catch (error) { }
 
       }
     }
+  }
+
+  getConvenios(idParceiro: number) {
+    
+    this.doacao.doacao.convenio = new Convenio();
+
+    if (idParceiro > 0) {
+      this.convenioServer.listarPorParceiro(idParceiro).subscribe(conv => {
+        let convenioVazio = new Convenio();
+        convenioVazio.id = 0;
+        convenioVazio.nome = "Selecione...";
+        this.convenios = [];
+        this.convenios = conv;
+        this.convenios.splice(0, 0, convenioVazio);
+      })
+    } else {
+      this.convenioServer.listarAtivos().subscribe(conv => {
+        let convenioVazio = new Convenio();
+        convenioVazio.id = 0;
+        convenioVazio.nome = "Selecione...";
+        this.convenios = [];
+        this.convenios = conv;
+        this.convenios.splice(0, 0, convenioVazio);
+      })
+    }
+
+
   }
 
   onChangeConvenio(event) {

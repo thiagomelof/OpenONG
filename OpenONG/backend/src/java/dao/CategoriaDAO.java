@@ -21,12 +21,12 @@ public class CategoriaDAO extends BaseDao<Categoria, Long>
 
     @Override
     public List<Categoria> pesquisarTodos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Categoria");
+        Query consulta = session.createQuery("from Categoria order by nome asc");
         return consulta.list();
     }
 
     public List<Categoria> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Categoria where status =:statusHQL");
+        Query consulta = session.createQuery("from Categoria where status =:statusHQL order by nome asc");
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();

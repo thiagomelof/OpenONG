@@ -24,7 +24,7 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
 
     @Override
     public List<ParceiroDeNegocio> pesquisarTodos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from ParceiroDeNegocio");
+        Query consulta = session.createQuery("from ParceiroDeNegocio order by nome asc");
         return consulta.list();
     }
 
@@ -38,7 +38,7 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
     }
 
     public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from ParceiroDeNegocio where status =:statusHQL");
+        Query consulta = session.createQuery("from ParceiroDeNegocio where status =:statusHQL order by nome asc");
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();
@@ -62,6 +62,8 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         if (status == Status.A || status == Status.I) {
             query += " and status=:statusHQL ";
         }
+        
+        query+="  order by nome asc ";
 
         Query consulta = session.createQuery(query);
 

@@ -1,3 +1,4 @@
+import { ComparativoDespesaLineGraphComponent } from './comparativo-despesa-anual/comparativo-despesa-anual.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -55,8 +56,8 @@ import { WorldMapComponent } from './world-map/world-map.component';
       RoundProgressbarComponent,
       SalesListComponent,
       D3UsaComponent,
-      WorldMapComponent
-    
+      WorldMapComponent,
+      ComparativoDespesaLineGraphComponent    
       ],
   exports: [
       DashcardComponent, 
@@ -70,7 +71,8 @@ import { WorldMapComponent } from './world-map/world-map.component';
       RoundProgressbarComponent,
       SalesListComponent,
       D3UsaComponent,
-      WorldMapComponent
+      WorldMapComponent,
+      ComparativoDespesaLineGraphComponent
   ]
 })
 export class DashboardWidgetModule { }

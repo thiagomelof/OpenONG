@@ -10,7 +10,7 @@ public interface IConvenioDAO extends IBaseDao<Convenio, Long> {
 
     List<Convenio> pesquisarTodos(Session session) throws HibernateException;
 
-    List<Convenio> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException;
+    List<Convenio> pesquisarPorParceiroDeNegocio(long id, Session session) throws HibernateException;
     
     List<Convenio> pesquisarPorNome(String nome, Session session) throws HibernateException;
 }

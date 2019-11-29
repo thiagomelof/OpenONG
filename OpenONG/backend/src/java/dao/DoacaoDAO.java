@@ -21,12 +21,12 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
 
     @Override
     public List<Doacao> pesquisarTodos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Doacao");
+        Query consulta = session.createQuery("from Doacao order by id desc");
         return consulta.list();
     }
 
     public List<Doacao> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Doacao where status =:statusHQL");
+        Query consulta = session.createQuery("from Doacao where status =:statusHQL order by id desc");
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();
@@ -46,7 +46,7 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
         String query = " from DoacaoItem ITEM "
                 + " join fetch ITEM.doacao DOACAO "
                 + " join fetch DOACAO.parceiroDeNegocio PARCEIRO "
-                + " join fetch DOACAO.convenio CONVENIO "                
+                + " join fetch DOACAO.convenio CONVENIO "
                 + " where DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
                 + " and DOACAO.status =:statusHQL ";
 
@@ -57,18 +57,20 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
             query += " AND CONVENIO.id =:convenioHQL ";
         }
 
+        query += "  order by CONVENIO.lancamento asc ";
+
         Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
-            
+
         if (idParceiro > 0) {
             consulta.setParameter("parceiroHQL", idParceiro);
         }
         if (idConvenio > 0) {
             consulta.setParameter("convenioHQL", idConvenio);
         }
-        
+
         return consulta.list();
     }
-    
+
     public List<DoacaoItem> doacoesPorPeriodo(Date dtInicio, Date dtFim, Session session) throws HibernateException {
 
         String query = " from DoacaoItem DOACAOITEM "

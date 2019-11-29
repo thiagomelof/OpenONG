@@ -29,9 +29,16 @@ public class ItemBO {
 
     public List<Item> getItensAtivos() {
         Session session = HibernateUtil.abrirSessao();
-        List<Item> convenios = new ItemDAO().pesquisarTodosAtivos(session);
+        List<Item> itens = new ItemDAO().pesquisarTodosAtivos(session);
         session.close();
-        return convenios;
+        return itens;
+    }
+
+    public List<Item> pesquisarTodosAtivosPorCategoriasDeConvenio(long idConvenio) {
+        Session session = HibernateUtil.abrirSessao();
+        List<Item> itens = new ItemDAO().pesquisarTodosAtivosPorCategoriasDeConvenio(idConvenio, session);
+        session.close();
+        return itens;
     }
 
     public List<Item> getItens() {

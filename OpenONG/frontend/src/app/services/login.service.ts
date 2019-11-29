@@ -7,27 +7,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
   providedIn: 'root'
 })
 export class LoginService {
-  private usuarioAutenticado: boolean = false;
-  mostrarTelasEmitter = new EventEmitter<boolean>();
 
   loginUrl = 'http://localhost:8084/backend/api/login'
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   login(usuario: Usuario) {
-    this.http.post<Usuario>(`${this.loginUrl}`, usuario).subscribe(user => {
-      usuario = user
-      console.log(usuario);
-      if (usuario.nome != null) {
-        console.log(usuario.nome);
-        this.usuarioAutenticado = true;
-        this.mostrarTelasEmitter.emit(true);
-        this.router.navigate(['/']);
-      }
-      else {
-        this.mostrarTelasEmitter.emit(false);
-        this.usuarioAutenticado = false;
-      }
-    });
+    return this.http.post<Usuario>(`${this.loginUrl}`, usuario);
   }
 }

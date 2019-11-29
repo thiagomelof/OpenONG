@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Item } from '../model-view/item';
 
@@ -17,6 +17,14 @@ export class ItemService {
 
   listarAtivos() {
     return this.http.get<any[]>(this.itemUrl + "/ativo");
+  }
+
+  listarPorCategoriasDoConvenio(idConvenio: number) {
+    let params = new HttpParams();
+
+    params = params.append('id', idConvenio.toString());
+
+    return this.http.get<any[]>(this.itemUrl + "/porcategoriasdeconvenio", { params: params });
   }
 
   add(item: Item) {

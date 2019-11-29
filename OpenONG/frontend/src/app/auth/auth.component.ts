@@ -13,11 +13,9 @@ import { LoginService } from '../services/login.service';
 })
 
 export class AuthComponent implements OnInit {
-  //TODO: verificar pq nao funcionou a autenticacao
-  mostrarTelas: boolean = true;
   @Input() isVisible: boolean = true;
   visibility = 'shown';
- 
+
   sideNavOpened: boolean = true;
   matDrawerOpened: boolean = false;
   matDrawerShow: boolean = true;
@@ -30,17 +28,9 @@ export class AuthComponent implements OnInit {
   constructor(private media: ObservableMedia, private loginService: LoginService) { }
 
   ngOnInit() {
-
-    this.loginService.mostrarTelasEmitter.subscribe(
-      mostrar => {
-        this.mostrarTelas = mostrar
-        console.log(this.mostrarTelas)
-       }
-      );
-
     this.media.subscribe((mediaChange: MediaChange) => {
       this.toggleView();
-  });
+    });
   }
   getRouteAnimation(outlet) {
 

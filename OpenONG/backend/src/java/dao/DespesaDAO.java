@@ -21,12 +21,12 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
 
     @Override
     public List<Despesa> pesquisarTodos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Despesa");
+        Query consulta = session.createQuery("from Despesa order by id desc");
         return consulta.list();
     }
 
     public List<Despesa> pesquisarTodosAtivos(Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Despesa where status =:statusHQL");
+        Query consulta = session.createQuery("from Despesa where status =:statusHQL order by lancamento asc");
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();
@@ -56,7 +56,9 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
         if (idConvenio > 0) {
             query += " AND CONVENIO.id =:convenioHQL ";
         }
-
+        
+        query+="  order by DESPESA.lancamento asc ";
+        
         Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
 
         if (idParceiro > 0) {
@@ -75,6 +77,18 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
                 + " join fetch DESPESAITEM.despesa DESPESA "
                 + " join fetch DESPESAITEM.item ITEM "
                 + " join fetch ITEM.categoria CATEGORIA "
+                + " where DESPESA.status =:statusHQL "
+                + " and DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
+
+        Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim);
+
+        return consulta.list();
+    }
+    
+    public List<DespesaItem> despesasPorPeriodo(Date dtInicio, Date dtFim, Session session) throws HibernateException {
+
+        String query = " from DespesaItem DESPESAITEM "
+                + " join fetch DESPESAITEM.despesa DESPESA "
                 + " where DESPESA.status =:statusHQL "
                 + " and DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
 

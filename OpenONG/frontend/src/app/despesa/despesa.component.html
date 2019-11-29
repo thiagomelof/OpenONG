@@ -59,7 +59,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Doador" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto">
+                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto">
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                                 <span>{{ pn.nome }}</span>

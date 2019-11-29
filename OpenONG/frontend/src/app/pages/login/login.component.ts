@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 // import { AuthService } from '../../core/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../../model-view/usuario';
 import { LoginService } from '../../services/login.service';
-import { HttpEvent } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,6 +12,7 @@ import { HttpEvent } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   private usuario: Usuario = new Usuario();
+  mostrarTelasEmitter = new EventEmitter<boolean>();
   userForm: FormGroup;
   formErrors = {
     'email': '',
@@ -19,18 +20,18 @@ export class LoginComponent implements OnInit {
   };
   validationMessages = {
     'email': {
-      'required': 'Please enter your email',
-      'email': 'please enter your vaild email'
+      'required': 'Por favor, insira seu e-mail',
+      'email': 'Por favor, insira um e-mail válido'
     },
     'password': {
-      'required': 'please enter your password',
-      'pattern': 'The password must contain numbers and letters',
-      'minlength': 'Please enter more than 4 characters',
-      'maxlength': 'Please enter less than 25 characters',
+      'required': 'Por favor, insira sua senha',
+      'pattern': 'A senha deve conter letras e números',
+      'minlength': 'Por favor, insira mais que 4 caracteres',
+      'maxlength': 'Por favor, insira menos que 25 caracteres',
     }
   };
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService, public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -60,7 +61,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.loginService.login(this.usuario);
+    this.loginService.login(this.usuario).subscribe(user => {
+      let usuario = user
+      if (usuario.nome != null && usuario.nome != "") {
+        this.mostrarTelasEmitter.emit(true);
+        this.router.navigate(['/']);
+      }
+      else {
+        this.snackBar.open("Usuário e/ou senha incorreto(s)", "FECHAR", { duration: 3500 });
+        this.mostrarTelasEmitter.emit(false);
+      }
+    });
   }
 }
 

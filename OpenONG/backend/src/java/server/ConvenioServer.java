@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import model.Convenio;
 
@@ -43,5 +44,12 @@ public class ConvenioServer {
     public RetornoMessage cadastrar(String body) {
         ConvenioMessage convenio = new Gson().fromJson(body, ConvenioMessage.class);
         return new ConvenioBO().cadastrar(convenio);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/porparceiro")
+    public List<Convenio> GetConveniosPorParceiroDeNegocio(@QueryParam("id") String id) {
+        return new ConvenioBO().GetConveniosPorParceiroDeNegocio(Long.parseLong(id));
     }
 }
