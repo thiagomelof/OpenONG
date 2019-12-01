@@ -3,6 +3,7 @@ package server;
 import bo.ConvenioBO;
 import com.google.gson.Gson;
 import dto.ConvenioMessage;
+import dto.ConsumoConvenioMessage;
 import dto.RetornoMessage;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -51,5 +52,12 @@ public class ConvenioServer {
     @Path("/porparceiro")
     public List<Convenio> GetConveniosPorParceiroDeNegocio(@QueryParam("id") String id) {
         return new ConvenioBO().GetConveniosPorParceiroDeNegocio(Long.parseLong(id));
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/relatorio")
+    public List<ConsumoConvenioMessage> GetConsumoConvenio(@QueryParam("id") String id){
+        return new ConvenioBO().GetConsumoConvenio(Long.parseLong(id));
     }
 }

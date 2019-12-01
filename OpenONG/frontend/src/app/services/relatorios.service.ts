@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 export class RelatoriosService {
   doacaoUrl = 'http://localhost:8084/backend/api/doacao/relatorio'
   despesaUrl = 'http://localhost:8084/backend/api/despesa/relatorio'
+  convenioUrl = 'http://localhost:8084/backend/api/convenio/relatorio'
 
   constructor(private http: HttpClient, public datepipe: DatePipe) { }
 
@@ -40,6 +41,14 @@ export class RelatoriosService {
     params = params.append('dtfim', this.datepipe.transform(parametros.dataFim, 'yyyy-MM-dd'));
 
     return this.http.get<any[]>(this.doacaoUrl, { params: params });
+  }
+
+  getRelatorioConsumoConvenio(idConvenio: number) {
+    let params = new HttpParams();
+
+    params = params.append('id', idConvenio.toString());
+
+    return this.http.get<any[]>(this.convenioUrl, { params: params });
   }
 
 }

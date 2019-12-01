@@ -4,14 +4,20 @@ import constantes.CodigoErro;
 import constantes.TipoRegistro;
 import dao.ConvenioCategoriaDAO;
 import dao.ConvenioDAO;
+import dao.DespesaDAO;
+import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
 import dto.ConvenioMessage;
+import dto.ConsumoConvenioMessage;
 import dto.RetornoMessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.Categoria;
 import model.Convenio;
 import model.ConvenioCategoria;
+import model.DespesaItem;
+import model.DoacaoItem;
 import model.Erro;
 import model.ParceiroDeNegocio;
 import model.Usuario;
@@ -52,6 +58,74 @@ public class ConvenioBO {
         List<Convenio> convenios = new ConvenioDAO().pesquisarPorParceiroDeNegocio(id, session);
         session.close();
         return convenios;
+    }
+
+    public List<ConsumoConvenioMessage> GetConsumoConvenio(long id) {
+        List<ConsumoConvenioMessage> msg = new ArrayList<>();
+
+        Session session = HibernateUtil.abrirSessao();
+
+        Convenio convenio = new ConvenioDAO().pesquisarPorId(id, session);
+        List<DespesaItem> despesas = new DespesaDAO().despesasPorConvenio(id, session);
+        List<DoacaoItem> doacoes = new DoacaoDAO().doacoesPorConvenio(id, session);
+
+        for (ConvenioCategoria di : convenio.getConvenioCategoria()) {
+            ConsumoConvenioMessage defaultitem = new ConsumoConvenioMessage();
+            long idCategoria = di.getCategoria().getId();
+
+            ConsumoConvenioMessage item = msg.stream().filter((categoria) -> categoria.getIdCategoria() == idCategoria).findFirst().orElseGet(() -> defaultitem);
+
+            if (item.getIdCategoria() != null) {
+                if (item.getIdCategoria() > 0) {
+                    for (ConsumoConvenioMessage doacaodespesa : msg) {
+                        if (doacaodespesa.getIdCategoria() == idCategoria) {
+                            doacaodespesa.setPercentualAplicado(di.getPercentual());
+                        }
+                    }
+                }
+            } else {
+                defaultitem.setIdCategoria(di.getCategoria().getId());
+                defaultitem.setNomeCategoria(di.getCategoria().getNome());
+                defaultitem.setPercentualAplicado(di.getPercentual());
+                msg.add(defaultitem);
+            }
+        }
+
+        for (DespesaItem di : despesas) {
+            ConsumoConvenioMessage defaultitem = new ConsumoConvenioMessage();
+            long idCategoria = di.getItem().getCategoria().getId();
+
+            ConsumoConvenioMessage item = msg.stream().filter((categoria) -> categoria.getIdCategoria() == idCategoria).findFirst().orElseGet(() -> defaultitem);
+
+            if (item.getIdCategoria() != null) {
+                if (item.getIdCategoria() > 0) {
+                    for (ConsumoConvenioMessage despesadespesa : msg) {
+                        if (despesadespesa.getIdCategoria() == idCategoria) {
+                            despesadespesa.setDespesa(despesadespesa.getDespesa() + (di.getValorUnitario() * di.getQuantidade()));
+                        }
+                    }
+                }
+            } else {
+                defaultitem.setIdCategoria(di.getItem().getCategoria().getId());
+                defaultitem.setNomeCategoria(di.getItem().getCategoria().getNome());
+                defaultitem.setDespesa((di.getValorUnitario() * di.getQuantidade()));
+                msg.add(defaultitem);
+            }
+        }
+        session.close();
+
+        for (DoacaoItem di : doacoes) {
+
+            for (ConsumoConvenioMessage doacaodespesa : msg) {
+                doacaodespesa.setDoacao((di.getValorUnitario() * di.getQuantidade()));
+
+            }
+        }
+        for (ConsumoConvenioMessage consumo : msg) {
+            consumo.setPercentualUtilizado((consumo.getDespesa() * 100) / consumo.getDoacao());
+        }
+
+        return msg;
     }
 
     public RetornoMessage cadastrar(ConvenioMessage convenio) {

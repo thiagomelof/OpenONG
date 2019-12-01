@@ -3,7 +3,7 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     .input-header {
-        background-color: #327ebd;
+        background-color: #FF9D0C;
         color: white;
         padding: 0 5px;
     }
@@ -11,10 +11,10 @@
         padding: 5px 15px 15px 15px;
     }
     .input-component-holder {
-        border: 1px solid #327ebd;
+        border: 1px solid #FF9D0C;
         background-color: white;
         h4 {
-            color: #327ebd;
+            color: #FF9D0C;
             margin: 14px 0;
         }
         mat-divider {
@@ -22,7 +22,7 @@
         }
     }
     .sidenav {
-        background: #327ebd;
+        background: #FF9D0C;
         overflow: hidden;
         position: relative;
         width: 250px;
@@ -50,7 +50,7 @@
         margin-top: 8px;
     }
     .table-header {
-        background-color: #327ebd;
+        background-color: #FF9D0C;
         color: white;
         padding: 0 5px;
     }
@@ -58,7 +58,7 @@
         padding: 5px 15px 15px 15px;
     }
     .table-component-holder {
-        border: 1px solid #327ebd;
+        border: 1px solid #FF9D0C;
         background-color: white;
     }
 }

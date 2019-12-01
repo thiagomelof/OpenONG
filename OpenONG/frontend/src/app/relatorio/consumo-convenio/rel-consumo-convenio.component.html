@@ -1,0 +1,64 @@
+<div fxLayout="column" class="components-container-gt-xs" [ngClass.xs]="'components-container-xs'" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+        <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+            <table cellspacing="6">
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Convênio" [(ngModel)]="convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
+                                <mat-option *ngFor="let c of convenios" [value]="c.id">
+                                    {{c.nome}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <input hidden [(ngModel)]="convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
+                    </td>
+                    <td>
+                        <button type="button" mat-raised-button color="accent" (click)="filtrar()">Gerar relatório</button>
+                    </td>
+                    <td>
+                        <button printSectionId="print-section" [useExistingCss]="true" type="button" mat-raised-button color="accent" ngxPrint>Imprimir</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="print-section">
+        <h1 class="mat-subheading-1 center-align" style="text-align: center;"><b>RELATÓRIO CONSUMO POR CONVÊNIO</b></h1>
+        <mat-divider></mat-divider>
+        <br />
+        <h5 class="mat-subheading-1 center-align"><b>Convênio:</b> {{convenio.nome}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em doações:</b> R$ {{totalDoacao}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em despesas:</b> R$ {{totalDespesa}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total consumido:</b> % {{totalConsumido}}</h5>
+        <br />
+        <mat-divider></mat-divider>
+
+        <mat-table #table [dataSource]="dataSource" style="margin-top: 20px;">
+
+            <ng-container matColumnDef="categoria">
+                <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.nomeCategoria}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="valDespesas">
+                <mat-header-cell *matHeaderCellDef> Valor em despesas </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.despesa}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="percPlanejado">
+                <mat-header-cell *matHeaderCellDef> Percentual planejado </mat-header-cell>
+                <mat-cell *matCellDef="let row"> % {{row.percentualAplicado}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="percUtilizado">
+                <mat-header-cell *matHeaderCellDef> Percentual utilizado </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color"> % {{row.percentualUtilizado}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+</div>

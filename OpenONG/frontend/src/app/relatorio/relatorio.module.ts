@@ -24,12 +24,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { RelatorioComponent } from './relatorio.component';
 import { NgxPrintModule } from 'ngx-print';
+import { RelConsumoConvenioComponent } from './consumo-convenio/rel-consumo-convenio.component';
 
 
 const appRoutes: Routes = [
     { path: '', component: RelatorioComponent },
     { path: 'reldespesa', component: RelDespesaComponent, data: { animation: 'reldespesa' } },
-    { path: 'reldoacao', component: RelDoacaoComponent, data: { animation: 'reldoacao' } }
+    { path: 'reldoacao', component: RelDoacaoComponent, data: { animation: 'reldoacao' } },
+    { path: 'relconsumo', component: RelConsumoConvenioComponent, data: { animation: 'relconsumo' } }
 ]
 
 @NgModule({
@@ -65,6 +67,6 @@ const appRoutes: Routes = [
         NgxPrintModule
     ],
     exports: [],
-    declarations: [RelatorioComponent, RelDoacaoComponent, RelDespesaComponent]
+    declarations: [RelatorioComponent, RelDoacaoComponent, RelDespesaComponent, RelConsumoConvenioComponent]
 })
 export class RelatorioModule { }

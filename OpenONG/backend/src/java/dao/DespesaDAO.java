@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import model.Despesa;
 import model.DespesaItem;
+import model.DespesaItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -93,6 +94,21 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
                 + " and DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL ";
 
         Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim);
+
+        return consulta.list();
+    }
+    
+    public List<DespesaItem> despesasPorConvenio(long idConvenio, Session session) throws HibernateException {
+
+        String query = " from DespesaItem DESPESAITEM "
+                + " join fetch DESPESAITEM.item ITEM "
+                + " join fetch ITEM.categoria CATEGORIA "
+                + " join fetch DESPESAITEM.despesa DESPESA "
+                + " join fetch DESPESA.convenio CONVENIO "
+                + " where DESPESA.status =:statusHQL "
+                + " and CONVENIO.id=:idConvenioHQL ";
+        
+        Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("idConvenioHQL", idConvenio);
 
         return consulta.list();
     }

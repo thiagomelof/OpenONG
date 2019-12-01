@@ -82,4 +82,19 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
 
         return consulta.list();
     }
+    
+    public List<DoacaoItem> doacoesPorConvenio(long idConvenio, Session session) throws HibernateException {
+
+        String query = " from DoacaoItem DOACAOITEM "
+                + " join fetch DOACAOITEM.item ITEM "
+                + " join fetch ITEM.categoria CATEGORIA "
+                + " join fetch DOACAOITEM.doacao DOACAO "
+                + " join fetch DOACAO.convenio CONVENIO "
+                + " where DOACAO.status =:statusHQL "
+                + " and CONVENIO.id=:idConvenioHQL ";
+        
+        Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("idConvenioHQL", idConvenio);
+
+        return consulta.list();
+    }
 }
