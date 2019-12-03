@@ -1,8 +1,9 @@
+import { FormControl, Validators } from '@angular/forms';
 import { ConsumoConvenioMessage } from './../../model-view/dto/consumo-convenio-message';
 import { Convenio } from './../../model-view/convenio';
 import { ConvenioService } from './../../services/convenio.service';
 import { RelatoriosService } from './../../services/relatorios.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -20,7 +21,8 @@ export class RelConsumoConvenioComponent implements OnInit {
   totalDoacao: number;
   totalConsumido: number;
   totalbool: boolean;
-  constructor(private relatorioServer: RelatoriosService, private convenioServer: ConvenioService) { }
+  convenioControl = new FormControl('', [Validators.required]);
+  constructor(private relatorioServer: RelatoriosService, private convenioServer: ConvenioService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -31,7 +33,7 @@ export class RelConsumoConvenioComponent implements OnInit {
     this.totalDespesa = 0;
 
 
-    this.convenioServer.listarAtivos().subscribe(conv => {
+    this.convenioServer.listar().subscribe(conv => {
       let convenioVazio = new Convenio();
       convenioVazio.id = 0;
       convenioVazio.nome = "Selecione...";
@@ -65,23 +67,29 @@ export class RelConsumoConvenioComponent implements OnInit {
     this.totalDoacao = 0;
     this.totalConsumido = 0;
     this.totalbool = false;
-    this.relatorioServer.getRelatorioConsumoConvenio(this.convenio.id).subscribe(dados => {
-      this.consumo = dados;
+    if (this.convenio.id > 0 && this.convenio.id != undefined) {
+      this.relatorioServer.getRelatorioConsumoConvenio(this.convenio.id).subscribe(dados => {
+        this.consumo = dados;
 
-      this.consumo.forEach(item => {
-        if (item.percentualUtilizado >= item.percentualAplicado)
-          item.color = "red";
+        this.consumo.forEach(item => {
+          if (item.percentualUtilizado >= item.percentualAplicado)
+            item.color = "red";
 
 
-        this.addLinha(item);
-        this.totalDespesa = this.totalDespesa + item.despesa;
-        this.totalDoacao = item.doacao;
-        this.totalConsumido = this.totalConsumido + item.percentualUtilizado;
-      });
+          this.addLinha(item);
+          this.totalDespesa = this.totalDespesa + item.despesa;
+          this.totalDoacao = item.doacao;
+          this.totalConsumido = this.totalConsumido + item.percentualUtilizado;
+        });
 
-      this.totalbool = true;
-    })
+        this.totalbool = true;
+      })
+    } else {
+      this.getStatusBar("Necessário informar um convênio.");
+    }
   }
-
+  getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
+  }
 
 }

@@ -1,26 +1,25 @@
 <div fxLayout="column" class="components-container-gt-xs" [ngClass.xs]="'components-container-xs'" fxLayoutGap="20px">
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="2px">
         <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
             <table cellspacing="6">
                 <tr>
                     <td>
                         <mat-form-field>
-                            <input [(ngModel)]="params.dataInicio" id="inicio" name="inicio" matInput [matDatepicker]="dp3" placeholder="Data de lançamento de" disabled>
+                            <input [(ngModel)]="params.dataInicio" id="inicio" name="inicio" matInput [matDatepicker]="dp3" placeholder="Data de lançamento de" [formControl]="dataDeControl" required>
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field>
-                            <input [(ngModel)]="params.dataFim" id="dp4" name="fim" matInput [matDatepicker]="dp4" placeholder="Data de lançamento até" disabled>
+                            <input [(ngModel)]="params.dataFim" id="dp4" name="fim" matInput [matDatepicker]="dp4" placeholder="Data de lançamento até" [formControl]="dataAteControl" required>
                             <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
                             <mat-datepicker #dp4 disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </td>
-
                     <td>
                         <mat-form-field class="width">
-                            <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="params.parceiro.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto">
+                            <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="params.parceiro.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                     <span>{{ pn.nome }}</span>
@@ -30,7 +29,7 @@
                         <input hidden [(ngModel)]="params.parceiro.id" type="text" id="idPn" name="idPn" matInput placeholder="Id parceiroDeNegocio" />
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field *ngIf="!semConvenio">
                             <mat-select placeholder="Convênio" [(ngModel)]="params.convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
                                 <mat-option *ngFor="let c of convenios" [value]="c.id">
                                     {{c.nome}}
@@ -38,6 +37,17 @@
                             </mat-select>
                         </mat-form-field>
                         <input hidden [(ngModel)]="params.convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="2px">
+        <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
+            <table cellspacing="6">
+                <tr>
+                    <td>
+                        <mat-checkbox (change)="checkValue(semConvenio?'Y':'N')" [(ngModel)]="semConvenio">Mostrar apenas lançamentos sem convênio</mat-checkbox>
                     </td>
                     <td>
                         <button type="button" mat-raised-button color="accent" (click)="filtrar()">Gerar relatório</button>
@@ -51,13 +61,13 @@
     </div>
 
     <div id="print-section">
-        <h1 class="mat-subheading-1 center-align" style="text-align: center;">RELATÓRIO DE DESPESAS POR PERÍODO</h1>
+        <h1 class="mat-subheading-1 center-align" style="text-align: center;"><b>RELATÓRIO DE DESPESAS POR PERÍODO</b></h1>
         <mat-divider></mat-divider>
         <br/>
-        <h5 class="mat-subheading-1 center-align">Data de lançamento : {{params.dataInicio | date : "dd/MM/yyyy"}} até {{params.dataFim | date : "dd/MM/yyyy"}}</h5>
-        <h5 *ngIf="fornecedor" class="mat-subheading-1 center-align">Fornecedor: {{params.parceiro.nome}}</h5>
-        <h5 *ngIf="convenio" class="mat-subheading-1 center-align">Convênio: {{params.convenio.nome}}</h5>
-        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align">Total em despesas: R$ {{total}}</h5>
+        <h5 class="mat-subheading-1 center-align"><b>Data de lançamento:</b> {{params.dataInicio | date : "dd/MM/yyyy"}} até {{params.dataFim | date : "dd/MM/yyyy"}}</h5>
+        <h5 *ngIf="fornecedor" class="mat-subheading-1 center-align"><b>Fornecedor:</b> {{params.parceiro.nome}}</h5>
+        <h5 *ngIf="convenio" class="mat-subheading-1 center-align"><b>Convênio:</b> {{params.convenio.nome}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em despesas:</b> R$ {{total | number:'1.2-2':'pt'}}</h5>
         <br/>
         <mat-divider></mat-divider>
 
@@ -95,12 +105,12 @@
 
             <ng-container matColumnDef="Valor">
                 <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.valorUnitario}} </mat-cell>
+                <mat-cell *matCellDef="let row"> R$ {{row.valorUnitario | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="Total">
                 <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.quantidade * row.valorUnitario}} </mat-cell>
+                <mat-cell *matCellDef="let row"> R$ {{row.quantidade * row.valorUnitario | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="Observações">

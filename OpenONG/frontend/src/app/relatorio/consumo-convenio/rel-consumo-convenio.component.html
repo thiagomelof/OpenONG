@@ -5,7 +5,7 @@
                 <tr>
                     <td>
                         <mat-form-field>
-                            <mat-select placeholder="Convênio" [(ngModel)]="convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
+                            <mat-select placeholder="Convênio" [(ngModel)]="convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)" [formControl]="convenioControl" required>
                                 <mat-option *ngFor="let c of convenios" [value]="c.id">
                                     {{c.nome}}
                                 </mat-option>
@@ -25,13 +25,13 @@
     </div>
 
     <div id="print-section">
-        <h1 class="mat-subheading-1 center-align" style="text-align: center;"><b>RELATÓRIO CONSUMO POR CONVÊNIO</b></h1>
+        <h1 class="mat-subheading-1 center-align" style="text-align: center;"><b>RELATÓRIO DE CONSUMO POR CONVÊNIO</b></h1>
         <mat-divider></mat-divider>
         <br />
         <h5 class="mat-subheading-1 center-align"><b>Convênio:</b> {{convenio.nome}}</h5>
-        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em doações:</b> R$ {{totalDoacao}}</h5>
-        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em despesas:</b> R$ {{totalDespesa}}</h5>
-        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total consumido:</b> % {{totalConsumido}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em doações:</b> R$ {{totalDoacao | number:'1.2-2':'pt'}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total em despesas:</b> R$ {{totalDespesa | number:'1.2-2':'pt'}}</h5>
+        <h5 *ngIf="totalbool" class="mat-subheading-1 center-align"><b>Total consumido:</b> % {{totalConsumido | number:'1.2-2':'pt'}}</h5>
         <br />
         <mat-divider></mat-divider>
 
@@ -44,17 +44,17 @@
 
             <ng-container matColumnDef="valDespesas">
                 <mat-header-cell *matHeaderCellDef> Valor em despesas </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.despesa}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.despesa | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="percPlanejado">
                 <mat-header-cell *matHeaderCellDef> Percentual planejado </mat-header-cell>
-                <mat-cell *matCellDef="let row"> % {{row.percentualAplicado}} </mat-cell>
+                <mat-cell *matCellDef="let row"> % {{row.percentualAplicado | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="percUtilizado">
                 <mat-header-cell *matHeaderCellDef> Percentual utilizado </mat-header-cell>
-                <mat-cell *matCellDef="let row" [style.color]="row.color"> % {{row.percentualUtilizado}} </mat-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color"> % {{row.percentualUtilizado | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

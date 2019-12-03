@@ -8,10 +8,10 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { Status } from './../../model-view/const/status';
 import { ConvenioService } from './../../services/convenio.service';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ParceiroDeNegocioService } from './../../services/parceiro-de-negocio.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { DespesaParameters } from './../../model-view/dto/despesa-parameters';
 import { DespesaItem } from './../../model-view/despesa-item';
 import { RelatoriosService } from './../../services/relatorios.service';
@@ -34,6 +34,7 @@ export class RelDespesaComponent implements OnInit {
   dataSource: MatTableDataSource<DespesaItem>;
   fornecedor: boolean;
   convenio: boolean;
+  semConvenio: boolean;
   total: number;
   totalbool: boolean;
   itens: DespesaItem[];
@@ -42,8 +43,10 @@ export class RelDespesaComponent implements OnInit {
   parceirosDeNegocio: ParceiroDeNegocio[];
   parceiroDeNegociosFiltradas: Observable<any[]>;
   parceiroDeNegocioControl = new FormControl('');
+  dataDeControl = new FormControl('', [Validators.required]);
+  dataAteControl = new FormControl('', [Validators.required]);
 
-  constructor(private relatorioServer: RelatoriosService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService) { }
+  constructor(private relatorioServer: RelatoriosService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -66,7 +69,7 @@ export class RelDespesaComponent implements OnInit {
       }
     })
 
-    this.convenioServer.listarAtivos().subscribe(conv => {
+    this.convenioServer.listar().subscribe(conv => {
       let convenioVazio = new Convenio();
       convenioVazio.id = 0;
       convenioVazio.nome = "Selecione...";
@@ -77,6 +80,9 @@ export class RelDespesaComponent implements OnInit {
   }
 
   addLinha(item: DespesaItem) {
+    if (item.despesa.convenio == undefined) {
+      item.despesa.convenio = new Convenio();
+    }
     this.dataSource.data.push(item);
     this.dataSource.filter = "";
   }
@@ -113,6 +119,20 @@ export class RelDespesaComponent implements OnInit {
     }
   }
 
+  checkValue(event: any) {
+    if (event == "Y") {
+      this.params.convenio = new Convenio();
+      this.params.convenio.nome = "Lançamentos sem convênio";
+      this.params.convenio.id = -1;
+      this.convenio = true;
+    }
+    else {
+      this.convenio = false;
+      this.params.convenio = new Convenio();
+      this.params.convenio.id = 0;
+    }
+  }
+
   filtrarParceiroDeNegocios(name: string) {
     return this.parceirosDeNegocio.filter(pn =>
       pn.nome.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -123,6 +143,8 @@ export class RelDespesaComponent implements OnInit {
     this.dataSource.filter = "";
     this.total = 0;
     this.totalbool = false;
+
+    if (this.params.dataInicio != undefined && this.params.dataFim != undefined) {
     this.relatorioServer.getRelatorioDespesa(this.params).subscribe(dados => {
       this.itens = dados;
 
@@ -133,7 +155,12 @@ export class RelDespesaComponent implements OnInit {
 
       this.totalbool = true;
     })
+  }else{
+    this.getStatusBar("Necessário informar o período de lançamento.");
+  }
   }
 
-
+  getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
+  }
 }

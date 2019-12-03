@@ -1,20 +1,19 @@
-package dao;
+package bo;
 
+import dao.DespesaDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
-import java.util.List;
 import model.Despesa;
 import model.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class DespesaDAOTest {
+public class DespesaBOTest {
 
-    public DespesaDAOTest() {
+    public DespesaBOTest() {
     }
 
     @Test
@@ -41,27 +40,6 @@ public class DespesaDAOTest {
         Despesa despesaPesquisado = new DespesaDAO().pesquisarPorId(despesa.getId(), session);
         session.close();
         assertNotNull(despesaPesquisado);
-    }
-
-    /*
-    @Test
-    public void excluir() {
-        Despesa despesa = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new DespesaDAO().excluir(despesa, session);
-        Despesa despesaExcluido = new DespesaDAO().pesquisarPorId(despesa.getId(), session);
-        session.close();
-        assertNull(despesaExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<Despesa> despesas = new DespesaDAO().pesquisarPorNomeDoParceiroDeNegocio("Thiago", session);
-
-        session.close();
-        assertNotNull(despesas);
     }
 
     private Despesa primeiroRegistroDoBancoDeDados() {
@@ -92,8 +70,8 @@ public class DespesaDAOTest {
     }
 
     public static Despesa getDespesa() {
-        Usuario teste = UsuarioDAOTest.novoUsuario();
+        Usuario teste = UsuarioBOTest.novoUsuario();
         
-        return new Despesa(ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(), true, new Date(), "teste", ConvenioDAOTest.novoConvenio(), new Date(), teste);
+        return new Despesa(ParceiroDeNegocioBOTest.novoParceiroDeNegocio(), true, new Date(), "teste", ConvenioBOTest.novoConvenio(), new Date(), teste);
     }
 }

@@ -26,9 +26,9 @@ import { Observable } from 'rxjs';
 export class ItemServicoComponent implements OnInit {
 
   tiposDeitem = [
-    { value: TipoItem.Dinheiro, name: 'Dinheiro' },
     { value: TipoItem.Item, name: 'Item' },
     { value: TipoItem.Servico, name: 'Serviço' },
+    { value: TipoItem.Dinheiro, name: 'Dinheiro' }
   ];
 
   public progressBarMode;

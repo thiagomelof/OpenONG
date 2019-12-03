@@ -1,5 +1,6 @@
-package dao;
+package bo;
 
+import dao.UsuarioDAO;
 import dao.base.HibernateUtil;
 import java.util.List;
 import model.Endereco;
@@ -10,9 +11,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
-public class UsuarioDAOTest {
+public class UsuarioBOTest {
 
-    public UsuarioDAOTest() {
+    public UsuarioBOTest() {
     }
 
     @Test

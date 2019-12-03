@@ -51,7 +51,7 @@
             </mat-table>
 
             <div class="example-no-results" [style.display]="dataSource?.listaRenderizada.length == 0 ? '' : 'none'">
-                Convênio não encontrada.
+                Convênio não encontrado.
             </div>
 
             <mat-paginator #paginator [length]="paginatorLength()" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">

@@ -138,7 +138,7 @@ public class ParceiroDeNegocioBO {
             erros.add(new Erro(CodigoErro.PARCEIROAA, "Necessário informar o nome."));
         } else {
 
-            boolean exists = new ParceiroDeNegocioDAO().parceiroExists(id, pn.getNome(), session);
+            boolean exists = new ParceiroDeNegocioDAO().parceiroExists(id, pn.getNome(), pn.getTipoParceiro(), session);
 
             if (exists) {
                 erros.add(new Erro(CodigoErro.PARCEIROAB, "Este parceiro já existe."));

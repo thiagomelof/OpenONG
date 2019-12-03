@@ -13,10 +13,6 @@ export class ParceiroDeNegocioService {
 
   constructor(private http: HttpClient) { }
 
-  // listar() {
-  //   return this.http.get<any[]>(this.parceirosUrl);
-  // }
-  
   listarParceirosPorTipo(tipo: TipoParceiro, status: Status) {
     let params = new HttpParams();
     params = params.append('tipo', tipo);
@@ -32,9 +28,6 @@ export class ParceiroDeNegocioService {
 
     return this.http.get<any[]>(this.parceirosUrl + "/porperiodo", { params: params });
   }
-
-
-
 
   add(parceiro: ParceiroDeNegocio) {
     return this.http.post(this.parceirosUrl, parceiro);

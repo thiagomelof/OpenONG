@@ -52,14 +52,15 @@
                             <tr>
                                 <td>
                                     <mat-form-field>
-                                        <input [(ngModel)]="despesa.despesa.lancamento" id="dtLanc" name="dtLanc" matInput [matDatepicker]="dp3" placeholder="Data de lançamento" disabled>
+                                        <input [(ngModel)]="despesa.despesa.lancamento" id="dtLanc" name="dtLanc" matInput [matDatepicker]="dp3" placeholder="Data de lançamento">
                                         <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                         <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto">
+                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl"
+                                            required>
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
                                                 <span>{{ pn.nome }}</span>
@@ -165,7 +166,7 @@
 
                     <ng-container matColumnDef="Valor">
                         <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.valorUnitario}} </mat-cell>
+                        <mat-cell *matCellDef="let row"> {{row.valorUnitario | number:'1.2-2':'pt'}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Observações">

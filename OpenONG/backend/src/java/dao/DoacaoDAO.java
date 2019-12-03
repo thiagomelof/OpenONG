@@ -11,8 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class DoacaoDAO extends BaseDao<Doacao, Long>
-        implements IDoacaoDAO, Serializable {
+public class DoacaoDAO extends BaseDao<Doacao, Long> implements IDoacaoDAO, Serializable {
 
     @Override
     public Doacao pesquisarPorId(Long id, Session session) throws HibernateException {
@@ -45,9 +44,13 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
 
         String query = " from DoacaoItem ITEM "
                 + " join fetch ITEM.doacao DOACAO "
-                + " join fetch DOACAO.parceiroDeNegocio PARCEIRO "
-                + " join fetch DOACAO.convenio CONVENIO "
-                + " where DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
+                + " join fetch DOACAO.parceiroDeNegocio PARCEIRO ";
+
+        if (idConvenio > 0 || idConvenio == -1) {
+            query += " left join fetch DOACAO.convenio CONVENIO ";
+        }
+
+        query += " where DOACAO.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
                 + " and DOACAO.status =:statusHQL ";
 
         if (idParceiro > 0) {
@@ -55,9 +58,9 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
         }
         if (idConvenio > 0) {
             query += " AND CONVENIO.id =:convenioHQL ";
+        } else if (idConvenio == -1) {
+            query += " AND CONVENIO is null ";
         }
-
-        query += "  order by CONVENIO.lancamento asc ";
 
         Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
 
@@ -82,7 +85,7 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
 
         return consulta.list();
     }
-    
+
     public List<DoacaoItem> doacoesPorConvenio(long idConvenio, Session session) throws HibernateException {
 
         String query = " from DoacaoItem DOACAOITEM "
@@ -92,7 +95,7 @@ public class DoacaoDAO extends BaseDao<Doacao, Long>
                 + " join fetch DOACAO.convenio CONVENIO "
                 + " where DOACAO.status =:statusHQL "
                 + " and CONVENIO.id=:idConvenioHQL ";
-        
+
         Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("idConvenioHQL", idConvenio);
 
         return consulta.list();

@@ -112,6 +112,7 @@ export class ConvenioComponent implements OnInit {
   }
 
   addLinhaEdit(categoria: ConvenioCategoria) {
+    this.categoriasConvenio.push(categoria);
     this.dataSource.data.push(categoria);
     this.dataSource.filter = "";
   }
@@ -131,7 +132,7 @@ export class ConvenioComponent implements OnInit {
       this.categoriasConvenio.push(this.AdicionaCategoria());
       this.dataSource.data = this.categoriasConvenio;
       this.dataSource.filter = "";
-      
+
       this.convenioCategoria = new ConvenioCategoria();
       this.convenioCategoria.categoria = new Categoria();
       this.convenioCategoria.convenio = new Convenio();

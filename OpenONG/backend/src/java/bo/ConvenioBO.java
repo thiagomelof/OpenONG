@@ -13,7 +13,6 @@ import dto.RetornoMessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.Categoria;
 import model.Convenio;
 import model.ConvenioCategoria;
 import model.DespesaItem;
@@ -122,7 +121,11 @@ public class ConvenioBO {
             }
         }
         for (ConsumoConvenioMessage consumo : msg) {
-            consumo.setPercentualUtilizado((consumo.getDespesa() * 100) / consumo.getDoacao());
+            if (consumo.getDespesa() > 0) {
+                consumo.setPercentualUtilizado((consumo.getDespesa() * 100) / consumo.getDoacao());
+            } else {
+                consumo.setPercentualUtilizado(0);
+            }
         }
 
         return msg;
@@ -201,7 +204,7 @@ public class ConvenioBO {
             erros.add(new Erro(CodigoErro.CONVENIOAE, "Necessário informar uma data final de validade."));
         }
 
-        List<Erro> errosCategorias = validacoesCategorias(convenio.getCategorias(), session);
+        List<Erro> errosCategorias = validacoesCategorias(convenio.getCategorias());
 
         if (errosCategorias.size() > 0) {
             erros.addAll(errosCategorias);
@@ -210,7 +213,7 @@ public class ConvenioBO {
         return erros;
     }
 
-    private List<Erro> validacoesCategorias(List<ConvenioCategoria> categorias, Session session) {
+    private List<Erro> validacoesCategorias(List<ConvenioCategoria> categorias) {
         List<Erro> erros = new ArrayList<>();
         if (categorias.size() == 0) {
             erros.add(new Erro(CodigoErro.CONVENIOCATEGORIAAA, "Necessário informar ao menos uma categoria."));

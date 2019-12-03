@@ -59,8 +59,8 @@ export class ComparativoDespesaLineGraphComponent implements OnInit {
             data: {
                 labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", 'Out', 'Nov', 'Dez'],
                 datasets: [{
-                    backgroundColor: 'rgba(92, 107, 192, 0.36)',
-                    borderColor: 'rgba(92, 107, 192,.5)',
+                    backgroundColor: 'rgba(38, 166, 154,.7)',
+                    borderColor: 'rgba(38, 166, 154,.7)',
                     data: this.valoresAtual,
                     label: new Date().getFullYear(),
                     fill: 'start'

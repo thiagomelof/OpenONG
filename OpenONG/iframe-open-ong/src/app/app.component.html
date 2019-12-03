@@ -27,7 +27,7 @@
 
     <ng-container matColumnDef="Valor">
         <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-        <mat-cell *matCellDef="let row"> R$ {{row.valor}} </mat-cell>
+        <mat-cell *matCellDef="let row"> R$ {{row.valor | number:'1.2-2':'pt'}}}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -1,5 +1,7 @@
-package dao;
+package bo;
 
+import bo.CategoriaBO;
+import dao.CategoriaDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +14,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class CategoriaDAOTest {
+public class CategoriaBOTest {
 
-    public CategoriaDAOTest() {
+    public CategoriaBOTest() {
     }
 
     @Test
@@ -27,41 +29,18 @@ public class CategoriaDAOTest {
     public void testAlterar() {
         Categoria categoria = primeiroRegistroDoBancoDeDados();
         categoria.setNome("Nome alterado");
-        Session session = HibernateUtil.abrirSessao();
-        new CategoriaDAO().salvarOuAlterar(categoria, session);
-        Categoria categoriaAlterado = new CategoriaDAO().pesquisarPorId(categoria.getId(), session);
-        session.close();
+
+        new CategoriaBO().cadastrar(categoria);
+        Categoria categoriaAlterado = new CategoriaBO().getCategoria(categoria.getId());
+
         assertEquals(categoria.getNome(), categoriaAlterado.getNome());
     }
 
     @Test
     public void testPesquisarPorId() {
         Categoria categoria = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        Categoria categoriaPesquisado = new CategoriaDAO().pesquisarPorId(categoria.getId(), session);
-        session.close();
+        Categoria categoriaPesquisado = new CategoriaBO().getCategoria(categoria.getId());
         assertNotNull(categoriaPesquisado);
-    }
-
-    /*
-    @Test
-    public void excluir() {
-        Categoria categoria = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new CategoriaDAO().excluir(categoria, session);
-        Categoria categoriaExcluido = new CategoriaDAO().pesquisarPorId(categoria.getId(), session);
-        session.close();
-        assertNull(categoriaExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<Categoria> categorias = new CategoriaDAO().pesquisarPorNome("Material Escolar", session);
-
-        session.close();
-        assertNotNull(categorias);
     }
 
     private Categoria primeiroRegistroDoBancoDeDados() {
@@ -70,9 +49,8 @@ public class CategoriaDAOTest {
 
     private static Categoria addCategoria() {
         Categoria categoria = getCategoria();
-
         Session session = HibernateUtil.abrirSessao();
-        new CategoriaDAO().salvarOuAlterar(categoria, session);
+        new CategoriaDAO().salvarOuAlterar(categoria,session);
         session.close();
         assertNotNull(categoria.getId());
 
@@ -92,7 +70,7 @@ public class CategoriaDAOTest {
     }
 
     private static Categoria getCategoria() {
-        Usuario usuario = UsuarioDAOTest.novoUsuario();
+        Usuario usuario = UsuarioBOTest.novoUsuario();
         return new Categoria("Material Escolar", true, "teste", new Date(), usuario);
     }
 }

@@ -14,8 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
-        implements IParceiroDeNegocioDAO, Serializable {
+public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long> implements IParceiroDeNegocioDAO, Serializable {
 
     @Override
     public ParceiroDeNegocio pesquisarPorId(Long id, Session session) throws HibernateException {
@@ -26,15 +25,6 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
     public List<ParceiroDeNegocio> pesquisarTodos(Session session) throws HibernateException {
         Query consulta = session.createQuery("from ParceiroDeNegocio order by nome asc");
         return consulta.list();
-    }
-
-    @Override
-    public List<ParceiroDeNegocio> pesquisarPorNome(String nome, Session session) throws HibernateException {
-        Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
-        criteria.add(Restrictions.like("nome", "%" + nome + "%"));
-        List<ParceiroDeNegocio> parceiros = criteria.list();
-
-        return parceiros;
     }
 
     public List<ParceiroDeNegocio> pesquisarTodosAtivos(Session session) throws HibernateException {
@@ -51,7 +41,7 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
             query += " and dataCriacao BETWEEN :dtInicioHQL and :dtFimHQL ";
         }
 
-        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D) {
+        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D || tipoParceiro == TipoParceiro.F) {
             query += " and tipoParceiro =:tipoHQL ";
         }
 
@@ -62,8 +52,8 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         if (status == Status.A || status == Status.I) {
             query += " and status=:statusHQL ";
         }
-        
-        query+="  order by nome asc ";
+
+        query += "  order by nome asc ";
 
         Query consulta = session.createQuery(query);
 
@@ -72,7 +62,7 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
             consulta.setParameter("dtFimHQL", dtFim);
         }
 
-        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D) {
+        if (tipoParceiro == TipoParceiro.B || tipoParceiro == TipoParceiro.D || tipoParceiro == TipoParceiro.F) {
             consulta.setParameter("tipoHQL", tipoParceiro);
         }
 
@@ -91,12 +81,14 @@ public class ParceiroDeNegocioDAO extends BaseDao<ParceiroDeNegocio, Long>
         return consulta.list();
     }
 
-    public boolean parceiroExists(Long id, String nome, Session session) throws HibernateException {
+    public boolean parceiroExists(Long id, String nome, TipoParceiro tipoParceiro, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(ParceiroDeNegocio.class);
         criteria.add(Restrictions.eq("nome", nome));
         if (id > 0) {
             criteria.add(Restrictions.ne("id", id));
         }
+        criteria.add(Restrictions.eq("tipoParceiro", tipoParceiro));
+
         List<ParceiroDeNegocio> parceiros = criteria.list();
 
         if (parceiros.size() > 0) {

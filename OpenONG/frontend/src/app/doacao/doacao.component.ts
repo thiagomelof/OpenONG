@@ -1,6 +1,6 @@
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { Status } from './../model-view/const/status';
-import { RetornoMessage } from './../model-view/dto/retorno-message';
+import { RetornoMessage, Erro } from './../model-view/dto/retorno-message';
 import { ConvenioService } from './../services/convenio.service';
 import { Convenio } from './../model-view/convenio';
 import { DoacaoMessage } from './../model-view/dto/doacao-message';
@@ -48,6 +48,7 @@ export class DoacaoComponent implements OnInit {
   parceiroDeNegociosFiltradas: Observable<any[]>;
   parceiroDeNegocioControl = new FormControl('', [Validators.required]);
   nomeFormControl = new FormControl('', [Validators.required]);
+  valorControl = new FormControl('', [Validators.required]);
   retorno = new RetornoMessage();
 
   matcher = new MyErrorStateMatcher();
@@ -127,6 +128,11 @@ export class DoacaoComponent implements OnInit {
   }
 
   addLinha() {
+    
+    if (this.dataSource.data.length > 0) {
+      this.removeLinha(0);
+    }
+
     this.dataSource.data.push(this.AdicionaItem());
     this.dataSource.filter = "";
   }
@@ -150,6 +156,7 @@ export class DoacaoComponent implements OnInit {
 
       this.retorno = <RetornoMessage>dados;
       this.msg = "";
+
       if (this.retorno.erros.length > 0) {
         this.retorno.erros.forEach(erro => { this.msg += erro.msgErro + '\n'; });
       } else {
@@ -206,7 +213,7 @@ export class DoacaoComponent implements OnInit {
   }
 
   getConvenios(idParceiro: number) {
-    
+
     this.doacao.doacao.convenio = new Convenio();
 
     if (idParceiro > 0) {

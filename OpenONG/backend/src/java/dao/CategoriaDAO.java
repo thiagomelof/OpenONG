@@ -11,8 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class CategoriaDAO extends BaseDao<Categoria, Long>
-        implements ICategoriaDAO, Serializable {
+public class CategoriaDAO extends BaseDao<Categoria, Long> implements ICategoriaDAO, Serializable {
 
     @Override
     public Categoria pesquisarPorId(Long id, Session session) throws HibernateException {
@@ -30,15 +29,6 @@ public class CategoriaDAO extends BaseDao<Categoria, Long>
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();
-    }
-
-    @Override
-    public List<Categoria> pesquisarPorNome(String nome, Session session) throws HibernateException {
-        Criteria criteria = session.createCriteria(Categoria.class);
-        criteria.add(Restrictions.like("nome", "%" + nome + "%"));
-        List<Categoria> categorias = criteria.list();
-
-        return categorias;
     }
 
     public boolean categoriaExists(long id, String nome, Session session) throws HibernateException {

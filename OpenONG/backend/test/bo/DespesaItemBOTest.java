@@ -1,5 +1,6 @@
-package dao;
+package bo;
 
+import dao.DespesaItemDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class DespesaItemDAOTest {
+public class DespesaItemBOTest {
 
-    public DespesaItemDAOTest() {
+    public DespesaItemBOTest() {
     }
 
     @Test
@@ -91,6 +92,6 @@ public class DespesaItemDAOTest {
 
     public static DespesaItem getDespesaItem() {
         
-        return new DespesaItem("abc123", DespesaDAOTest.novoDespesa(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
+        return new DespesaItem("abc123", DespesaBOTest.novoDespesa(), ItemBOTest.novoItem(), 20.5, 2, new Date(), "obs");
     }
 }

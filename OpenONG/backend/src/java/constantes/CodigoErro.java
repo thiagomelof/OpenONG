@@ -33,6 +33,8 @@ public final class CodigoErro {
     public static final int DESPESAAB = 105001;
     public static final int DESPESAAC = 105002;
     public static final int DESPESAAD = 105003;
+    public static final int DESPESAAE = 105004;
+    public static final int DESPESAAF = 105005;
 
     public static final int DESPESAITEMAA = 106000;
     public static final int DESPESAITEMAB = 106001;
@@ -43,6 +45,7 @@ public final class CodigoErro {
     public static final int DOACAOAB = 107001;
     public static final int DOACAOAC = 107002;
     public static final int DOACAOAD = 107003;
+    public static final int DOACAOAE = 107004;
 
     public static final int DOACAOITEMAA = 108000;
     public static final int DOACAOITEMAB = 108001;

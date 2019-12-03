@@ -93,6 +93,7 @@ public class DespesaServer {
     @Path("/porcategoriames")
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoriaMes(@QueryParam("mes") String mes, @QueryParam("ano") String ano) {
         return new DespesaBO().DespesasAtivasPorCategoriaMes(mes, ano);
+        //UTILIZADO NO IFRAME
     }
     
     @GET

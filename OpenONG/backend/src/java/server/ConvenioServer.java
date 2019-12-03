@@ -18,7 +18,15 @@ import model.Convenio;
 
 @Path("/convenio")
 public class ConvenioServer {
-
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public RetornoMessage cadastrar(String body) {
+        ConvenioMessage convenio = new Gson().fromJson(body, ConvenioMessage.class);
+        return new ConvenioBO().cadastrar(convenio);
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Convenio> getConvenios() {
@@ -39,25 +47,17 @@ public class ConvenioServer {
         return new ConvenioBO().getConvenio(id);
     }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public RetornoMessage cadastrar(String body) {
-        ConvenioMessage convenio = new Gson().fromJson(body, ConvenioMessage.class);
-        return new ConvenioBO().cadastrar(convenio);
-    }
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/porparceiro")
     public List<Convenio> GetConveniosPorParceiroDeNegocio(@QueryParam("id") String id) {
         return new ConvenioBO().GetConveniosPorParceiroDeNegocio(Long.parseLong(id));
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/relatorio")
-    public List<ConsumoConvenioMessage> GetConsumoConvenio(@QueryParam("id") String id){
+    public List<ConsumoConvenioMessage> GetConsumoConvenio(@QueryParam("id") String id) {
         return new ConvenioBO().GetConsumoConvenio(Long.parseLong(id));
     }
 }

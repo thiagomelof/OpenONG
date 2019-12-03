@@ -1,5 +1,6 @@
-package dao;
+package bo;
 
+import dao.DoacaoItemDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class DoacaoItemDAOTest {
+public class DoacaoItemBOTest {
 
-    public DoacaoItemDAOTest() {
+    public DoacaoItemBOTest() {
     }
 
     @Test
@@ -90,6 +91,6 @@ public class DoacaoItemDAOTest {
     }
 
     public static DoacaoItem getDoacaoItem() {
-        return new DoacaoItem("abc123", DoacaoDAOTest.novoDoacao(), ItemDAOTest.novoItem(), 20.5, 2, new Date(), "obs");
+        return new DoacaoItem("abc123", DoacaoBOTest.novoDoacao(), ItemBOTest.novoItem(), 20.5, 2, new Date(), "obs");
     }    
 }

@@ -1,8 +1,8 @@
-package dao;
+package bo;
 
+import dao.ConvenioDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
-import java.util.List;
 import model.Convenio;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,9 +10,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
-public class ConvenioDAOTest {
+public class ConvenioBOTest {
 
-    public ConvenioDAOTest() {
+    public ConvenioBOTest() {
     }
 
     @Test
@@ -39,26 +39,6 @@ public class ConvenioDAOTest {
         Convenio convenioPesquisado = new ConvenioDAO().pesquisarPorId(convenio.getId(), session);
         session.close();
         assertNotNull(convenioPesquisado);
-    }
-    /*
-    @Test
-    public void excluir() {
-        Convenio convenio = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new ConvenioDAO().excluir(convenio, session);
-        Convenio convenioExcluido = new ConvenioDAO().pesquisarPorId(convenio.getId(), session);
-        session.close();
-        assertNull(convenioExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<Convenio> convenios = new ConvenioDAO().pesquisarPorNome("Governo 2019/01", session);
-
-        session.close();
-        assertNotNull(convenios);
     }
 
     private Convenio primeiroRegistroDoBancoDeDados() {
@@ -89,7 +69,7 @@ public class ConvenioDAOTest {
     }
 
     public static Convenio getConvenio() {
-        return new Convenio("Governo 2019/01", ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(),
-                true, "obs", new Date(), new Date(), new Date(), UsuarioDAOTest.novoUsuario());
+        return new Convenio("Governo 2019/01", ParceiroDeNegocioBOTest.novoParceiroDeNegocio(),
+                true, "obs", new Date(), new Date(), new Date(), UsuarioBOTest.novoUsuario());
     }
 }

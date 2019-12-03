@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import model.Despesa;
 import model.DespesaItem;
-import model.DespesaItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -33,22 +32,17 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
         return consulta.list();
     }
 
-    @Override
-    public List<Despesa> pesquisarPorNomeDoParceiroDeNegocio(String nome, Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Despesa d join fetch d.parceiroDeNegocio pn"
-                + " where pn.nome like :pnHQL");
-        consulta.setParameter("pnHQL", "%" + nome + "%");
-
-        return consulta.list();
-    }
-
     public List<DespesaItem> relatorioDeDespesa(Long idParceiro, Long idConvenio, Date dtInicio, Date dtFim, Session session) throws HibernateException {
 
         String query = " from DespesaItem ITEM "
                 + " join fetch ITEM.despesa DESPESA "
-                + " join fetch DESPESA.parceiroDeNegocio PARCEIRO "
-                + " join fetch DESPESA.convenio CONVENIO "
-                + " where DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
+                + " join fetch DESPESA.parceiroDeNegocio PARCEIRO ";
+
+        if (idConvenio > 0 || idConvenio == -1) {
+            query += "left join fetch DESPESA.convenio CONVENIO ";
+        }
+
+        query += " where DESPESA.lancamento BETWEEN :dtInicioHQL and :dtFimHQL "
                 + " and DESPESA.status =:statusHQL ";
 
         if (idParceiro > 0) {
@@ -56,10 +50,12 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
         }
         if (idConvenio > 0) {
             query += " AND CONVENIO.id =:convenioHQL ";
+        } else if (idConvenio == -1) {
+            query += " AND CONVENIO.id is null ";
         }
-        
-        query+="  order by DESPESA.lancamento asc ";
-        
+
+        query += "  order by DESPESA.lancamento asc ";
+
         Query consulta = session.createQuery(query).setParameter("dtInicioHQL", dtInicio).setParameter("dtFimHQL", dtFim).setParameter("statusHQL", true);
 
         if (idParceiro > 0) {
@@ -85,7 +81,7 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
 
         return consulta.list();
     }
-    
+
     public List<DespesaItem> despesasPorPeriodo(Date dtInicio, Date dtFim, Session session) throws HibernateException {
 
         String query = " from DespesaItem DESPESAITEM "
@@ -97,7 +93,7 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
 
         return consulta.list();
     }
-    
+
     public List<DespesaItem> despesasPorConvenio(long idConvenio, Session session) throws HibernateException {
 
         String query = " from DespesaItem DESPESAITEM "
@@ -107,7 +103,7 @@ public class DespesaDAO extends BaseDao<Despesa, Long>
                 + " join fetch DESPESA.convenio CONVENIO "
                 + " where DESPESA.status =:statusHQL "
                 + " and CONVENIO.id=:idConvenioHQL ";
-        
+
         Query consulta = session.createQuery(query).setParameter("statusHQL", true).setParameter("idConvenioHQL", idConvenio);
 
         return consulta.list();

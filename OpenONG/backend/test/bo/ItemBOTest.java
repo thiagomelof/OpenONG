@@ -1,9 +1,9 @@
-package dao;
+package bo;
 
 import constantes.TipoItem;
+import dao.ItemDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
-import java.util.List;
 import model.Categoria;
 import model.Item;
 import model.Usuario;
@@ -13,9 +13,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
-public class ItemDAOTest {
+public class ItemBOTest {
 
-    public ItemDAOTest() {
+    public ItemBOTest() {
     }
 
     @Test
@@ -42,26 +42,6 @@ public class ItemDAOTest {
         Item itemPesquisado = new ItemDAO().pesquisarPorId(item.getId(), session);
         session.close();
         assertNotNull(itemPesquisado);
-    }
-    /*
-    @Test
-    public void excluir() {
-        Item item = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new ItemDAO().excluir(item, session);
-        Item itemExcluido = new ItemDAO().pesquisarPorId(item.getId(), session);
-        session.close();
-        assertNull(itemExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<Item> items = new ItemDAO().pesquisarPorNome("Arroz Branco", session);
-
-        session.close();
-        assertNotNull(items);
     }
 
     private Item primeiroRegistroDoBancoDeDados() {
@@ -92,8 +72,8 @@ public class ItemDAOTest {
     }
 
     private static Item getItem() {
-        Usuario usuario = UsuarioDAOTest.novoUsuario();
-        Categoria categoria = CategoriaDAOTest.novaCategoria();
+        Usuario usuario = UsuarioBOTest.novoUsuario();
+        Categoria categoria = CategoriaBOTest.novaCategoria();
         return new Item("Arroz Branco", categoria, TipoItem.D, true, "teste", new Date(), usuario);
     }
 }

@@ -1,5 +1,6 @@
-package dao;
+package bo;
 
+import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class DoacaoDAOTest {
+public class DoacaoBOTest {
 
-    public DoacaoDAOTest() {
+    public DoacaoBOTest() {
     }
 
     @Test
@@ -40,26 +41,6 @@ public class DoacaoDAOTest {
         Doacao doacaoPesquisado = new DoacaoDAO().pesquisarPorId(doacao.getId(), session);
         session.close();
         assertNotNull(doacaoPesquisado);
-    }
-    /*
-    @Test
-    public void excluir() {
-        Doacao doacao = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new DoacaoDAO().excluir(doacao, session);
-        Doacao doacaoExcluido = new DoacaoDAO().pesquisarPorId(doacao.getId(), session);
-        session.close();
-        assertNull(doacaoExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<Doacao> doacaos = new DoacaoDAO().pesquisarPorNomeDoParceiroDeNegocio("Thiago", session);
-
-        session.close();
-        assertNotNull(doacaos);
     }
 
     private Doacao primeiroRegistroDoBancoDeDados() {
@@ -90,7 +71,7 @@ public class DoacaoDAOTest {
     }
 
     public static Doacao getDoacao() {
-        return new Doacao(ParceiroDeNegocioDAOTest.novoParceiroDeNegocio(), true, new Date(), "teste",
-                ConvenioDAOTest.novoConvenio(), new Date(), UsuarioDAOTest.novoUsuario());
+        return new Doacao(ParceiroDeNegocioBOTest.novoParceiroDeNegocio(), true, new Date(), "teste",
+                ConvenioBOTest.novoConvenio(), new Date(), UsuarioBOTest.novoUsuario());
     }
 }

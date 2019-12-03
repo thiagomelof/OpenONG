@@ -9,6 +9,4 @@ import dao.base.IBaseDao;
 public interface ICategoriaDAO extends IBaseDao<Categoria, Long> {
     
     List<Categoria> pesquisarTodos(Session session) throws HibernateException;
-    
-    List<Categoria> pesquisarPorNome(String nome,Session session) throws HibernateException;
 }

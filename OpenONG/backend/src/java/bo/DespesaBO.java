@@ -5,6 +5,8 @@ import constantes.TipoRegistro;
 import dao.DespesaItemDAO;
 import dao.DespesaDAO;
 import dao.base.HibernateUtil;
+import dto.ConsumoConvenioMessage;
+import dto.ConvenioMessage;
 import dto.DespesaMessage;
 import dto.DespesasPorCategoriaMessage;
 import dto.DespesasPorPeriodoMessage;
@@ -68,7 +70,7 @@ public class DespesaBO {
         }
 
         if (parametros.getConvenio().getId() != null) {
-            if (parametros.getConvenio().getId() > 0) {
+            if (parametros.getConvenio().getId() > 0 || parametros.getConvenio().getId() == -1) {
                 idConvenio = parametros.getConvenio().getId();
             }
         }
@@ -114,7 +116,7 @@ public class DespesaBO {
 
         return msg;
     }
-    
+
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoria() {
         Session session = HibernateUtil.abrirSessao();
         List<DespesaItem> despesas = new DespesaDAO().DespesasAtivasPorCategoria(DataUtils.primeiroDiaDoMes(), DataUtils.ultimoDiaDoMes(), session);
@@ -154,7 +156,7 @@ public class DespesaBO {
     public List<DespesasPorCategoriaMessage> DespesasAtivasPorCategoriaMes(String mes, String ano) {
         Session session = HibernateUtil.abrirSessao();
         List<DespesaItem> despesas = new DespesaDAO().DespesasAtivasPorCategoria(DataUtils.primeiroDiaDoMes(mes, ano), DataUtils.ultimoDiaDoMes(mes, ano), session);
-            session.close();
+        session.close();
         List<DespesasPorCategoriaMessage> msg = new ArrayList<>();
 
         for (DespesaItem despesa : despesas) {
@@ -246,7 +248,21 @@ public class DespesaBO {
             erros.add(new Erro(CodigoErro.DESPESAAA, "Necessário informar um fornecedor válido."));
         }
 
-        List<Erro> errosItens = validacoesItens(despesa.getItens(), session);
+        long idConvenio = 0;
+        if (despesa.getDespesa().getConvenio() != null) {
+            if (despesa.getDespesa().getConvenio().getId() > 0) {
+                idConvenio = despesa.getDespesa().getConvenio().getId();
+
+                ConvenioMessage convenio = new ConvenioBO().getConvenio(idConvenio);
+
+                if (despesa.getDespesa().getLancamento().before(convenio.getConvenio().getValidoDe())
+                        || despesa.getDespesa().getLancamento().after(convenio.getConvenio().getValidoAte())) {
+                    erros.add(new Erro(CodigoErro.DESPESAAE, "Este lançamento está fora do período de validade do convênio"));
+                }
+            }
+        }
+
+        List<Erro> errosItens = validacoesItens(despesa.getItens(), idConvenio, session);
 
         if (errosItens.size() > 0) {
             erros.addAll(errosItens);
@@ -255,11 +271,26 @@ public class DespesaBO {
         return erros;
     }
 
-    private List<Erro> validacoesItens(List<DespesaItem> itens, Session session) {
+    private List<Erro> validacoesItens(List<DespesaItem> itens, long idConvenio, Session session) {
         List<Erro> erros = new ArrayList<>();
         if (itens.size() == 0) {
             erros.add(new Erro(CodigoErro.DESPESAAB, "Necessário informar ao menos um item de despesa."));
         }
+
+        if (idConvenio > 0) {
+            List<ConsumoConvenioMessage> consumo = new ConvenioBO().GetConsumoConvenio(idConvenio);
+
+            double valorTotal = itens.stream().mapToDouble((item) -> item.getQuantidade() * item.getValorUnitario()).sum();
+
+            double valorConsumo = consumo.stream().mapToDouble((item) -> item.getDespesa()).sum();
+
+            double valorDoacao = consumo.get(0).getDoacao();
+
+            if ((valorTotal + valorConsumo) > valorDoacao) {
+                erros.add(new Erro(CodigoErro.DESPESAAF, "Convênio não há fundos o suficente para esta despesa."));
+            }
+        }
+
         return erros;
     }
 

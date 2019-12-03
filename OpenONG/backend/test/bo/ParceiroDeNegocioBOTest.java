@@ -1,6 +1,7 @@
-package dao;
+package bo;
 
 import constantes.TipoParceiro;
+import dao.ParceiroDeNegocioDAO;
 import dao.base.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
-public class ParceiroDeNegocioDAOTest {
+public class ParceiroDeNegocioBOTest {
 
-    public ParceiroDeNegocioDAOTest() {
+    public ParceiroDeNegocioBOTest() {
     }
 
     @Test
@@ -42,27 +43,6 @@ public class ParceiroDeNegocioDAOTest {
         ParceiroDeNegocio parceiroDeNegocioPesquisado = new ParceiroDeNegocioDAO().pesquisarPorId(parceiroDeNegocio.getId(), session);
         session.close();
         assertNotNull(parceiroDeNegocioPesquisado);
-    }
-
-    /*
-    @Test
-    public void excluir() {
-        ParceiroDeNegocio parceiroDeNegocio = primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        new ParceiroDeNegocioDAO().excluir(parceiroDeNegocio, session);
-        ParceiroDeNegocio parceiroDeNegocioExcluido = new ParceiroDeNegocioDAO().pesquisarPorId(parceiroDeNegocio.getId(), session);
-        session.close();
-        assertNull(parceiroDeNegocioExcluido);
-    }*/
-
-    @Test
-    public void testPesquisarPorNome() {
-        primeiroRegistroDoBancoDeDados();
-        Session session = HibernateUtil.abrirSessao();
-        List<ParceiroDeNegocio> parceiroDeNegocios = new ParceiroDeNegocioDAO().pesquisarPorNome("Thiago", session);
-
-        session.close();
-        assertNotNull(parceiroDeNegocios);
     }
 
     private ParceiroDeNegocio primeiroRegistroDoBancoDeDados() {
@@ -93,8 +73,8 @@ public class ParceiroDeNegocioDAOTest {
     }
 
     public static ParceiroDeNegocio getParceiroDeNegocio() {
-        return new ParceiroDeNegocio("Thiago Melo", true,TipoParceiro.F, "thiago.melo93@hotmail.com", "(48)99999999", "(48)996501990", "033.88.890-05", "", "", "100.111.1213",
-                getEndereco(), new Date(), UsuarioDAOTest.novoUsuario());
+        return new ParceiroDeNegocio("Thiago Melo", true, TipoParceiro.F, "thiago.melo93@hotmail.com", "(48)99999999", "(48)996501990", "033.88.890-05", "", "", "100.111.1213",
+                getEndereco(), new Date(), UsuarioBOTest.novoUsuario());
     }
 
     public static Endereco getEndereco() {

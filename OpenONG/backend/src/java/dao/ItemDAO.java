@@ -42,15 +42,6 @@ public class ItemDAO extends BaseDao<Item, Long>
         return consulta.list();
     }
 
-    @Override
-    public List<Item> pesquisarPorNome(String nome, Session session) throws HibernateException {
-        Criteria criteria = session.createCriteria(Item.class);
-        criteria.add(Restrictions.like("nome", "%" + nome + "%"));
-        List<Item> itens = criteria.list();
-
-        return itens;
-    }
-
     public boolean itemExists(long id, String nome, Session session) throws HibernateException {
         Criteria criteria = session.createCriteria(Item.class);
         criteria.add(Restrictions.eq("nome", nome));

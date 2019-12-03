@@ -67,7 +67,7 @@ public class DoacaoBO {
         }
 
         if (parametros.getConvenio().getId() != null) {
-            if (parametros.getConvenio().getId() > 0) {
+            if (parametros.getConvenio().getId() > 0 || parametros.getConvenio().getId() == -1) {
                 idConvenio = parametros.getConvenio().getId();
             }
         }
@@ -188,6 +188,13 @@ public class DoacaoBO {
         if (itens.size() == 0) {
             erros.add(new Erro(CodigoErro.DOACAOAB, "Necessário informar ao menos um item de doação"));
         }
+
+        for (DoacaoItem item : itens) {
+            if (item.getValorUnitario() <= 0) {
+                erros.add(new Erro(CodigoErro.DOACAOAE, "Necessário informar o valor da doação."));
+            }
+        }
+
         return erros;
     }
 
@@ -201,7 +208,7 @@ public class DoacaoBO {
         if (doacao.getParceiroDeNegocio() == null) {
             doacao.setParceiroDeNegocio(new ParceiroDeNegocio());
         }
-        if (doacao.getConvenio()== null) {
+        if (doacao.getConvenio() == null) {
             doacao.setConvenio(new Convenio());
         }
     }

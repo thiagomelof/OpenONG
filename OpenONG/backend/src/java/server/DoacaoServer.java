@@ -1,9 +1,7 @@
 package server;
 
-import bo.DespesaBO;
 import bo.DoacaoBO;
 import com.google.gson.Gson;
-import dto.DespesasPorCategoriaMessage;
 import dto.DoacaoMessage;
 import dto.DoacoesPorPeriodoMessage;
 import dto.RelatorioDoacaoParameters;

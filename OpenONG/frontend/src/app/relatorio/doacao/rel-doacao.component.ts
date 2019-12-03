@@ -3,10 +3,10 @@ import { Status } from './../../model-view/const/status';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ConvenioService } from './../../services/convenio.service';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ParceiroDeNegocioService } from './../../services/parceiro-de-negocio.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { DoacaoParameters } from './../../model-view/dto/doacao-parameters';
 import { DoacaoItem } from './../../model-view/doacao-item';
 import { RelatoriosService } from './../../services/relatorios.service';
@@ -29,6 +29,7 @@ export class RelDoacaoComponent implements OnInit {
   dataSource: MatTableDataSource<DoacaoItem>;
   doador: boolean;
   convenio: boolean;
+  semConvenio: boolean;
   total: number;
   totalbool: boolean;
   itens: DoacaoItem[];
@@ -37,8 +38,10 @@ export class RelDoacaoComponent implements OnInit {
   parceirosDeNegocio: ParceiroDeNegocio[];
   parceiroDeNegociosFiltradas: Observable<any[]>;
   parceiroDeNegocioControl = new FormControl('');
+  dataDeControl = new FormControl('', [Validators.required]);
+  dataAteControl = new FormControl('', [Validators.required]);
 
-  constructor(private relatorioServer: RelatoriosService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService) { }
+  constructor(private relatorioServer: RelatoriosService, private parceiroDeNegocioServer: ParceiroDeNegocioService, private convenioServer: ConvenioService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -61,7 +64,7 @@ export class RelDoacaoComponent implements OnInit {
       }
     })
 
-    this.convenioServer.listarAtivos().subscribe(conv => {
+    this.convenioServer.listar().subscribe(conv => {
       let convenioVazio = new Convenio();
       convenioVazio.id = 0;
       convenioVazio.nome = "Selecione...";
@@ -72,6 +75,9 @@ export class RelDoacaoComponent implements OnInit {
   }
 
   addLinha(item: DoacaoItem) {
+    if (item.doacao.convenio == undefined) {
+      item.doacao.convenio = new Convenio();
+    }
     this.dataSource.data.push(item);
     this.dataSource.filter = "";
   }
@@ -108,6 +114,20 @@ export class RelDoacaoComponent implements OnInit {
     }
   }
 
+  checkValue(event: any) {
+    if (event == "Y") {
+      this.params.convenio = new Convenio();
+      this.params.convenio.nome = "Lançamentos sem convênio";
+      this.params.convenio.id = -1;
+      this.convenio = true;
+    }
+    else {
+      this.convenio = false;
+      this.params.convenio = new Convenio();
+      this.params.convenio.id = 0;
+    }
+  }
+
   filtrarParceiroDeNegocios(name: string) {
     return this.parceirosDeNegocio.filter(pn =>
       pn.nome.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -118,17 +138,25 @@ export class RelDoacaoComponent implements OnInit {
     this.dataSource.filter = "";
     this.total = 0;
     this.totalbool = false;
-    this.relatorioServer.getRelatorioDoacoes(this.params).subscribe(dados => {
-      this.itens = dados;
 
-      this.itens.forEach(item => {
-        this.addLinha(item);
-        this.total = (this.total + ((item.valorUnitario) * item.quantidade));
-      });
+    if (this.params.dataInicio != undefined && this.params.dataFim != undefined) {
+      this.relatorioServer.getRelatorioDoacoes(this.params).subscribe(dados => {
+        this.itens = dados;
 
-      this.totalbool = true;
-    })
+        this.itens.forEach(item => {
+          this.addLinha(item);
+          this.total = (this.total + ((item.valorUnitario) * item.quantidade));
+        });
+
+        this.totalbool = true;
+      })
+    }else{
+      this.getStatusBar("Necessário informar o período de lançamento.");
+    }
   }
 
+getStatusBar(msgSnack: string) {
+    this.snackBar.open(msgSnack, "FECHAR", { duration: 3500 });
+  }
 
 }
