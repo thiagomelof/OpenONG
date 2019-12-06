@@ -257,7 +257,7 @@ public class DespesaBO {
 
                 if (despesa.getDespesa().getLancamento().before(convenio.getConvenio().getValidoDe())
                         || despesa.getDespesa().getLancamento().after(convenio.getConvenio().getValidoAte())) {
-                    erros.add(new Erro(CodigoErro.DESPESAAE, "Este lançamento está fora do período de validade do convênio"));
+                    erros.add(new Erro(CodigoErro.DESPESAAE, "Este lançamento está fora do período de validade do convênio."));
                 }
             }
         }

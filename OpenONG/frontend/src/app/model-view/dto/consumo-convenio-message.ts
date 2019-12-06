@@ -4,6 +4,7 @@ export class ConsumoConvenioMessage {
     doacao: number;
     despesa: number;
     percentualAplicado: number;
+    valorPlanejado: number;
     percentualUtilizado: number;
     color: String;
 }

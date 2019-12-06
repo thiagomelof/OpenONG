@@ -42,7 +42,8 @@ public class ConvenioDAO extends BaseDao<Convenio, Long> implements IConvenioDAO
 
     public List<Convenio> pesquisarTodosAtivos(Session session) throws HibernateException {
         Query consulta = session.createQuery("from Convenio where status =:statusHQL "
-                + " and sysdate() between validoDe and validoAte order by nome asc");
+                //+ " and sysdate() between validoDe and validoAte "
+                + " order by nome asc");
         consulta.setParameter("statusHQL", true);
 
         return consulta.list();

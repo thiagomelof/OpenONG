@@ -5,6 +5,7 @@ import constantes.TipoRegistro;
 import dao.DoacaoItemDAO;
 import dao.DoacaoDAO;
 import dao.base.HibernateUtil;
+import dto.ConvenioMessage;
 import dto.DoacaoMessage;
 import dto.DoacoesPorPeriodoMessage;
 import dto.RelatorioDoacaoParameters;
@@ -174,6 +175,20 @@ public class DoacaoBO {
             erros.add(new Erro(CodigoErro.DOACAOAA, "Necessário informar um doador válido."));
         }
 
+        long idConvenio = 0;
+        if (doacao.getDoacao().getConvenio() != null) {
+            if (doacao.getDoacao().getConvenio().getId() > 0) {
+                idConvenio = doacao.getDoacao().getConvenio().getId();
+
+                ConvenioMessage convenio = new ConvenioBO().getConvenio(idConvenio);
+
+                if (doacao.getDoacao().getLancamento().before(convenio.getConvenio().getValidoDe())
+                        || doacao.getDoacao().getLancamento().after(convenio.getConvenio().getValidoAte())) {
+                    erros.add(new Erro(CodigoErro.DOACAOAF, "Este lançamento está fora do período de validade do convênio."));
+                }
+            }
+        }
+        
         List<Erro> errosItens = validacoesItens(doacao.getItens(), session);
 
         if (errosItens.size() > 0) {

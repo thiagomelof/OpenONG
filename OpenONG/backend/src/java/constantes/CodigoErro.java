@@ -46,6 +46,7 @@ public final class CodigoErro {
     public static final int DOACAOAC = 107002;
     public static final int DOACAOAD = 107003;
     public static final int DOACAOAE = 107004;
+    public static final int DOACAOAF = 107005;
 
     public static final int DOACAOITEMAA = 108000;
     public static final int DOACAOITEMAB = 108001;

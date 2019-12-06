@@ -44,7 +44,7 @@
 
             <ng-container matColumnDef="valDespesas">
                 <mat-header-cell *matHeaderCellDef> Valor em despesas </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.despesa | number:'1.2-2':'pt'}} </mat-cell>
+                <mat-cell *matCellDef="let row"> R$ {{row.despesa | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="percPlanejado">
@@ -55,6 +55,11 @@
             <ng-container matColumnDef="percUtilizado">
                 <mat-header-cell *matHeaderCellDef> Percentual utilizado </mat-header-cell>
                 <mat-cell *matCellDef="let row" [style.color]="row.color"> % {{row.percentualUtilizado | number:'1.2-2':'pt'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="valPlanejado">
+                <mat-header-cell *matHeaderCellDef> Valor planejado </mat-header-cell>
+                <mat-cell *matCellDef="let row"> R$ {{row.valorPlanejado | number:'1.2-2':'pt'}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

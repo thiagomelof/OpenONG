@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./../../shared/shared-table.component.scss']
 })
 export class RelConsumoConvenioComponent implements OnInit {
-  displayedColumns = ['categoria', 'valDespesas', 'percPlanejado', 'percUtilizado'];
+  displayedColumns = ['categoria',  'percPlanejado','valPlanejado', 'valDespesas', 'percUtilizado'];
   dataSource: MatTableDataSource<ConsumoConvenioMessage>;
   consumo: ConsumoConvenioMessage[];
   convenios: Convenio[];
@@ -75,11 +75,13 @@ export class RelConsumoConvenioComponent implements OnInit {
           if (item.percentualUtilizado >= item.percentualAplicado)
             item.color = "red";
 
-
-          this.addLinha(item);
           this.totalDespesa = this.totalDespesa + item.despesa;
           this.totalDoacao = item.doacao;
           this.totalConsumido = this.totalConsumido + item.percentualUtilizado;
+
+          item.valorPlanejado = (this.totalDoacao * item.percentualAplicado) / 100;
+
+          this.addLinha(item);
         });
 
         this.totalbool = true;
