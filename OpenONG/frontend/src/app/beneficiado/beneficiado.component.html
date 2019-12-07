@@ -12,174 +12,94 @@
 
         <div class="input-container">
             <form method="post" (ngSubmit)="addOrUpdate()">
-                <div *ngIf="!isAddMode" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="parceiro.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-checkbox [(ngModel)]="parceiro.status" id="status" name="status">Ativo
-                                    </mat-checkbox>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="parceiro.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="parceiro.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
-                                        <mat-error *ngIf="nomeFormControl.hasError('required')">O nome é <strong>obrigatório</strong>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="text" mask="(00) 0000-0000" [(ngModel)]="parceiro.telefone" id="telefone" name="telefone" type="tel" matInput placeholder="Telefone">
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="text" mask="(00) 00000-0000" [(ngModel)]="parceiro.celular" id="celular" name="celular" type="tel" matInput placeholder="Celular">
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.email" id="emai" name="emai" matInput placeholder="E-mail" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="emailFormControl.hasError('email') ">Insira um e-mail válido</mat-error>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div *ngIf="!isAddMode" fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input disabled [(ngModel)]="parceiro.id" type="text" id="id" name="id" matInput placeholder="Código">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="45">
+                        <input disabled [(ngModel)]="parceiro.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" matInput placeholder="Usuário de criação">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="35">
+                        <input disabled [(ngModel)]="parceiro.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" matInput placeholder="Último usuário a modificar">
+                    </mat-form-field>
+                    <mat-checkbox fxFlex="5" [(ngModel)]="parceiro.status" id="status" name="status">Ativo</mat-checkbox>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="text" mask="000.000.000-00" [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.rua" matInput id="rua" name="rua" placeholder="Rua">
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.numRua" matInput id="numero" name="numero" placeholder="Número">
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <input [(ngModel)]="parceiro.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required/>
+                        <mat-error *ngIf="nomeFormControl.hasError('required')">O nome é <strong>obrigatório</strong></mat-error>
+                    </mat-form-field>
+
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.complemento" matInput id="complemento" name="complemento" placeholder="Complemento">
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.bairro" matInput id="bairro" name="bairro" placeholder="Bairro">
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="text" mask="00000-000" [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="parceiro.endereco.cidade" matInput id="cidade" name="cidade" placeholder="Cidade">
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input type="text" mask="000.000.000-00" [(ngModel)]="parceiro.cpf" matInput id="cpf" name="cpf" placeholder="CPF">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <textarea [(ngModel)]="parceiro.observacoes" matInput id="observacoes" name="observacoes" placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <mat-select [(ngModel)]="parceiro.endereco.estado" id="estado" name="estado" placeholder="Estado">
-                                            <mat-option>--</mat-option>
-                                            <mat-option *ngFor="let estado of estados" [value]="estado.value">{{estado.name}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <textarea [(ngModel)]="parceiro.observacoes" matInput id="observacoes" name="observacoes" placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <h4 class="mat-subheading-1 center-align">Contato</h4>
+
+                <mat-divider></mat-divider>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <input type="text" mask="(00) 0000-0000" [(ngModel)]="parceiro.telefone" id="telefone" name="telefone" type="tel" matInput placeholder="Telefone">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input type="text" mask="(00) 00000-0000" [(ngModel)]="parceiro.celular" id="celular" name="celular" type="tel" matInput placeholder="Celular">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input [(ngModel)]="parceiro.email" id="emai" name="emai" matInput placeholder="E-mail" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="emailFormControl.hasError('email') ">Insira um e-mail válido</mat-error>
+                    </mat-form-field>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <table class="example-full-width" cellspacing="6">
-                        <tr>
-                            <td>
-                                <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
-                            </td>
-                        </tr>
-                    </table>
+                <h4 class="mat-subheading-1 center-align">Endereço</h4>
+
+                <mat-divider></mat-divider>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="70">
+                        <input [(ngModel)]="parceiro.endereco.rua" matInput id="rua" name="rua" placeholder="Rua">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="15">
+                        <input [(ngModel)]="parceiro.endereco.numRua" matInput id="numero" name="numero" placeholder="Número">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="15">
+                        <input [(ngModel)]="parceiro.endereco.complemento" matInput id="complemento" name="complemento" placeholder="Complemento">
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input type="text" mask="00000-000" [(ngModel)]="parceiro.endereco.cep" matInput id="cep" name="cep" placeholder="CEP">
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="18">
+                        <input [(ngModel)]="parceiro.endereco.bairro" matInput id="bairro" name="bairro" placeholder="Bairro">
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="30">
+                        <input [(ngModel)]="parceiro.endereco.cidade" matInput id="cidade" name="cidade" placeholder="Cidade">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <mat-select [(ngModel)]="parceiro.endereco.estado" id="estado" name="estado" placeholder="Estado">
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let estado of estados" [value]="estado.value">{{estado.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
                 </div>
             </form>
         </div>
+
     </div>
 </div>

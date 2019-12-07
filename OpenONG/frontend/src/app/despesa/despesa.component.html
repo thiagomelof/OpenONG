@@ -12,139 +12,77 @@
         <div class="input-container">
             <form method="post" (ngSubmit)="addOrUpdate()">
 
-                <div *ngIf="!isAddMode" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="despesa.despesa.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-checkbox [(ngModel)]="despesa.despesa.status" id="status" name="status">Ativo
-                                    </mat-checkbox>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="despesa.despesa.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="despesa.despesa.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div *ngIf="!isAddMode" fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input disabled [(ngModel)]="despesa.despesa.id" type="text" id="id" name="id" matInput placeholder="Código">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="45">
+                        <input disabled [(ngModel)]="despesa.despesa.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" matInput placeholder="Usuário de criação">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="35">
+                        <input disabled [(ngModel)]="despesa.despesa.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" matInput placeholder="Último usuário a modificar">
+                    </mat-form-field>
+                    <mat-checkbox fxFlex="5" [(ngModel)]="despesa.despesa.status" id="status" name="status">Ativo</mat-checkbox>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="despesa.despesa.lancamento" id="dtLanc" name="dtLanc" matInput [matDatepicker]="dp3" placeholder="Data de lançamento">
-                                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field class="width">
-                                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl"
-                                            required>
-                                        <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
-                                                <span>{{ pn.nome }}</span>
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                    </mat-form-field>
-                                    <input hidden [(ngModel)]="despesa.despesa.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" matInput placeholder="Id parceiroDeNegocio" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <mat-select placeholder="Convênio" [(ngModel)]="despesa.despesa.convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
-                                            <mat-option *ngFor="let c of convenios" [value]="c.id">
-                                                {{c.nome}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <input hidden [(ngModel)]="despesa.despesa.convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+
+                    <mat-form-field fxFlex="15">
+                        <input [(ngModel)]="despesa.despesa.lancamento" id="dtLanc" name="dtLanc" matInput [matDatepicker]="dp3" placeholder="Data de lançamento">
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="45">
+                        <input (ngModelChange)="onChangeParceiro($event)" [(ngModel)]="despesa.despesa.parceiroDeNegocio.nome" id="pn" name="pn" matInput placeholder="Fornecedor" aria-label="ParceiroDeNegocio" [matAutocomplete]="auto" [formControl]="parceiroDeNegocioControl"
+                            required>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let pn of parceiroDeNegociosFiltradas | async" [value]="pn.nome">
+                                <span>{{ pn.nome }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <input hidden [(ngModel)]="despesa.despesa.parceiroDeNegocio.id" type="text" id="idPn" name="idPn" matInput placeholder="Id parceiroDeNegocio" />
+
+
+                    <mat-form-field fxFlex="40">
+                        <mat-select placeholder="Convênio" [(ngModel)]="despesa.despesa.convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)">
+                            <mat-option *ngFor="let c of convenios" [value]="c.id">
+                                {{c.nome}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <input hidden [(ngModel)]="despesa.despesa.convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
+
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <textarea [(ngModel)]="despesa.despesa.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <textarea [(ngModel)]="despesa.despesa.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
                 </div>
 
                 <h4 class="mat-subheading-1 center-align">Itens da despesa</h4>
 
                 <mat-divider></mat-divider>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <mat-select placeholder="Item/serviço" [(ngModel)]="despesaItem.item.id" name="item" (ngModelChange)="onChangeItem($event)">
-                                            <mat-option *ngFor="let i of itens" [value]="i.id">
-                                                {{i.nome}}
-                                            </mat-option>
-                                        </mat-select>
-
-                                        <input hidden [(ngModel)]="despesaItem.item.nome" type="text" name="nomeCat" class="form-control" matInput />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="number" [(ngModel)]="despesaItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input type="number" [(ngModel)]="despesaItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
-                                    </mat-form-field>
-                                </td>
-
-                                <td>
-                                    <mat-form-field>
-                                        <textarea [(ngModel)]="despesaItem.observacoes" id="itemObservacoes" name="itemObservacoes" matInput placeholder="Observações do item" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <button type="button" mat-raised-button color="accent" (click)="addLinha()">Salvar Linha</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="20">
+                        <mat-select placeholder="Item/serviço" [(ngModel)]="despesaItem.item.id" name="item" (ngModelChange)="onChangeItem($event)">
+                            <mat-option *ngFor="let i of itens" [value]="i.id"> {{i.nome}} </mat-option>
+                        </mat-select>
+                        <input hidden [(ngModel)]="despesaItem.item.nome" type="text" name="nomeCat" class="form-control" matInput />
+                    </mat-form-field>
+                    <mat-form-field fxFlex="10">
+                        <input type="number" [(ngModel)]="despesaItem.quantidade" name="quantidade" class="form-control" matInput placeholder="Quantidade" />
+                    </mat-form-field>
+                    <mat-form-field fxFlex="10">
+                        <input type="number" [(ngModel)]="despesaItem.valorUnitario" name="valUnit" class="form-control" matInput placeholder="Valor" />
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50">
+                        <textarea [(ngModel)]="despesaItem.observacoes" id="itemObservacoes" name="itemObservacoes" matInput placeholder="Observações do item" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                    <button fxFlex="10" type="button" mat-raised-button color="accent" (click)="addLinha()">Salvar Linha</button>
                 </div>
 
                 <mat-table #table [dataSource]="dataSource" style="margin-top: 20px;">
@@ -189,14 +127,8 @@
 
                 <br /><br />
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <table class="example-full-width" cellspacing="6">
-                        <tr>
-                            <td>
-                                <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
-                            </td>
-                        </tr>
-                    </table>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
                 </div>
             </form>
         </div>

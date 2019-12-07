@@ -10,67 +10,36 @@
         <app-form-header *ngIf="!isAddMode" titulo="Editar categoria de item e serviço" [rota]="['../../list']" icone="arrow_back"></app-form-header>
         <div class="input-container">
             <form method="post" (ngSubmit)="addOrUpdate()">
-                <div *ngIf="!isAddMode" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="categoria.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-checkbox [(ngModel)]="categoria.status" id="status" name="status">Ativo
-                                    </mat-checkbox>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="categoria.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="categoria.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div *ngIf="!isAddMode" fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input disabled [(ngModel)]="categoria.id" type="text" id="id" name="id" matInput placeholder="Código">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="45">
+                        <input disabled [(ngModel)]="categoria.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" matInput placeholder="Usuário de criação">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="35">
+                        <input disabled [(ngModel)]="categoria.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" matInput placeholder="Último usuário a modificar">
+                    </mat-form-field>
+                    <mat-checkbox fxFlex="5" [(ngModel)]="categoria.status" id="status" name="status">Ativo</mat-checkbox>
                 </div>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
 
-                    <table cellspacing="6">
-                        <tr>
-                            <td>
-                                <mat-form-field>
-                                    <input [(ngModel)]="categoria.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
-                                    <mat-error *ngIf="nomeFormControl.hasError('required')">
-                                        O nome é <strong>obrigatório</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <textarea [(ngModel)]="categoria.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <input [(ngModel)]="categoria.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
+                        <mat-error *ngIf="nomeFormControl.hasError('required')">
+                            O nome é <strong>obrigatório</strong>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <table class="example-full-width" cellspacing="6">
-                        <tr>
-                            <td>
-                                <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
-                            </td>
-                        </tr>
-                    </table>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <textarea [(ngModel)]="categoria.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
                 </div>
             </form>
         </div>

@@ -1,27 +1,15 @@
 <div fxLayout="column" class="components-container-gt-xs" [ngClass.xs]="'components-container-xs'" fxLayoutGap="20px">
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-        <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-            <table cellspacing="6">
-                <tr>
-                    <td>
-                        <mat-form-field>
-                            <mat-select placeholder="Convênio" [(ngModel)]="convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)" [formControl]="convenioControl" required>
-                                <mat-option *ngFor="let c of convenios" [value]="c.id">
-                                    {{c.nome}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <input hidden [(ngModel)]="convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
-                    </td>
-                    <td>
-                        <button type="button" mat-raised-button color="accent" (click)="filtrar()">Gerar relatório</button>
-                    </td>
-                    <td>
-                        <button printSectionId="print-section" [useExistingCss]="true" type="button" mat-raised-button color="accent" ngxPrint>Imprimir</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
+    <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-form-field fxFlex>
+            <mat-select placeholder="Convênio" [(ngModel)]="convenio.id" name="convenio" (ngModelChange)="onChangeConvenio($event)" [formControl]="convenioControl" required>
+                <mat-option *ngFor="let c of convenios" [value]="c.id">
+                    {{c.nome}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <input hidden [(ngModel)]="convenio.nome" type="text" id="nomeConv" name="nomeConv" matInput />
+        <button fxFlex="10" type="button" mat-raised-button color="accent" (click)="filtrar()">Gerar relatório</button>
+        <button fxFlex="10" printSectionId="print-section" [useExistingCss]="true" type="button" mat-raised-button color="accent" ngxPrint>Imprimir</button>
     </div>
 
     <div id="print-section">

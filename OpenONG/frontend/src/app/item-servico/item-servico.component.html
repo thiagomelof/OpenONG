@@ -12,103 +12,53 @@
         </app-form-header>
         <div class="input-container">
             <form method="post" (ngSubmit)="addOrUpdate()">
-                <div *ngIf="!isAddMode" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="item.id" type="text" id="id" name="id" class="form-control" matInput placeholder="Código" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-checkbox [(ngModel)]="item.status" id="status" name="status">Ativo
-                                    </mat-checkbox>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="item.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" class="form-control" matInput placeholder="Usuário de criação" />
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <input disabled [(ngModel)]="item.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" class="form-control" matInput placeholder="Último usuário a modificar" />
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div *ngIf="!isAddMode" fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <input disabled [(ngModel)]="item.id" type="text" id="id" name="id" matInput placeholder="Código">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="45">
+                        <input disabled [(ngModel)]="item.usuarioCriacao.nome" type="text" id="uscNome" name="uscNome" matInput placeholder="Usuário de criação">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="35">
+                        <input disabled [(ngModel)]="item.usuarioModificacao.nome" type="text" id="usmNome" name="usmNome" matInput placeholder="Último usuário a modificar">
+                    </mat-form-field>
+                    <mat-checkbox fxFlex="5" [(ngModel)]="item.status" id="status" name="status">Ativo</mat-checkbox>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <input [(ngModel)]="item.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
-                                        <mat-error *ngIf="nomeFormControl.hasError('required')">
-                                            O nome é <strong>obrigatório</strong>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field class="width">
-                                        <input (ngModelChange)="onChange($event)" [(ngModel)]="item.categoria.nome" matInput placeholder="Categoria" aria-label="Categoria" [matAutocomplete]="auto" [formControl]="categoriaControl" required>
-                                        <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let categoria of categoriasFiltradas | async" [value]="categoria.nome">
-                                                <span>{{ categoria.nome }}</span>
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                        <mat-error *ngIf="categoriaControl.hasError('required')">
-                                            A categoria é <strong>obrigatória</strong>
-                                        </mat-error>
-                                    </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex="15">
+                        <mat-select [(ngModel)]="item.tipoItem" [(value)]="item.tipoItem" id="tipoItem" name="tipoItem" matInput placeholder="Tipo" [formControl]="tipoControl" required>
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let i of tiposDeitem" [value]="i.value">{{i.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="tipoControl.hasError('required')">o Tipo é<strong> obrigatório</strong></mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="30">
+                        <input (ngModelChange)="onChange($event)" [(ngModel)]="item.categoria.nome" matInput placeholder="Categoria" aria-label="Categoria" [matAutocomplete]="auto" [formControl]="categoriaControl" required>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let categoria of categoriasFiltradas | async" [value]="categoria.nome">
+                                <span>{{ categoria.nome }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="categoriaControl.hasError('required')"> A categoria é <strong>obrigatória</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <input hidden [(ngModel)]="item.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id categoria" />
 
-
-                                    <input hidden [(ngModel)]="item.categoria.id" type="text" id="idCat" name="idCat" class="form-control" matInput placeholder="Id categoria" />
-
-                                </td>
-
-                            </tr>
-                        </table>
-                    </div>
-                    <div fxFlex.xs="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50">
-                        <table cellspacing="6">
-                            <tr>
-                                <td>
-                                    <mat-form-field>
-                                        <mat-select [(ngModel)]="item.tipoItem" [(value)]="item.tipoItem" id="tipoItem" name="tipoItem" matInput placeholder="Tipo" [formControl]="tipoControl" required>
-                                            <mat-option>--</mat-option>
-                                            <mat-option *ngFor="let i of tiposDeitem" [value]="i.value">{{i.name}}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="tipoControl.hasError('required')">o Tipo é<strong> obrigatório</strong></mat-error>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field>
-                                        <textarea [(ngModel)]="item.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                                    </mat-form-field>
-
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <mat-form-field fxFlex="55">
+                        <input [(ngModel)]="item.nome" type="text" id="nome" name="nome" class="form-control" matInput placeholder="Nome" [formControl]="nomeFormControl" [errorStateMatcher]="matcher" required />
+                        <mat-error *ngIf="nomeFormControl.hasError('required')"> O nome é <strong>obrigatório</strong> </mat-error>
+                    </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <table class="example-full-width" cellspacing="6">
-                        <tr>
-                            <td>
-                                <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
-                            </td>
-                        </tr>
-                    </table>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <mat-form-field fxFlex>
+                        <textarea [(ngModel)]="item.observacoes" id="observacoes" name="observacoes" matInput placeholder="Observações" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign=" center" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                    <button [disabled]="!saving" type="submit" mat-raised-button color="accent">Salvar</button>
                 </div>
             </form>
         </div>
